@@ -1,0 +1,15 @@
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\bin\Debug\net7.0\Explorer.Payments.API.deps.json
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\bin\Debug\net7.0\Explorer.Payments.API.dll
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\bin\Debug\net7.0\Explorer.Payments.API.pdb
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\bin\Debug\net7.0\Explorer.BuildingBlocks.Core.dll
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\bin\Debug\net7.0\Explorer.BuildingBlocks.Core.pdb
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\obj\Debug\net7.0\Explorer.Payments.API.csproj.AssemblyReference.cache
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\obj\Debug\net7.0\Explorer.Payments.API.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\obj\Debug\net7.0\Explorer.Payments.API.AssemblyInfoInputs.cache
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\obj\Debug\net7.0\Explorer.Payments.API.AssemblyInfo.cs
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\obj\Debug\net7.0\Explorer.Payments.API.csproj.CoreCompileInputs.cache
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\obj\Debug\net7.0\Explorer.Payments.API.csproj.CopyComplete
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\obj\Debug\net7.0\Explorer.Payments.API.dll
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\obj\Debug\net7.0\refint\Explorer.Payments.API.dll
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\obj\Debug\net7.0\Explorer.Payments.API.pdb
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\Modules\Payments\Explorer.Payments.API\obj\Debug\net7.0\ref\Explorer.Payments.API.dll

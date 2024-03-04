@@ -1,0 +1,17 @@
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\bin\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.deps.json
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\bin\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.runtimeconfig.json
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\bin\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.dll
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\bin\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.pdb
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\bin\Debug\net7.0\Explorer.BuildingBlocks.Core.dll
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\bin\Debug\net7.0\Explorer.BuildingBlocks.Core.pdb
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\obj\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.csproj.AssemblyReference.cache
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\obj\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\obj\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.AssemblyInfoInputs.cache
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\obj\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.AssemblyInfo.cs
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\obj\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.csproj.CoreCompileInputs.cache
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\obj\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.csproj.CopyComplete
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\obj\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.dll
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\obj\Debug\net7.0\refint\Explorer.BuildingBlocks.Infrastructure.dll
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\obj\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.pdb
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\obj\Debug\net7.0\Explorer.BuildingBlocks.Infrastructure.genruntimeconfig.cache
+C:\Users\Milica\OneDrive\Radna površina\PSW-G1\back-end\src\BuildingBlocks\Explorer.BuildingBlocks.Infrastructure\obj\Debug\net7.0\ref\Explorer.BuildingBlocks.Infrastructure.dll

@@ -1,0 +1,54 @@
+{
+  "Version": 1,
+  "Hash": "0fuVpiMRnQvoo5DFzJeskhcPL1oM5s8WgzRhJJdEpDA=",
+  "Source": "Explorer.API",
+  "BasePath": "_content/Explorer.API",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "Explorer.API\\wwwroot",
+      "Source": "Explorer.API",
+      "ContentRoot": "C:\\Users\\Milica\\OneDrive\\Radna površina\\PSW-G1\\back-end\\src\\Explorer.API\\wwwroot\\",
+      "BasePath": "_content/Explorer.API",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "C:\\Users\\Milica\\OneDrive\\Radna površina\\PSW-G1\\back-end\\src\\Explorer.API\\wwwroot\\game.html",
+      "SourceId": "Explorer.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Milica\\OneDrive\\Radna površina\\PSW-G1\\back-end\\src\\Explorer.API\\wwwroot\\",
+      "BasePath": "_content/Explorer.API",
+      "RelativePath": "game.html",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\game.html"
+    },
+    {
+      "Identity": "C:\\Users\\Milica\\OneDrive\\Radna površina\\PSW-G1\\back-end\\src\\Explorer.API\\wwwroot\\images\\.gitkeep",
+      "SourceId": "Explorer.API",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Users\\Milica\\OneDrive\\Radna površina\\PSW-G1\\back-end\\src\\Explorer.API\\wwwroot\\",
+      "BasePath": "_content/Explorer.API",
+      "RelativePath": "images/.gitkeep",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\.gitkeep"
+    }
+  ]
+}

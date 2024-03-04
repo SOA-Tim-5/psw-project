@@ -1,0 +1,29 @@
+{
+  "Files": [
+    {
+      "Id": "C:\\Users\\Milica\\OneDrive\\Radna površina\\PSW-G1\\back-end\\src\\Explorer.API\\wwwroot\\game.html",
+      "PackagePath": "staticwebassets\\game.html"
+    },
+    {
+      "Id": "C:\\Users\\Milica\\OneDrive\\Radna površina\\PSW-G1\\back-end\\src\\Explorer.API\\wwwroot\\images\\.gitkeep",
+      "PackagePath": "staticwebassets\\images\\.gitkeep"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.Explorer.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.Explorer.API.props",
+      "PackagePath": "build\\Explorer.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.Explorer.API.props",
+      "PackagePath": "buildMultiTargeting\\Explorer.API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.Explorer.API.props",
+      "PackagePath": "buildTransitive\\Explorer.API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}
