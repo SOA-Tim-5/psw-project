@@ -48,8 +48,8 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
-        [Authorize(Roles = "author, tourist")]
-        /*[HttpPost]
+        /*[Authorize(Roles = "author, tourist")]
+        [HttpPost]
         public ActionResult<TourResponseDto> Create([FromBody] TourCreateDto tour)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -75,7 +75,6 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return CreateResponse(jsonResponse.ToResult());
         }
-
 
 
 
