@@ -1,9 +1,12 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public;
+using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.Json;
+using System.Text;
 
 namespace Explorer.API.Controllers.Author.TourAuthoring
 {
@@ -12,6 +15,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
     public class TourController : BaseApiController
     {
         private readonly ITourService _tourService;
+        static readonly HttpClient client = new HttpClient();
 
         public TourController(ITourService tourService)
         {
@@ -45,7 +49,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
         }
 
         [Authorize(Roles = "author, tourist")]
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult<TourResponseDto> Create([FromBody] TourCreateDto tour)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -55,7 +59,46 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             }
             var result = _tourService.Create(tour);
             return CreateResponse(result);
+        }*/
+        //KREIRANJE TURE 1. FUNKCIONALNOST
+        [Authorize(Roles = "author, tourist")]
+        [HttpPost]
+        public async Task<ActionResult<TourResponseDto>> Create([FromBody] TourCreateDto tour)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            if (identity != null && identity.IsAuthenticated)
+            {
+                tour.AuthorId = long.Parse(identity.FindFirst("id").Value);
+            }
+            using StringContent jsonContent = new(JsonSerializer.Serialize(tour), Encoding.UTF8, "application/json");
+            using HttpResponseMessage response = await client.PostAsync("http://localhost:88/tour/create", jsonContent);
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            return CreateResponse(jsonResponse.ToResult());
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [Authorize(Roles = "author, tourist")]
         [HttpPut("{id:int}")]
