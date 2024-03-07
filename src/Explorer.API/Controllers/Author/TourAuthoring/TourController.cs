@@ -38,30 +38,64 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(result);
         }
 
+
+
+        //**************************************************
         [Authorize(Roles = "author, tourist")]
         [HttpGet("authors")]
-        public ActionResult<PagedResult<TourResponseDto>> GetAuthorsTours([FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<ActionResult<List<TourResponseDto>>> GetAuthorsTours([FromQuery] int page, [FromQuery] int pageSize)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var id = long.Parse(identity.FindFirst("id").Value);
-            var result = _tourService.GetAuthorsPagedTours(id, page, pageSize);
-            return CreateResponse(result);
+
+            // Pravljenje URL-a za pozivanje GetByAuthorId metode
+            string url = $"http://localhost:88/tours/get/{id}?page={page}&pageSize={pageSize}";
+
+            // Slanje GET zahteva
+            using HttpResponseMessage response = await client.GetAsync(url);
+
+            // Provera status koda odgovora
+            if (response.IsSuccessStatusCode)
+            {
+                // Čitanje odgovora kao string
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+
+                // Kreiranje odgovora
+                return CreateResponse(jsonResponse.ToResult());
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode);
+            }
         }
 
-        /*[Authorize(Roles = "author, tourist")]
-        [HttpPost]
-        public ActionResult<TourResponseDto> Create([FromBody] TourCreateDto tour)
-        {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null && identity.IsAuthenticated)
+
+        /*    [Authorize(Roles = "author, tourist")]
+            [HttpGet("authors")]
+            public ActionResult<PagedResult<TourResponseDto>> GetAuthorsTours([FromQuery] int page, [FromQuery] int pageSize)
             {
-                tour.AuthorId = long.Parse(identity.FindFirst("id").Value);
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                var id = long.Parse(identity.FindFirst("id").Value);
+                var result = _tourService.GetAuthorsPagedTours(id, page, pageSize);
+                return CreateResponse(result);
+            }*/
+
+         /*   [Authorize(Roles = "author, tourist")]
+            [HttpPost]
+            public ActionResult<TourResponseDto> Create([FromBody] TourCreateDto tour)
+            {
+                var identity = HttpContext.User.Identity as ClaimsIdentity;
+                if (identity != null && identity.IsAuthenticated)
+                {
+                    tour.AuthorId = long.Parse(identity.FindFirst("id").Value);
+                }
+                var result = _tourService.Create(tour);
+                return CreateResponse(result);
             }
-            var result = _tourService.Create(tour);
-            return CreateResponse(result);
-        }*/
-        //KREIRANJE TURE 1. FUNKCIONALNOST
-        [Authorize(Roles = "author, tourist")]
+
+        */
+            //KREIRANJE TURE 1. FUNKCIONALNOST
+            [Authorize(Roles = "author, tourist")]
         [HttpPost]
         public async Task<ActionResult<TourResponseDto>> Create([FromBody] TourCreateDto tour)
         {
@@ -76,7 +110,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return CreateResponse(jsonResponse.ToResult());
         }
 
-
+        
 
 
 
