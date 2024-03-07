@@ -1,5 +1,4 @@
 ﻿using Explorer.Encounters.API.Dtos;
-using Explorer.Encounters.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +8,7 @@ namespace Explorer.API.Controllers.Author
     [Route("api/author/misc-encounter")]
     public class MiscEncounterController : BaseApiController
     {
+        /*
         private readonly IEncounterService _encounterService;
         public MiscEncounterController(IEncounterService encounterService) {
             _encounterService = encounterService;
@@ -21,6 +21,6 @@ namespace Explorer.API.Controllers.Author
             var result = _encounterService.CreateMiscEncounter(encounter);
             return CreateResponse(result);
         }
-
+        */
     }
 }

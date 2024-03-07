@@ -4,13 +4,6 @@ using Explorer.Payments.API.Dtos;
 using Explorer.Payments.API.Public;
 using Explorer.Payments.Core.Domain;
 using Explorer.Payments.Core.Domain.RepositoryInterfaces;
-using Explorer.Stakeholders.API.Dtos;
-using Explorer.Stakeholders.API.Internal;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Internal;
-using Explorer.Tours.API.Public;
-using Explorer.Tours.Core.Domain;
-using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using FluentResults;
 
 namespace Explorer.Tours.Core.UseCases

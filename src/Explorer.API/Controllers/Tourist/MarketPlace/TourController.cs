@@ -1,16 +1,15 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
+﻿using System.Security.Claims;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Payments.API.Public;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Tourist.MarketPlace
 {
     [Route("api/market-place")]
     public class TourController : BaseApiController
     {
+        /*
         private readonly ITourService _tourService;
         private readonly IShoppingCartService _shoppingCartService;
 
@@ -72,7 +71,7 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
             var tourIds = cart.Value.OrderItems.Select(order => order.TourId).ToList();
             var result = _tourService.GetLimitedInfoTours(page, pageSize, tourIds);
             return CreateResponse(result);
-        }*/
+        }
 
         [HttpGet("tours/adventure")]
         public ActionResult<PagedResult<TourResponseDto>> GetPopularAdventureTours([FromQuery] int page, [FromQuery] int pageSize)
@@ -101,6 +100,6 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
             var result = _tourService.GetCulturalTours(page, pageSize);
             return CreateResponse(result);
         }
-
+        */
     }
 }

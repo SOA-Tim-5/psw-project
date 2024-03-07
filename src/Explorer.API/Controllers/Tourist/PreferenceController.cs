@@ -1,8 +1,5 @@
-﻿using Explorer.Tours.API.Public;
-using Explorer.Tours.API.Dtos;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -10,6 +7,7 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourist/preferences")]
     public class PreferenceController : BaseApiController
     {
+        /*
         private readonly IPreferenceService _tourPreferencesService;
 
         public PreferenceController(IPreferenceService tourPreferencesService)
@@ -53,5 +51,6 @@ namespace Explorer.API.Controllers.Tourist
             var result = _tourPreferencesService.Update(preference);
             return CreateResponse(result);
         }
+        */
     }
 }

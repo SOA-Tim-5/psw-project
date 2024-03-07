@@ -1,11 +1,9 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
+﻿using System.Security.Claims;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Payments.API.Dtos;
 using Explorer.Payments.API.Public;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -13,6 +11,7 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/wishlist")]
     public class WishlistController : BaseApiController
     {
+        /*
         private readonly IWishlistService _wishlistService;
         private readonly ITourService _tourService;
 
@@ -61,6 +60,6 @@ namespace Explorer.API.Controllers.Tourist
             var result = _wishlistService.RemoveTourFromWishlist(tourId,touristId);
             return CreateResponse(result);
         }
-
+        */
     }
 }

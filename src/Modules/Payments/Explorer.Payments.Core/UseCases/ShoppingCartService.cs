@@ -5,14 +5,7 @@ using Explorer.Payments.API.Public;
 using Explorer.Payments.Core.Domain;
 using Explorer.Payments.Core.Domain.RepositoryInterfaces;
 using Explorer.Payments.Core.Domain.ShoppingCarts;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
 using FluentResults;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Explorer.Payments.Core.UseCases
 {
@@ -23,15 +16,15 @@ namespace Explorer.Payments.Core.UseCases
         private readonly ICrudRepository<OrderItem> _orderItemRepository;
         private readonly ICouponRepository _couponRepository;
         private readonly ICrudRepository<ShoppingCart> _repository;
-        private readonly ITourService _tourService;
-        public ShoppingCartService(ICrudRepository<ShoppingCart> repository, IShoppingCartRepository cartRepository, ICrudRepository<OrderItem> orderItemRepository,ICouponRepository couponRepository,ITourService tourService, IMapper mapper) : base(repository, mapper)
+        //private readonly ITourService _tourService;
+        public ShoppingCartService(ICrudRepository<ShoppingCart> repository, IShoppingCartRepository cartRepository, ICrudRepository<OrderItem> orderItemRepository,ICouponRepository couponRepository, IMapper mapper) : base(repository, mapper)
         {
             _mapper = mapper;
             _repository = repository;
             _cartRepository = cartRepository;
             _orderItemRepository = orderItemRepository;
             _couponRepository = couponRepository;
-            _tourService = tourService;
+            //_tourService = tourService;
 
         }
 
@@ -166,7 +159,7 @@ namespace Explorer.Payments.Core.UseCases
         {
             try
             {
-                
+                /*
                 ShoppingCart cart = _cartRepository.Get(applyCouponRequestDto.ShoppingCartId);
                 List<long> tourIds = new List<long>();
                 foreach(OrderItem ori in cart.OrderItems)
@@ -208,7 +201,8 @@ namespace Explorer.Payments.Core.UseCases
                 _orderItemRepository.Update(oi);
                 _repository.Update(cart);
                 return MapToDto<ShoppingCartResponseDto>(cart);
-
+                */
+                return null;
             }
             catch (Exception e)
             {

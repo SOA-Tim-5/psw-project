@@ -1,5 +1,4 @@
 ﻿using Explorer.Encounters.API.Dtos;
-using Explorer.Encounters.API.Public;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -10,6 +9,7 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourist/social-encounter")]
     public class SocialEncounterController : BaseApiController
     {
+        /*
         private readonly IEncounterService _encounterService;
         private readonly ITouristProgressService _touristProgressService;
         public SocialEncounterController(IEncounterService encounterService, ITouristProgressService touristProgressService)
@@ -30,5 +30,6 @@ namespace Explorer.API.Controllers.Tourist
             }
             return CreateResponse(Result.Fail("Tourist level is not high enough."));
         }
+        */
     }
 }

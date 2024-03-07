@@ -1,9 +1,5 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Author
 {
@@ -11,6 +7,7 @@ namespace Explorer.API.Controllers.Author
     [Route("api/facility")]
     public class FacilityController : BaseApiController
     {
+        /*
         private readonly IFacilityService _facilityService;
 
         public FacilityController(IFacilityService facilityService)
@@ -67,5 +64,6 @@ namespace Explorer.API.Controllers.Author
             var result = _facilityService.Delete(id);
             return CreateResponse(result);
         }
+        */
     }
 }

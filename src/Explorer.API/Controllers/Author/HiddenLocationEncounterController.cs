@@ -1,7 +1,5 @@
-﻿using Explorer.Encounters.API.Dtos;
-using Explorer.Encounters.API.Public;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Components;
 
 namespace Explorer.API.Controllers.Author
 {
@@ -9,6 +7,7 @@ namespace Explorer.API.Controllers.Author
     [Route("api/author/hidden-location-encounter")]
     public class HiddenLocationEncounterController : BaseApiController
     {
+    /*
         private readonly IEncounterService _encounterService;
         public HiddenLocationEncounterController(IEncounterService encounterService)
         {
@@ -21,6 +20,6 @@ namespace Explorer.API.Controllers.Author
             var result = _encounterService.CreateHiddenLocationEncounter(encounter);
             return CreateResponse(result);
         }
-
-    }
+    */
+}
 }

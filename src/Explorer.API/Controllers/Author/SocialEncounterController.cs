@@ -1,5 +1,4 @@
 ﻿using Explorer.Encounters.API.Dtos;
-using Explorer.Encounters.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -9,6 +8,7 @@ namespace Explorer.API.Controllers.Author
     [Route("api/author/social-encounter")]
     public class SocialEncounterController : BaseApiController
     {
+        /*
         private readonly IEncounterService _encounterService;
         public SocialEncounterController(IEncounterService encounterService)
         {
@@ -21,5 +21,6 @@ namespace Explorer.API.Controllers.Author
             var result = _encounterService.CreateSocialEncounter(encounter);
             return CreateResponse(result);
         }
+        */
     }
 }

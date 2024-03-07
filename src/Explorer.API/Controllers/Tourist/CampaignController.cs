@@ -1,13 +1,5 @@
-﻿using Explorer.Stakeholders.API.Public;
-using Explorer.Stakeholders.Core.Domain;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
-using FluentResults;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -15,6 +7,7 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourist/campaign")]
     public class CampaignController : BaseApiController
     {
+        /*
         private readonly ICampaignService _campaignService;
         public CampaignController(ICampaignService campaignService)
         {
@@ -57,6 +50,6 @@ namespace Explorer.API.Controllers.Tourist
             }
             return CreateResponse(result);
         }
-        
+        */
     }
 }

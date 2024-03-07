@@ -1,16 +1,15 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
+﻿using System.Security.Claims;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Author.TourAuthoring
 {
-    
+
     [Route("api/tour")] 
     public class TourController : BaseApiController
     {
+        /*
         private readonly ITourService _tourService;
 
         public TourController(ITourService tourService)
@@ -170,5 +169,6 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             var result = _tourService.GetToursBasedOnSelectedKeyPoints(page, pageSize, keyPointIdsList, authorId);
             return CreateResponse(result);
         }
+        */
     }
 }

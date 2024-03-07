@@ -9,8 +9,6 @@ using Explorer.Payments.Core.Mappers;
 using Explorer.Payments.Core.UseCases;
 using Explorer.Payments.Infrastructure.Database;
 using Explorer.Payments.Infrastructure.Database.Repositories;
-using Explorer.Tours.API.Internal;
-using Explorer.Tours.Core.Domain.RepositoryInterfaces;
 using Explorer.Tours.Core.UseCases;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;

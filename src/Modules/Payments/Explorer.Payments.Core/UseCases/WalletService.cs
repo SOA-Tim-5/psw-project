@@ -3,28 +3,23 @@ using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Payments.API.Dtos;
 using Explorer.Payments.API.Public;
 using Explorer.Payments.Core.Domain;
-using Explorer.Stakeholders.API.Internal;
 using FluentResults;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Explorer.Payments.Core.UseCases
 {
     public class WalletService : CrudService<WalletResponseDto, Wallet>, IWalletService
     {
-        private readonly IInternalUserService _internalUserService;
+        //private readonly IInternalUserService _internalUserService;
         private readonly ICrudRepository<Wallet> _walletRepository;
-        public WalletService(ICrudRepository<Wallet> repository, IMapper mapper, IInternalUserService internalUserService) : base(repository, mapper)
+        public WalletService(ICrudRepository<Wallet> repository, IMapper mapper) : base(repository, mapper)
         {
-            _internalUserService = internalUserService;
+            //_internalUserService = internalUserService;
             _walletRepository = repository;
         }
 
         public Result<WalletResponseDto> Create(WalletCreateDto walletCreateDto)
         {
+            /*
             var userResponse = _internalUserService.Get(walletCreateDto.TouristId);
             if(!userResponse.IsSuccess)
             {
@@ -44,6 +39,8 @@ namespace Explorer.Payments.Core.UseCases
             {
                 return Result.Fail(FailureCode.InvalidArgument).WithError(e.Message);
             }
+            */
+            return null;
         }
 
         public Result<WalletResponseDto> Update(WalletUpdateDto walletUpdateDto)

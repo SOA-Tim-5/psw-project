@@ -8,6 +8,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
     [Route("api/administrator/tour")]
     public class TourController : BaseApiController
     {
+        /*
         private readonly ITourService _tourService;
 
         public TourController(ITourService tourService)
@@ -21,5 +22,6 @@ namespace Explorer.API.Controllers.Administrator.Administration
             var result = _tourService.DeleteCascade(id);
             return CreateResponse(result);
         }
+        */
     }
 }

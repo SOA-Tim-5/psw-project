@@ -5,11 +5,7 @@ using Explorer.Payments.API.Internal;
 using Explorer.Payments.API.Public;
 using Explorer.Payments.Core.Domain;
 using Explorer.Payments.Core.Domain.RepositoryInterfaces;
-using Explorer.Payments.Core.Domain.ShoppingCarts;
-using Explorer.Tours.API.Internal;
-using Explorer.Tours.Core.Domain.Tours; //GREH , kliknula sam -  add reference 
 using FluentResults;
-using System.Diagnostics;
 
 namespace Explorer.Payments.Core.UseCases
 {
@@ -20,18 +16,18 @@ namespace Explorer.Payments.Core.UseCases
         private readonly ICrudRepository<ShoppingNotification> _shoppingNotificationRepository;
         private readonly IWalletService _walletService;
         private readonly IShoppingCartRepository _shoppingCartRepository;
-        private IInternalTourService _tourService;
+        //private IInternalTourService _tourService;
         private readonly IBundleRepository _bundleRepository;
         private readonly IBundleRecordRepository _bundleRecordRepository;
         IMapper _mapper;
-        public TourTokenService(ICrudRepository<TourToken> repository, IMapper mapper, ICrudRepository<Record> recordRepository, IWalletService walletService,IShoppingCartRepository shoppingCartRepository, IInternalTourService tourService, ICrudRepository<ShoppingNotification> shoppingNotificationRepository, IBundleRepository bundleRepository, IBundleRecordRepository bundleRecordRepository) : base(repository, mapper)
+        public TourTokenService(ICrudRepository<TourToken> repository, IMapper mapper, ICrudRepository<Record> recordRepository, IWalletService walletService,IShoppingCartRepository shoppingCartRepository, ICrudRepository<ShoppingNotification> shoppingNotificationRepository, IBundleRepository bundleRepository, IBundleRecordRepository bundleRecordRepository) : base(repository, mapper)
         {
             _repository = repository;
             _mapper = mapper;
             _recordRepository = recordRepository;
             _walletService = walletService;
             _shoppingCartRepository = shoppingCartRepository;
-            _tourService = tourService;
+           // _tourService = tourService;
             _shoppingNotificationRepository = shoppingNotificationRepository;
             _bundleRepository = bundleRepository;
             _bundleRecordRepository = bundleRecordRepository;
@@ -42,6 +38,7 @@ namespace Explorer.Payments.Core.UseCases
             //check if tour is archived
             try
             {
+                /*
                 var wallet = _walletService.GetForTourist(token.TouristId);
                 var shoppingCart = _shoppingCartRepository.GetByTouristId(token.TouristId);
                 var tour = _tourService.Get(token.TourId)?.Value;
@@ -72,7 +69,8 @@ namespace Explorer.Payments.Core.UseCases
                 {
                     return Result.Fail(FailureCode.InvalidArgument).WithError("You don't have enough coins.");
                 }
-                
+                */
+                return null;
             }
             catch (KeyNotFoundException e)
             {
@@ -99,17 +97,20 @@ namespace Explorer.Payments.Core.UseCases
         }
         private void CreateNotfication(long touristId, long tourId)
         {
+            /*
             var tour= _tourService.Get(tourId)?.Value;
             var description="";
             if(tour!=null)
                 description = "Tour " + tour.Name + " is successfully added to your tours collection.";
             _shoppingNotificationRepository.Create(new ShoppingNotification(description,touristId, tourId));
+            */
         }
 
         public Result AddTokensByBundle(long touristId, long bundleId)
         {
             try
             {
+                /*
                 var wallet = _walletService.GetForTourist(touristId);
                 var shoppingCart = _shoppingCartRepository.GetByTouristId(touristId);
                 var bundle = _bundleRepository.Get(b => b.Id == bundleId, include: "BundleItems");
@@ -137,7 +138,8 @@ namespace Explorer.Payments.Core.UseCases
                 {
                     return Result.Fail(FailureCode.InvalidArgument).WithError("You don't have enough coins.");
                 }
-
+                */
+                return null;
             }
             catch (KeyNotFoundException e)
             {
