@@ -8,7 +8,7 @@ namespace Explorer.Encounters.API.Dtos
 {
     public class MiscEncounterResponseDto
     {
-        public string Id { get; set; }
+        public long Id { get; set; }
         public bool ChallengeDone { get; set; }
         public string Title { get; set; }
         public string Description { get; set; }

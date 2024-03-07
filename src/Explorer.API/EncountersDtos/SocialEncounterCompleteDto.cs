@@ -2,6 +2,6 @@
 
 public class SocialEncounterCompleteDto
 {
-    public string EncounterId {  get; set; }
+    public int EncounterId {  get; set; }
     public long UserId { get; set; }
 }

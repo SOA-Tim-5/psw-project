@@ -2,7 +2,7 @@
 {
     public class HiddenLocationEncounterResponseDto
     {
-        public string Id { get; set; }
+        public long Id { get; set; }
         public double PictureLongitude { get; set; }
         public double PictureLatitude { get; set; }
         public string Title { get; set; }
