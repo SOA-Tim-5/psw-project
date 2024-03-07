@@ -1,9 +1,12 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public;
+using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
+using System.Text.Json;
+using System.Text;
 
 namespace Explorer.API.Controllers.Author
 {
@@ -12,7 +15,7 @@ namespace Explorer.API.Controllers.Author
     public class FacilityController : BaseApiController
     {
         private readonly IFacilityService _facilityService;
-
+        static readonly HttpClient client = new HttpClient();
         public FacilityController(IFacilityService facilityService)
         {
             _facilityService = facilityService;
@@ -34,7 +37,7 @@ namespace Explorer.API.Controllers.Author
             return CreateResponse(result);
         }
 
-        [HttpPost]
+        /*[HttpPost]
         public ActionResult<FacilityResponseDto> Create([FromBody] FacilityCreateDto facility)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -46,6 +49,18 @@ namespace Explorer.API.Controllers.Author
             var result = _facilityService.Create(facility);
 
             return CreateResponse(result);
+        }*/
+
+        
+        [HttpPost]
+        public async Task<ActionResult<FacilityResponseDto>> Create([FromBody] FacilityCreateDto facility)
+        {
+            //var result = _keyPointService.Create(keyPoint);
+            using StringContent jsonContent = new(JsonSerializer.Serialize(facility), Encoding.UTF8, "application/json");
+            using HttpResponseMessage response = await client.PostAsync("http://localhost:88/facility/create", jsonContent);
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            return CreateResponse(jsonResponse.ToResult());
+            //return CreateResponse(result);
         }
 
         [HttpPut("{id:int}")]

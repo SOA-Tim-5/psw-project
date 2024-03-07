@@ -2,8 +2,13 @@
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public.TourAuthoring;
 using Explorer.Tours.Core.UseCases.TourAuthoring;
+using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Security.Claims;
+using System.Text.Json;
+using System.Text;
+using Explorer.Tours.Core.Domain.Tours;
 
 namespace Explorer.API.Controllers.Author.TourAuthoring;
 
@@ -11,6 +16,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring;
 public class KeyPointController : BaseApiController
 {
     private readonly IKeyPointService _keyPointService;
+    static readonly HttpClient client = new HttpClient();
 
     public KeyPointController(IKeyPointService keyPointService)
     {
@@ -19,11 +25,16 @@ public class KeyPointController : BaseApiController
 
     [Authorize(Roles = "author")]
     [HttpPost("tours/{tourId:long}/key-points")]
-    public ActionResult<KeyPointResponseDto> CreateKeyPoint([FromRoute] long tourId, [FromBody] KeyPointCreateDto keyPoint)
+    public async Task<ActionResult<KeyPointResponseDto>> CreateKeyPoint([FromRoute] long tourId, [FromBody] KeyPointCreateDto keyPoint)
     {
+            
         keyPoint.TourId = tourId;
-        var result = _keyPointService.Create(keyPoint);
-        return CreateResponse(result);
+        //var result = _keyPointService.Create(keyPoint);
+        using StringContent jsonContent = new(JsonSerializer.Serialize(keyPoint), Encoding.UTF8, "application/json");
+        using HttpResponseMessage response = await client.PostAsync("http://localhost:88/keypoint/create", jsonContent);
+        var jsonResponse = await response.Content.ReadAsStringAsync();
+        return CreateResponse(jsonResponse.ToResult());
+        //return CreateResponse(result);
     }
 
     [Authorize(Roles = "author")]
