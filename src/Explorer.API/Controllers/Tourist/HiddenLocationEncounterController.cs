@@ -1,8 +1,4 @@
-﻿using Explorer.Encounters.API.Dtos;
-using Explorer.Encounters.API.Public;
-using Explorer.Tours.API.Dtos.TouristPosition;
-using FluentResults;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Tourist
@@ -11,6 +7,7 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourist/hidden-location-encounter")]
     public class HiddenLocationEncounterController : BaseApiController
     {
+        /*
         private readonly IEncounterService _encounterService;
         private readonly ITouristProgressService _touristProgressService;
         public HiddenLocationEncounterController(IEncounterService encounterService, ITouristProgressService touristProgressService)
@@ -54,5 +51,6 @@ namespace Explorer.API.Controllers.Tourist
             }
             return CreateResponse(Result.Fail("Tourist level is not high enough."));
         }
+        */
     }
 }

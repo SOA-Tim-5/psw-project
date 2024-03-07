@@ -1,11 +1,5 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Stakeholders.Core.Domain;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
-using FluentResults;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Author
 {
@@ -13,6 +7,7 @@ namespace Explorer.API.Controllers.Author
     [Route("api/notifications")]
     public class NotificationController : BaseApiController
     {
+        /*
         private readonly INotificationService _notificationService;
 
         public NotificationController(INotificationService notificationService)
@@ -51,5 +46,6 @@ namespace Explorer.API.Controllers.Author
             var result = _notificationService.GetKeyPointNotificationsByAuthorId(page, pageSize, id);
             return CreateResponse(result);
         }
+        */
     }
 }

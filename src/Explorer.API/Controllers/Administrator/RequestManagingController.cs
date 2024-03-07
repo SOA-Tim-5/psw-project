@@ -1,8 +1,4 @@
-﻿using Explorer.Blog.Core.Domain;
-using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Administrator
@@ -11,6 +7,7 @@ namespace Explorer.API.Controllers.Administrator
     [Route("api/administration/requests")]
     public class RequestManagingController : BaseApiController
     {
+        /*
         private readonly IPublicKeyPointRequestService _publicKeyPointRequestService;
         private readonly IPublicFacilityRequestService _publicFacilityRequestService;
         public RequestManagingController(IPublicKeyPointRequestService publicKeyPointRequestService, IPublicFacilityRequestService publicFacilityRequestService)
@@ -72,5 +69,6 @@ namespace Explorer.API.Controllers.Administrator
             var result = _publicFacilityRequestService.Accept(id, loggedUserId);
             return CreateResponse(result);
         }
+        */
     }
 }

@@ -1,15 +1,8 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Dtos.TouristPosition;
-using Explorer.Tours.API.Public;
+﻿using System.Security.Claims;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Payments.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
-using Explorer.Payments.Core.Domain;
-using Explorer.Payments.API.Dtos;
-using FluentResults;
-using System.Collections.Generic;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -17,6 +10,7 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourexecution/tourexecution")]
     public class TourExecutionSessionController : BaseApiController
     {
+        /*
         private readonly ITourExecutionSessionService _tourExecutionService;
         private readonly ITourService _tourService;
         private readonly ITourTokenService _tourTokenService;
@@ -131,5 +125,6 @@ namespace Explorer.API.Controllers.Tourist
             }
             return CreateResponse(result);
         }
+        */
     }
 }

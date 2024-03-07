@@ -1,9 +1,6 @@
-﻿using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
-using Explorer.Tours.Core.Domain;
+﻿using System.Security.Claims;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Author
 {
@@ -12,6 +9,7 @@ namespace Explorer.API.Controllers.Author
     [Route("api/publicFacilityRequest")]
     public class PublicFacilityRequestController : BaseApiController
     {
+        /*
         private readonly IPublicFacilityRequestService _requestService;
 
         public PublicFacilityRequestController(IPublicFacilityRequestService requestService)
@@ -30,5 +28,6 @@ namespace Explorer.API.Controllers.Author
             var result = _requestService.Create(request);
             return CreateResponse(result);
         }
+        */
     }
 }

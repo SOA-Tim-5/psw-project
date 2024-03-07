@@ -1,26 +1,24 @@
-﻿using AutoMapper;
+﻿using System.Linq.Expressions;
+using AutoMapper;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Payments.API.Dtos;
 using Explorer.Payments.API.Public;
-using Explorer.Payments.Core.Domain.RepositoryInterfaces;
-using Explorer.Tours.API.Internal;
-using FluentResults;
 using Explorer.Payments.Core.Domain.Bundles;
-using System.Linq.Expressions;
-using System.Reflection.Metadata;
+using Explorer.Payments.Core.Domain.RepositoryInterfaces;
+using FluentResults;
 
 namespace Explorer.Payments.Core.UseCases
 {
     public class BundleService : IBundleService
     {
         private readonly IMapper _mapper;
-        private IInternalTourService _tourService;
+        //private IInternalTourService _tourService;
         private IBundleRepository _bundleRepository;
 
-        public BundleService(IMapper mapper, IInternalTourService tourService, IBundleRepository bundleRepository)
+        public BundleService(IMapper mapper, IBundleRepository bundleRepository)
         {
             _mapper = mapper;
-            _tourService = tourService;
+           // _tourService = tourService;
             _bundleRepository = bundleRepository;
         }
 
@@ -28,6 +26,7 @@ namespace Explorer.Payments.Core.UseCases
         {
             try
             {
+                /*
                 var bundle = new Bundle(bundleDto.Name, bundleDto.Price, authorId, Domain.Bundles.BundleStatus.Draft);
 
                 List<BundleItem> bundleItems = new List<BundleItem>();
@@ -44,6 +43,8 @@ namespace Explorer.Payments.Core.UseCases
                 var responseDto = _mapper.Map<BundleResponseDto>(createdBundle);
 
                 return responseDto;
+                */
+                return null;
             }
             catch (ArgumentException e)
             {
@@ -59,6 +60,7 @@ namespace Explorer.Payments.Core.UseCases
         {
             try
             {
+                /*
                 Expression<Func<Bundle, bool>> filter = b => b.Id == id && b.AuthorId == authorId &&
                                                         (b.Status == Domain.Bundles.BundleStatus.Draft || b.Status == Domain.Bundles.BundleStatus.Archived);
                 Bundle bundle = _bundleRepository.Get(filter, include: "BundleItems");
@@ -81,6 +83,8 @@ namespace Explorer.Payments.Core.UseCases
                 var responseDto = _mapper.Map<BundleResponseDto>(editedBundle);
 
                 return responseDto;
+                */
+                return null;
             }
             catch (ArgumentException e)
             {

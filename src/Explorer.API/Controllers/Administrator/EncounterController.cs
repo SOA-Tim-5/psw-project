@@ -1,14 +1,7 @@
-﻿using Explorer.Blog.API.Dtos;
-using Explorer.Blog.API.Public;
-using Explorer.Blog.Core.UseCases;
-using Explorer.BuildingBlocks.Core.UseCases;
+﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Encounters.API.Dtos;
-using Explorer.Encounters.API.Public;
-using Explorer.Tours.API.Dtos;
-using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Administrator
 {
@@ -16,6 +9,7 @@ namespace Explorer.API.Controllers.Administrator
     [Route("api/administrator/encounter")]
     public class EncounterController : BaseApiController
     {
+        /*
         private readonly IEncounterService _encounterService;
         public EncounterController(IEncounterService encounterService)
         {
@@ -66,6 +60,6 @@ namespace Explorer.API.Controllers.Administrator
         }
 
         
-
+        */
     }
 }

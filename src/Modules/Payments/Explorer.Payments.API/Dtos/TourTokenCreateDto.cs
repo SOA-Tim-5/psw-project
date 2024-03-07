@@ -2,6 +2,6 @@
 
 public class TourTokenCreateDto
 {
-    public long TourId { get; set; }
-    public long TouristId { get; set; }
+    public string TourId { get; set; }
+    public string TouristId { get; set; }
 }

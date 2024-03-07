@@ -8,6 +8,7 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourist/facility/")]
     public class FacilityController: BaseApiController
     {
+        /*
         private readonly IFacilityService _facilityService;
 
         public FacilityController(IFacilityService facilityService)
@@ -21,6 +22,6 @@ namespace Explorer.API.Controllers.Tourist
             var result = _facilityService.GetPublic();
             return CreateResponse(result);
         }
-        
+     */   
     }
 }

@@ -1,15 +1,11 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.TourAuthoring;
-using Explorer.Tours.Core.UseCases.TourAuthoring;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Author.TourAuthoring;
 
 [Route("api/tour-authoring")]
 public class KeyPointController : BaseApiController
 {
+    /*
     private readonly IKeyPointService _keyPointService;
 
     public KeyPointController(IKeyPointService keyPointService)
@@ -50,4 +46,5 @@ public class KeyPointController : BaseApiController
         var result = _keyPointService.GetPaged(page, pageSize);
         return CreateResponse(result);
     }
+    */
 }

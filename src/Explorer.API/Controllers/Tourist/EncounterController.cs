@@ -1,8 +1,4 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Encounters.API.Dtos;
-using Explorer.Encounters.API.Public;
-using Explorer.Tours.API.Dtos.TouristPosition;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Tourist
@@ -11,6 +7,7 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourist/encounter")]
     public class EncounterController : BaseApiController
     {
+        /*
         private readonly IEncounterService _encounterService;
         private readonly ITouristProgressService _progressService;
         public EncounterController(IEncounterService encounterService, ITouristProgressService progressService)
@@ -108,5 +105,6 @@ namespace Explorer.API.Controllers.Tourist
 
             return CreateResponse(result);
         }
+        */
     }
 }

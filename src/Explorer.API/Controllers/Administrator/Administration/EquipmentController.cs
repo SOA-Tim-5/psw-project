@@ -1,7 +1,4 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.Administration;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Administrator.Administration
@@ -9,7 +6,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
     [Authorize(Policy = "administratorPolicy")]
     [Route("api/administration/equipment")]
     public class EquipmentController : BaseApiController
-    {
+    {/*
         private readonly IEquipmentService _equipmentService;
 
         public EquipmentController(IEquipmentService equipmentService)
@@ -44,5 +41,6 @@ namespace Explorer.API.Controllers.Administrator.Administration
             var result = _equipmentService.Delete(id);
             return CreateResponse(result);
         }
+        */
     }
 }

@@ -1,12 +1,5 @@
-﻿using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
-using Explorer.Tours.Core.UseCases;
-using FluentResults;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.HttpResults;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -14,6 +7,7 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourist/subscriber")]
     public class SubscriberController : BaseApiController
     {
+        /*
         private readonly ISubscriberService _subscriberService;
         public SubscriberController(ISubscriberService subscriberService)
         {
@@ -46,5 +40,6 @@ namespace Explorer.API.Controllers.Tourist
             var result = _subscriberService.GetByUserId(userId);
             return CreateResponse(result);
         }
+        */
     }
 }

@@ -1,7 +1,4 @@
-﻿using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.TourAuthoring;
-using Explorer.Tours.Core.Domain.Tours;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Tourist.MarketPlace
@@ -9,6 +6,7 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
     [Route("api/market-place")]
     public class KeyPointController : BaseApiController
     {
+        /*
         private readonly IKeyPointService _keyPointService;
 
         public KeyPointController(IKeyPointService keyPointService)
@@ -38,5 +36,6 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
             var result = _keyPointService.GetFirstByTourId(tourId);
             return CreateResponse(result);
         }
+        */
     }
 }

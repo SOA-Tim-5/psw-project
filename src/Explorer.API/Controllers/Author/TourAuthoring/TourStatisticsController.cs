@@ -8,7 +8,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
     [Route("api/tour/statistics")]
     public class TourStatisticsController : BaseApiController
     {
-
+        /*
         private readonly Explorer.Tours.API.Public.ITourStatisticsService _tourExecutionStatisticsService;
         private readonly Explorer.Payments.API.Public.ITourStatisticsService _tourPurchasingStatisticsService;
         private readonly Explorer.Encounters.API.Public.ITourStatisticsService _tourEncounterStatisticsService;
@@ -114,6 +114,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
         {
             return _tourEncounterStatisticsService.GetKeyPointEncounterCompletionPercentage(tourId);
         }
+        */
     }
 }
 
