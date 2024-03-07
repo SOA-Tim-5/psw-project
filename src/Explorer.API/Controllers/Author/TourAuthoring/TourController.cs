@@ -95,7 +95,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
 
         */
             //KREIRANJE TURE 1. FUNKCIONALNOST
-            [Authorize(Roles = "author, tourist")]
+        [Authorize(Roles = "author, tourist")]
         [HttpPost]
         public async Task<ActionResult<TourResponseDto>> Create([FromBody] TourCreateDto tour)
         {
@@ -109,29 +109,6 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return CreateResponse(jsonResponse.ToResult());
         }
-
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
         [Authorize(Roles = "author, tourist")]
         [HttpPut("{id:int}")]
