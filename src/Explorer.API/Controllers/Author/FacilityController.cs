@@ -29,13 +29,41 @@ namespace Explorer.API.Controllers.Author
         }
 
         [HttpGet("authorsFacilities")]
-        public ActionResult<PagedResult<FacilityResponseDto>> GetByAuthorId([FromQuery] int page, [FromQuery] int pageSize)
+        /*public ActionResult<PagedResult<FacilityResponseDto>> GetByAuthorId([FromQuery] int page, [FromQuery] int pageSize)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var loggedInAuthorId = int.Parse(identity.FindFirst("id").Value);
             var result = _facilityService.GetPagedByAuthorId(page, pageSize, loggedInAuthorId);
             return CreateResponse(result);
+        }*/
+
+        public async Task<ActionResult<List<TourResponseDto>>> GetByAuthorId([FromQuery] int page, [FromQuery] int pageSize)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var id = long.Parse(identity.FindFirst("id").Value);
+
+            // Pravljenje URL-a za pozivanje GetByAuthorId metode
+            string url = $"http://localhost:88/facility/get/{id}?page={page}&pageSize={pageSize}";
+
+            // Slanje GET zahteva
+            using HttpResponseMessage response = await client.GetAsync(url);
+
+            // Provera status koda odgovora
+            if (response.IsSuccessStatusCode)
+            {
+                // Čitanje odgovora kao string
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+
+                // Kreiranje odgovora
+                return CreateResponse(jsonResponse.ToResult());
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode);
+            }
         }
+
+
 
         /*[HttpPost]
         public ActionResult<FacilityResponseDto> Create([FromBody] FacilityCreateDto facility)
@@ -51,11 +79,14 @@ namespace Explorer.API.Controllers.Author
             return CreateResponse(result);
         }*/
 
-        
+
         [HttpPost]
         public async Task<ActionResult<FacilityResponseDto>> Create([FromBody] FacilityCreateDto facility)
         {
             //var result = _keyPointService.Create(keyPoint);
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var id = long.Parse(identity.FindFirst("id").Value);
+            facility.AuthorId = id;
             using StringContent jsonContent = new(JsonSerializer.Serialize(facility), Encoding.UTF8, "application/json");
             using HttpResponseMessage response = await client.PostAsync("http://localhost:88/facility/create", jsonContent);
             var jsonResponse = await response.Content.ReadAsStringAsync();

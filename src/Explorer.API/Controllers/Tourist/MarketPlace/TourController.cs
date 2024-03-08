@@ -2,6 +2,7 @@
 using Explorer.Payments.API.Public;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public;
+using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -13,7 +14,7 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
     {
         private readonly ITourService _tourService;
         private readonly IShoppingCartService _shoppingCartService;
-
+        static readonly HttpClient client = new HttpClient();
         public TourController(ITourService service, IShoppingCartService shoppingCartService)
         {
             _tourService = service;
@@ -29,10 +30,35 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
         }
 
         [HttpGet("tours/{tourId:long}")]
-        public ActionResult<PagedResult<TourResponseDto>> GetById(long tourId)
+        /*public ActionResult<PagedResult<TourResponseDto>> GetById(long tourId)
         {
             var result = _tourService.GetById(tourId);
             return CreateResponse(result);
+        }*/
+        public async Task<ActionResult<PagedResult<TourResponseDto>>> GetById(long tourId)
+        {
+            var identity = HttpContext.User.Identity as ClaimsIdentity;
+            var id = long.Parse(identity.FindFirst("id").Value);
+
+            // Pravljenje URL-a za pozivanje GetByAuthorId metode
+            string url = $"http://localhost:88/tours/getTour/{tourId}";
+
+            // Slanje GET zahteva
+            using HttpResponseMessage response = await client.GetAsync(url);
+
+            // Provera status koda odgovora
+            if (response.IsSuccessStatusCode)
+            {
+                // Čitanje odgovora kao string
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+
+                // Kreiranje odgovora
+                return CreateResponse(jsonResponse.ToResult());
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode);
+            }
         }
 
         [HttpGet("tours/can-be-rated/{tourId:long}")]
