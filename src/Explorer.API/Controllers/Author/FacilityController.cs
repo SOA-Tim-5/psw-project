@@ -37,7 +37,7 @@ namespace Explorer.API.Controllers.Author
             return CreateResponse(result);
         }*/
 
-        public async Task<ActionResult<List<TourResponseDto>>> GetByAuthorId([FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<ActionResult<List<FacilityResponseDto>>> GetByAuthorId([FromQuery] int page, [FromQuery] int pageSize)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
             var id = long.Parse(identity.FindFirst("id").Value);
