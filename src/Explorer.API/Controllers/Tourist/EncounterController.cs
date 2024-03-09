@@ -1,6 +1,6 @@
-﻿using System.Diagnostics.Metrics;
-using System.Text.Json;
 using System.Text;
+using System.Text.Json;
+using Explorer.API.EncountersDtos;
 using Explorer.Encounters.API.Dtos;
 using Explorer.Tours.API.Dtos.TouristPosition;
 using FluentResults;
@@ -103,15 +103,23 @@ namespace Explorer.API.Controllers.Tourist
 
             return CreateResponse(result);
         }
-
+        */
         [HttpGet("progress")]
-        public ActionResult<TouristProgressResponseDto> GetProgress()
+        public async Task<ActionResult<TouristProgressDto>> GetProgress()
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            var result = _progressService.GetByUserId(userId);
 
-            return CreateResponse(result);
+            string url = $"http://localhost:81/encounters/touristProgress/{userId}?";
+
+            using HttpResponseMessage touristProgressResponse = await client.GetAsync(url);
+           
+            var touristProgress = await touristProgressResponse.Content.ReadAsStringAsync();
+            var touristProgressModel = JsonSerializer.Deserialize<TouristProgressDto>(touristProgress);
+
+
+            return CreateResponse(touristProgressModel.ToResult());
+            
         }
-        */
+        
     }
 }
