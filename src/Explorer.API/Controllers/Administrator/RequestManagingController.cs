@@ -51,10 +51,28 @@ namespace Explorer.API.Controllers.Administrator
             return CreateResponse(result);
         }
         [HttpGet("facility")]
-        public ActionResult<PagedResult<PublicFacilityRequestResponseDto>> GetAllFacilityRequest([FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<ActionResult<PagedResult<PublicFacilityRequestResponseDto>>> GetAllFacilityRequest([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _publicFacilityRequestService.GetPagedWithName(page, pageSize);
-            return CreateResponse(result);
+            /*var result = _publicFacilityRequestService.GetPagedWithName(page, pageSize);
+            return CreateResponse(result);*/
+            string url = $"http://localhost:88/publicFacilityRequest/get/?page={page}&pageSize={pageSize}";
+
+            // Slanje GET zahteva
+            using HttpResponseMessage response = await client.GetAsync(url);
+
+            // Provera status koda odgovora
+            if (response.IsSuccessStatusCode)
+            {
+                // Čitanje odgovora kao string
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+
+                // Kreiranje odgovora
+                return CreateResponse(jsonResponse.ToResult());
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode);
+            }
         }
         [HttpPut("facility/{id:long}")]
         public ActionResult<PublicFacilityRequestResponseDto> UpdateFacility([FromBody] PublicFacilityRequestUpdateDto response)

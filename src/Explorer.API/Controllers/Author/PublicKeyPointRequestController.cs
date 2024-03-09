@@ -14,7 +14,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Author
 {
-    [Authorize(Policy = "authorPolicy, administratorPolicy")]
+    [Authorize(Policy = "authorPolicy")]
     [Route("api/publicKeyPointRequest")]
     public class PublicKeyPointRequestController:BaseApiController
     {
