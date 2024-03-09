@@ -1,11 +1,4 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Stakeholders.API.Dtos.TouristEquipment;
-using Explorer.Stakeholders.API.Public;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Dtos.TouristEquipment;
-using Explorer.Tours.API.Public;
-using Explorer.Tours.API.Public.Administration;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Tourist
@@ -14,6 +7,7 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourist/equipment")]
     public class TouristEquipmentController : BaseApiController
     {
+        /*
         private readonly ITouristEquipmentService _touristEquipmentService;
         private readonly IEquipmentService _equipmentService;
         public TouristEquipmentController(ITouristEquipmentService touristEquipmentService, IEquipmentService equipmentService)
@@ -77,5 +71,6 @@ namespace Explorer.API.Controllers.Tourist
         {
             return ((GetAllTouristEquipment(0, 0).Result as OkObjectResult).Value as PagedResult<TouristEquipmentResponseDto>).Results.Find(te => te.TouristId == touristId);
         }
+        */
     }
 }

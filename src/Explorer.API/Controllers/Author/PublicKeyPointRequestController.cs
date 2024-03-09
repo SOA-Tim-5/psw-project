@@ -6,7 +6,6 @@ using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public;
-using Explorer.Tours.Core.Domain;
 using Explorer.Tours.Core.UseCases;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
@@ -18,13 +17,12 @@ namespace Explorer.API.Controllers.Author
     [Route("api/publicKeyPointRequest")]
     public class PublicKeyPointRequestController:BaseApiController
     {
-        private readonly IPublicKeyPointRequestService _requestService;
+        
         private readonly IUserService _userService;
         static readonly HttpClient client = new HttpClient();
 
-        public PublicKeyPointRequestController(IPublicKeyPointRequestService requestService, IUserService userService)
+        public PublicKeyPointRequestController(IUserService userService)
         {
-            _requestService = requestService;
             _userService = userService;
         }
         [HttpPost]
@@ -44,5 +42,6 @@ namespace Explorer.API.Controllers.Author
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return CreateResponse(jsonResponse.ToResult());
         }
+        
     }
 }

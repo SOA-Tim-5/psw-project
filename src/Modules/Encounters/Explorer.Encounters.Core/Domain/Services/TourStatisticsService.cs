@@ -1,24 +1,24 @@
 ﻿using Explorer.Encounters.API.Public;
-using Explorer.Tours.API.Internal;
 
 namespace Explorer.Encounters.Core.Domain.Services;
 
 public class TourStatisticsService : API.Public.ITourStatisticsService
 {
     private IEncounterService _encounterService;
-    private IInternalTourExecutionSessionService _tourExecutionSessionService;
-    private IInternalTourService _tourService;
+    //private IInternalTourExecutionSessionService _tourExecutionSessionService;
+    //private IInternalTourService _tourService;
 
-    public TourStatisticsService(IEncounterService encounterService, IInternalTourExecutionSessionService tourExecutionSessionService, IInternalTourService tourService)
+    public TourStatisticsService(IEncounterService encounterService)
     {
         _encounterService = encounterService;
-        _tourExecutionSessionService = tourExecutionSessionService;
-        _tourService = tourService;
+        //_tourExecutionSessionService = tourExecutionSessionService;
+        //_tourService = tourService;
     }
 
     public Dictionary<long, double> GetKeyPointEncounterCompletionPercentage(long tourId)
     {
-
+        /*
+        
         var keyPointIds = _tourService.GetKeyPointIds(tourId);
         List<long> keyPointIdsSorted = new();
 
@@ -62,7 +62,7 @@ public class TourStatisticsService : API.Public.ITourStatisticsService
 
             return kpEncounterCompletionNumber;
         }
-
+        */
         return null;
     }
 }

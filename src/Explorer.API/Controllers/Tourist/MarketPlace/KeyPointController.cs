@@ -1,7 +1,5 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.TourAuthoring;
-using Explorer.Tours.Core.Domain.Tours;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,11 +10,9 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
     [Route("api/market-place")]
     public class KeyPointController : BaseApiController
     {
-        private readonly IKeyPointService _keyPointService;
         static readonly HttpClient client = new HttpClient();
-        public KeyPointController(IKeyPointService keyPointService)
+        public KeyPointController()
         {
-            _keyPointService = keyPointService;
         }
 
         [Authorize(Roles = "author, tourist")]
@@ -55,16 +51,18 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
         [HttpGet("{campaignId:long}/key-points")]
         public ActionResult<KeyPointResponseDto> GetCampaignKeyPoints(long campaignId)
         {
-            var result = _keyPointService.GetByCampaignId(campaignId);
-            return CreateResponse(result);
+            //var result = _keyPointService.GetByCampaignId(campaignId);
+            //return CreateResponse(result);
+            return null;
         }
 
         [Authorize(Roles = "author, tourist")]
         [HttpGet("tours/{tourId:long}/firts-key-point")]
         public ActionResult<KeyPointResponseDto> GetToursFirstKeyPoint(long tourId)
         {
-            var result = _keyPointService.GetFirstByTourId(tourId);
-            return CreateResponse(result);
+            //var result = _keyPointService.GetFirstByTourId(tourId);
+            //return CreateResponse(result);
+            return null;
         }
     }
 }

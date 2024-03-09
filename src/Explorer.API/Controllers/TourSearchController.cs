@@ -1,7 +1,5 @@
 ﻿using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Payments.API.Public;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,6 +9,7 @@ namespace Explorer.API.Controllers
     [Route("api/tourist/tour")]
     public class TourSearchController : BaseApiController
     {
+        /*
         private readonly ITourSearchService _tourSearchService;
         private readonly ITourSaleService? _tourSaleService;
 
@@ -54,5 +53,6 @@ namespace Explorer.API.Controllers
             var result = _tourSearchService.Search(tourSearchFilterDto, sortBy == null ? SortOption.NoSort : (SortOption)sortBy, false, getDiscount);
             return CreateResponse(result);
         }
+        */
     }
 }

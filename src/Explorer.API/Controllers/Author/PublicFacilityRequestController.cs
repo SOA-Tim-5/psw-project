@@ -1,7 +1,6 @@
-﻿using Explorer.Stakeholders.API.Public;
+using Explorer.Stakeholders.API.Public;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public;
-using Explorer.Tours.Core.Domain;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,13 +15,12 @@ namespace Explorer.API.Controllers.Author
     [Route("api/publicFacilityRequest")]
     public class PublicFacilityRequestController : BaseApiController
     {
-        private readonly IPublicFacilityRequestService _requestService;
+        
         private readonly IUserService _userService;
         static readonly HttpClient client = new HttpClient();
 
-        public PublicFacilityRequestController(IPublicFacilityRequestService requestService, IUserService userService)
+        public PublicFacilityRequestController(IUserService userService)
         {
-            _requestService = requestService;
             _userService = userService;
         }
         [HttpPost]
@@ -42,5 +40,6 @@ namespace Explorer.API.Controllers.Author
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return CreateResponse(jsonResponse.ToResult());
         }
+        
     }
 }

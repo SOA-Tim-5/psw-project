@@ -1,23 +1,21 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
+﻿using System.Security.Claims;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Payments.API.Public;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Tourist.MarketPlace
 {
     [Route("api/market-place")]
     public class TourController : BaseApiController
     {
-        private readonly ITourService _tourService;
         private readonly IShoppingCartService _shoppingCartService;
         static readonly HttpClient client = new HttpClient();
-        public TourController(ITourService service, IShoppingCartService shoppingCartService)
+        public TourController(IShoppingCartService shoppingCartService)
         {
-            _tourService = service;
             _shoppingCartService = shoppingCartService;
         }
 
@@ -25,8 +23,9 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
         [HttpGet("tours/published")]
         public ActionResult<PagedResult<LimitedTourViewResponseDto>> GetPublishedTours([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _tourService.GetPublishedLimitedView(page, pageSize);
-            return CreateResponse(result);
+            //var result = _tourService.GetPublishedLimitedView(page, pageSize);
+            //return CreateResponse(result);
+            return null;
         }
 
         [HttpGet("tours/{tourId:long}")]
@@ -64,8 +63,9 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
         [HttpGet("tours/can-be-rated/{tourId:long}")]
         public bool CanTourBeRated(long tourId)
         {
-            long userId = extractUserIdFromHttpContext();
-            return _tourService.CanTourBeRated(tourId, userId).Value;
+            //long userId = extractUserIdFromHttpContext();
+            //return _tourService.CanTourBeRated(tourId, userId).Value;
+            return true;
         }
 
         private long extractUserIdFromHttpContext()
@@ -78,55 +78,61 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
         [HttpGet("tours/inCart/{id:long}")]
         public ActionResult<PagedResult<LimitedTourViewResponseDto>> GetToursInCart([FromQuery] int page, [FromQuery] int pageSize, long id)
         {
-            var cart = _shoppingCartService.GetByTouristId(id);
-            if (cart.Value == null)
-            {
-                return NotFound();
-            }
-            var tourIds = cart.Value.OrderItems.Select(order => order.TourId).ToList();
-            var result = _tourService.GetLimitedInfoTours(page, pageSize, tourIds);
-            return CreateResponse(result);
+            //var cart = _shoppingCartService.GetByTouristId(id);
+            //if (cart.Value == null)
+            //{
+            //    return NotFound();
+            //}
+            //var tourIds = cart.Value.OrderItems.Select(order => order.TourId).ToList();
+            //var result = _tourService.GetLimitedInfoTours(page, pageSize, tourIds);
+            //return CreateResponse(result);
+            return null;
         }
-        /*[HttpGet("tours/inCart/{id:long}")]
-        public ActionResult<PagedResult<LimitedTourViewResponseDto>> GetToursInCart([FromQuery] int page, [FromQuery] int pageSize, long id)
-        {
-            var cart = _shoppingCartService.GetByTouristId(id);
-            if (cart == null)
-            {
-                return NotFound();
-            }
-            var tourIds = cart.Value.OrderItems.Select(order => order.TourId).ToList();
-            var result = _tourService.GetLimitedInfoTours(page, pageSize, tourIds);
-            return CreateResponse(result);
-        }*/
+        //[HttpGet("tours/inCart/{id:long}")]
+        //public ActionResult<PagedResult<LimitedTourViewResponseDto>> GetToursInCart([FromQuery] int page, [FromQuery] int pageSize, long id)
+        //{
+        //    //var cart = _shoppingCartService.GetByTouristId(id);
+        //    //if (cart == null)
+        //    //{
+        //    //    return NotFound();
+        //    //}
+        //    //var tourIds = cart.Value.OrderItems.Select(order => order.TourId).ToList();
+        //    //var result = _tourService.GetLimitedInfoTours(page, pageSize, tourIds);
+        //    //return CreateResponse(result);
+        //    return null;
+        //}
 
         [HttpGet("tours/adventure")]
         public ActionResult<PagedResult<TourResponseDto>> GetPopularAdventureTours([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _tourService.GetAdventureTours(page, pageSize);
-            return CreateResponse(result);
+            //var result = _tourService.GetAdventureTours(page, pageSize);
+            //return CreateResponse(result);
+            return null;
         }
 
         [HttpGet("tours/family")]
         public ActionResult<PagedResult<TourResponseDto>> GetPopularFamilyTours([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _tourService.GetFamilyTours(page, pageSize);
-            return CreateResponse(result);
+            //var result = _tourService.GetFamilyTours(page, pageSize);
+            //return CreateResponse(result);
+            return null;
         }
 
         [HttpGet("tours/cruise")]
         public ActionResult<PagedResult<TourResponseDto>> GetPopularCruiseTours([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _tourService.GetCruiseTours(page, pageSize);
-            return CreateResponse(result);
+            //var result = _tourService.GetCruiseTours(page, pageSize);
+            //return CreateResponse(result);
+            return null;
         }
 
         [HttpGet("tours/cultural")]
         public ActionResult<PagedResult<TourResponseDto>> GetPopularCulturalTours([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _tourService.GetCulturalTours(page, pageSize);
-            return CreateResponse(result);
+            //var result = _tourService.GetCulturalTours(page, pageSize);
+            //return CreateResponse(result);
+            return null;
         }
-
+        
     }
 }

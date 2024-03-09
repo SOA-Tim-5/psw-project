@@ -1,9 +1,10 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Encounters.API.Dtos;
-using Explorer.Encounters.API.Public;
-using Explorer.Tours.API.Dtos.TouristPosition;
+﻿using Explorer.API.EncountersDtos;
+using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Diagnostics.Metrics;
+using System.Text.Json;
+using System.Text;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -11,14 +12,12 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourist/encounter")]
     public class EncounterController : BaseApiController
     {
-        private readonly IEncounterService _encounterService;
-        private readonly ITouristProgressService _progressService;
-        public EncounterController(IEncounterService encounterService, ITouristProgressService progressService)
-        {
-            _encounterService = encounterService;
-            _progressService = progressService;
-        }
+        static readonly HttpClient client = new HttpClient();
 
+        public EncounterController()
+        {
+        }
+        /*
         [HttpGet("{encounterId:long}/instance")]
         public ActionResult<EncounterResponseDto> GetInstance(long encounterId)
         {
@@ -99,14 +98,23 @@ namespace Explorer.API.Controllers.Tourist
 
             return CreateResponse(result);
         }
-
+        */
         [HttpGet("progress")]
-        public ActionResult<TouristProgressResponseDto> GetProgress()
+        public async Task<ActionResult<TouristProgressDto>> GetProgress()
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            var result = _progressService.GetByUserId(userId);
 
-            return CreateResponse(result);
+            string url = $"http://localhost:81/encounters/touristProgress/{userId}?";
+
+            using HttpResponseMessage touristProgressResponse = await client.GetAsync(url);
+           
+            var touristProgress = await touristProgressResponse.Content.ReadAsStringAsync();
+            var touristProgressModel = JsonSerializer.Deserialize<TouristProgressDto>(touristProgress);
+
+
+            return CreateResponse(touristProgressModel.ToResult());
+            
         }
+        
     }
 }

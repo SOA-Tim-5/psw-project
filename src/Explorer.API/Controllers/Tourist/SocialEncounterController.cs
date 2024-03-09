@@ -1,8 +1,10 @@
-﻿using Explorer.Encounters.API.Dtos;
-using Explorer.Encounters.API.Public;
+﻿using Explorer.API.EncountersDtos;
+using Explorer.Encounters.API.Dtos;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
+using System.Text;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -10,25 +12,37 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourist/social-encounter")]
     public class SocialEncounterController : BaseApiController
     {
-        private readonly IEncounterService _encounterService;
-        private readonly ITouristProgressService _touristProgressService;
-        public SocialEncounterController(IEncounterService encounterService, ITouristProgressService touristProgressService)
+
+        static readonly HttpClient client = new HttpClient();
+
+        public SocialEncounterController()
         {
-            _encounterService = encounterService;
-            _touristProgressService = touristProgressService;
+           
         }
 
         [HttpPost("create")]
-        public ActionResult<EncounterResponseDto> Create([FromBody] SocialEncounterCreateDto encounter)
+        public async Task<ActionResult<EncounterResponseDto>> Create([FromBody] SocialEncounterCreateDto encounter)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            var progress = _touristProgressService.GetByUserId(userId);
-            if (progress.Value.Level >= 10)
+
+            string url = $"http://localhost:81/encounters/touristProgress/{userId}?";
+
+            using HttpResponseMessage touristProgressResponse = await client.GetAsync(url);
+            if (touristProgressResponse.IsSuccessStatusCode)
             {
-                var result = _encounterService.CreateSocialEncounter(encounter);
-                return CreateResponse(result);
+                var touristProgress = await touristProgressResponse.Content.ReadAsStringAsync();
+                var touristProgressModel = JsonSerializer.Deserialize<TouristProgressDto>(touristProgress);
+                if (touristProgressModel.Xp >= 10)
+                {
+                    using StringContent jsonContent = new(JsonSerializer.Serialize(encounter), Encoding.UTF8, "application/json");
+                    using HttpResponseMessage response = await client.PostAsync("http://localhost:81/encounters/social", jsonContent);
+                    var jsonResponse = await response.Content.ReadAsStringAsync();
+                    return CreateResponse(jsonResponse.ToResult());
+                }
+
             }
-            return CreateResponse(Result.Fail("Tourist level is not high enough."));
+            return CreateResponse(Result.Fail("Tourist level is not high enough.").ToResult());
         }
+        
     }
 }

@@ -1,6 +1,4 @@
-﻿using Explorer.Tours.API.Public;
-using Explorer.Tours.API.Dtos;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 using System.Text.Json;
@@ -8,6 +6,7 @@ using System.Text;
 using FluentResults;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Tours.API.Dtos;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -15,11 +14,9 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourist/preferences")]
     public class PreferenceController : BaseApiController
     {
-        private readonly IPreferenceService _tourPreferencesService;
         static readonly HttpClient client = new HttpClient();
-        public PreferenceController(IPreferenceService tourPreferencesService)
+        public PreferenceController()
         {
-            _tourPreferencesService = tourPreferencesService;
         }
 
         [HttpGet]
@@ -78,19 +75,20 @@ namespace Explorer.API.Controllers.Tourist
            return CreateResponse(jsonResponse.ToResult());
        }
 
-        [HttpDelete("{id:int}")]
-        public ActionResult Delete(int id)
-        {
-            var result = _tourPreferencesService.Delete(id);
-            return CreateResponse(result);
-        }
+        //[HttpDelete("{id:int}")]
+        //public ActionResult Delete(int id)
+        //{
+        //    var result = _tourPreferencesService.Delete(id);
+        //    return CreateResponse(result);
+        //}
 
-        [HttpPut]
-        public ActionResult<PreferenceResponseDto> Update([FromBody] PreferenceUpdateDto preference)
-        {
-            preference.UserId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            var result = _tourPreferencesService.Update(preference);
-            return CreateResponse(result);
-        }
+        //[HttpPut]
+        //public ActionResult<PreferenceResponseDto> Update([FromBody] PreferenceUpdateDto preference)
+        //{
+        //    preference.UserId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
+        //    var result = _tourPreferencesService.Update(preference);
+        //    return CreateResponse(result);
+        //}
+        
     }
 }

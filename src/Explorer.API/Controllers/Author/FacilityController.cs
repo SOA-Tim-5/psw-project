@@ -1,4 +1,4 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public;
 using FluentResults;
@@ -14,18 +14,18 @@ namespace Explorer.API.Controllers.Author
     [Route("api/facility")]
     public class FacilityController : BaseApiController
     {
-        private readonly IFacilityService _facilityService;
+        
         static readonly HttpClient client = new HttpClient();
-        public FacilityController(IFacilityService facilityService)
+        public FacilityController()
         {
-            _facilityService = facilityService;
         }
 
         [HttpGet]
         public ActionResult<PagedResult<FacilityResponseDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _facilityService.GetPaged(page, pageSize);
-            return CreateResponse(result);
+            //var result = _facilityService.GetPaged(page, pageSize);
+            //return CreateResponse(result);
+            return null;
         }
 
         [HttpGet("authorsFacilities")]
@@ -97,21 +97,24 @@ namespace Explorer.API.Controllers.Author
         [HttpPut("{id:int}")]
         public ActionResult<FacilityResponseDto> Update([FromBody] FacilityUpdateDto facility)
         {
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null && identity.IsAuthenticated)
-            {
-                facility.AuthorId = int.Parse(identity.FindFirst("id").Value);
-            }
+            //var identity = HttpContext.User.Identity as ClaimsIdentity;
+            //if (identity != null && identity.IsAuthenticated)
+            //{
+            //    facility.AuthorId = int.Parse(identity.FindFirst("id").Value);
+            //}
 
-            var result = _facilityService.Update(facility);
-            return CreateResponse(result);
+            //var result = _facilityService.Update(facility);
+            //return CreateResponse(result);
+            return null;
         }
 
         [HttpDelete("{id:int}")]
         public ActionResult Delete(int id)
         {
-            var result = _facilityService.Delete(id);
-            return CreateResponse(result);
+            //var result = _facilityService.Delete(id);
+            //return CreateResponse(result);
+            return null;
         }
+        
     }
 }

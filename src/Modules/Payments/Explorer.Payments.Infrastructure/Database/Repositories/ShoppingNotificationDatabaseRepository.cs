@@ -2,15 +2,7 @@
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Explorer.Payments.Core.Domain;
 using Explorer.Payments.Core.Domain.RepositoryInterfaces;
-using Explorer.Payments.Core.Domain.ShoppingCarts;
-using Explorer.Tours.Core.Domain;
-using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Explorer.Payments.Infrastructure.Database.Repositories
 {

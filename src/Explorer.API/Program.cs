@@ -1,10 +1,9 @@
 using Explorer.API.Startup;
-using Explorer.Tours.Core.UseCases;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddControllers();
-builder.Services.AddHostedService<MailingListScheduler>();
+//builder.Services.AddHostedService<MailingListScheduler>();
 builder.Services.ConfigureSwagger(builder.Configuration);
 const string corsPolicy = "_corsPolicy";
 builder.Services.ConfigureCors(corsPolicy);

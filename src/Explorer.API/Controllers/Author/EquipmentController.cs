@@ -1,7 +1,4 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public.Administration;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Author
@@ -10,6 +7,7 @@ namespace Explorer.API.Controllers.Author
     [Route("api/author/equipment")]
     public class EquipmentController : BaseApiController
     {
+        /*
         private readonly IEquipmentService _equipmentService;
 
         public EquipmentController(IEquipmentService equipmentService)
@@ -23,5 +21,6 @@ namespace Explorer.API.Controllers.Author
             var result = _equipmentService.GetPaged(page, pageSize);
             return CreateResponse(result);
         }
+        */
     }
 }

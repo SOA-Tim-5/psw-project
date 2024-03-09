@@ -1,17 +1,16 @@
 ﻿using System.Security.Claims;
 using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 
 namespace Explorer.API.Controllers.Tourist
 {
-    
+
     [Route("api/review")]
     public class ReviewController : BaseApiController
     {
+        /*
         private readonly IReviewService _reviewService;
 
         public ReviewController(IReviewService reviewService)
@@ -69,5 +68,6 @@ namespace Explorer.API.Controllers.Tourist
             var result = _reviewService.Delete(id);
             return CreateResponse(result);
         }
+        */
     }
 }

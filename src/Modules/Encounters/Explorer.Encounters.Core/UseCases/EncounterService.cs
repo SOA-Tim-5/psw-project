@@ -7,11 +7,7 @@ using Explorer.Encounters.Core.Domain;
 using Explorer.Encounters.Core.Domain.Encounter;
 using Explorer.Encounters.Core.Domain.RepositoryInterfaces;
 using Explorer.Stakeholders.API.Internal;
-using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Internal;
 using FluentResults;
-using System.Globalization;
-using System.Xml.Linq;
 using EncounterStatus = Explorer.Encounters.Core.Domain.Encounter.EncounterStatus;
 
 namespace Explorer.Encounters.Core.UseCases
@@ -23,13 +19,13 @@ namespace Explorer.Encounters.Core.UseCases
         private readonly ITouristProgressRepository _touristProgressRepository;
         private readonly ICrudRepository<TouristProgress> _touristProgressCrudRepository;
         private readonly IInternalUserService _internalUserService;
-        private readonly IInternalKeyPointService _keypointService;
+        //private readonly IInternalKeyPointService _keypointService;
         private readonly IKeyPointEncounterRepository _keypointEncounterRepository;
         private readonly IMapper _mapper;
         private readonly IMiscEncounterRepository _miscEncounterRepository;
 
 
-        public EncounterService(ICrudRepository<Encounter> repository, IEncounterRepository encounterRepository, IHiddenLocationEncounterRepository hiddenLocationEncounterRepository, ITouristProgressRepository touristProgressRepository, ICrudRepository<TouristProgress> touristProgressCrudRepository, IInternalUserService userService, IMiscEncounterRepository miscEncounterRepository, IMapper mapper, IInternalKeyPointService keypointService, IKeyPointEncounterRepository keypointEncounterRepository) : base(repository, mapper)
+        public EncounterService(ICrudRepository<Encounter> repository, IEncounterRepository encounterRepository, IHiddenLocationEncounterRepository hiddenLocationEncounterRepository, ITouristProgressRepository touristProgressRepository, ICrudRepository<TouristProgress> touristProgressCrudRepository, IInternalUserService userService, IMiscEncounterRepository miscEncounterRepository, IMapper mapper, IKeyPointEncounterRepository keypointEncounterRepository) : base(repository, mapper)
         {
             _encounterRepository = encounterRepository;
             _hiddenLocationEncounterRepository = hiddenLocationEncounterRepository;
@@ -37,7 +33,7 @@ namespace Explorer.Encounters.Core.UseCases
             _touristProgressCrudRepository = touristProgressCrudRepository;
             _internalUserService = userService;
             _mapper = mapper;
-            _keypointService = keypointService;
+           // _keypointService = keypointService;
             _keypointEncounterRepository = keypointEncounterRepository;
             _miscEncounterRepository = miscEncounterRepository;
         }
@@ -161,6 +157,7 @@ namespace Explorer.Encounters.Core.UseCases
         {
             try
             {
+                /*
                 if (!_keypointService.IsToursAuthor(userId, keyPointEncounter.KeyPointId)) return Result.Fail(FailureCode.Forbidden).WithError("Unauthorized");
                 if (_keypointService.CheckEncounterExists(keyPointEncounter.KeyPointId)) return Result.Fail(FailureCode.Forbidden).WithError("Encounter already exists on this key point");
 
@@ -171,6 +168,7 @@ namespace Explorer.Encounters.Core.UseCases
 
                 _keypointService.AddEncounter(keyPointEncounter.KeyPointId, keyPointEncounter.IsRequired);
 
+                */
                 return Result.Ok();
             }
             catch (ArgumentException e)
