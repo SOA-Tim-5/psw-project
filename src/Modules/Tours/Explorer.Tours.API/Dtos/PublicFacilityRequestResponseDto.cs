@@ -17,5 +17,7 @@ namespace Explorer.Tours.API.Dtos
         public string AuthorName { get; set; }
         public string? FacilityName { get; set; }
         public UserResponseDto Author { get; set; }
+
+        public string? AuthorPicture { get; set; }
     }
 }
