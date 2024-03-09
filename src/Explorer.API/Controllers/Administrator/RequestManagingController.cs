@@ -2,6 +2,7 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public;
+using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,16 +14,35 @@ namespace Explorer.API.Controllers.Administrator
     {
         private readonly IPublicKeyPointRequestService _publicKeyPointRequestService;
         private readonly IPublicFacilityRequestService _publicFacilityRequestService;
+        static readonly HttpClient client = new HttpClient();
         public RequestManagingController(IPublicKeyPointRequestService publicKeyPointRequestService, IPublicFacilityRequestService publicFacilityRequestService)
         {
             _publicKeyPointRequestService = publicKeyPointRequestService;
             _publicFacilityRequestService = publicFacilityRequestService;
         }
         [HttpGet]
-        public ActionResult<PagedResult<PublicKeyPointRequestResponseDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        public async  Task<ActionResult<PagedResult<PublicKeyPointRequestResponseDto>>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _publicKeyPointRequestService.GetPagedWithName(page, pageSize);
-            return CreateResponse(result);
+            /*var result = _publicKeyPointRequestService.GetPagedWithName(page, pageSize);
+            return CreateResponse(result);*/
+            string url = $"http://localhost:88/publicKeyPointRequest/get/?page={page}&pageSize={pageSize}";
+
+            // Slanje GET zahteva
+            using HttpResponseMessage response = await client.GetAsync(url);
+
+            // Provera status koda odgovora
+            if (response.IsSuccessStatusCode)
+            {
+                // Čitanje odgovora kao string
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+
+                // Kreiranje odgovora
+                return CreateResponse(jsonResponse.ToResult());
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode);
+            }
         }
         [HttpPut("{id:long}")]
         public ActionResult<PublicKeyPointRequestResponseDto> Update([FromBody] PublicKeyPointRequestUpdateDto response)
