@@ -3,6 +3,7 @@ using System.Text.Json;
 using Explorer.API.EncountersDtos;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Encounters.API.Dtos;
+using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.API.Dtos.TouristPosition;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
@@ -43,15 +44,22 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(jsonResponse.ToResult());
         }
 
-        /*
-        [HttpPost("{id:long}/complete")]
-        public ActionResult<EncounterResponseDto> Complete(long id)
+        
+        [HttpPost("{id:long}/complete/misc")]
+        public async Task<ActionResult<EncounterResponseDto>> Complete(long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            var result = _encounterService.CompleteEncounter(userId, id);
-            return CreateResponse(result);
-        }
+            string url = "http://localhost:81/encounters/complete/"+ userId.ToString()+"/"+id.ToString()+"/misc";
 
+            using HttpResponseMessage response = await client.GetAsync(url);
+
+            var result = await response.Content.ReadAsStringAsync();
+            var resultModel = JsonSerializer.Deserialize<TouristProgressDto>(result);
+
+
+            return CreateResponse(resultModel.ToResult());
+        }
+        /*
         [HttpGet("{id:long}/cancel")]
         public ActionResult<EncounterResponseDto> Cancel(long id)
         {
