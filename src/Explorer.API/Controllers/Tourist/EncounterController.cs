@@ -60,6 +60,23 @@ namespace Explorer.API.Controllers.Tourist
 
             return CreateResponse(resultModel.ToResult());
         }
+
+        [HttpPost("{id:long}/complete/social")]
+        public async Task<ActionResult<EncounterResponseDto>> CompleteSocialEncounter([FromBody] TouristPositionCreateDto position, long id)
+        {
+            long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
+            string url = "http://localhost:81/encounters/complete/" + id.ToString() + "/social";
+            position.TouristId = userId;
+            using StringContent jsonContent = new(JsonSerializer.Serialize(position), Encoding.UTF8, "application/json");
+            using HttpResponseMessage response = await client.PostAsync(url, jsonContent);
+
+            var result = await response.Content.ReadAsStringAsync();
+            var resultModel = JsonSerializer.Deserialize<TouristProgressDto>(result);
+
+
+            return CreateResponse(resultModel.ToResult());
+        }
+
         /*
         [HttpGet("{id:long}/cancel")]
         public ActionResult<EncounterResponseDto> Cancel(long id)
