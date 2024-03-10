@@ -38,6 +38,7 @@ namespace Explorer.API.Controllers.Tourist
         public async Task<ActionResult<EncounterResponseDto>> Activate([FromBody] TouristPositionCreateDto position, long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
+            position.TouristId = userId;
             using StringContent jsonContent = new(JsonSerializer.Serialize(position), Encoding.UTF8, "application/json");
             using HttpResponseMessage response = await client.PostAsync("http://localhost:81/encounters/activate/" + id, jsonContent);
             var jsonResponse = await response.Content.ReadAsStringAsync();
