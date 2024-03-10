@@ -1,13 +1,12 @@
-﻿using Explorer.API.EncountersDtos;
+using System.Text;
+using System.Text.Json;
+using Explorer.API.EncountersDtos;
+using Explorer.BuildingBlocks.Core.UseCases;
+using Explorer.Encounters.API.Dtos;
+using Explorer.Tours.API.Dtos.TouristPosition;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.Metrics;
-using System.Text.Json;
-using System.Text;
-using Explorer.Encounters.API.Dtos;
-using Explorer.Stakeholders.Core.Domain;
-using Explorer.BuildingBlocks.Core.UseCases;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -26,24 +25,25 @@ namespace Explorer.API.Controllers.Tourist
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
             string url = "http://localhost:81/encounters/instance/" + userId.ToString() + "/" + encounterId.ToString() + "/encounter";
-
             using HttpResponseMessage response = await client.GetAsync(url);
-
             var result = await response.Content.ReadAsStringAsync();
             var resultModel = JsonSerializer.Deserialize<EncounterInstanceResponseDto>(result);
 
 
             return CreateResponse(resultModel.ToResult());
         }
-        /*
+        
         [HttpPost("{id:long}/activate")]
-        public ActionResult<EncounterResponseDto> Activate([FromBody] TouristPositionCreateDto position, long id)
+        public async Task<ActionResult<EncounterResponseDto>> Activate([FromBody] TouristPositionCreateDto position, long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            var result = _encounterService.ActivateEncounter(userId, id, position.Longitude, position.Latitude);
-            return CreateResponse(result);
+            using StringContent jsonContent = new(JsonSerializer.Serialize(position), Encoding.UTF8, "application/json");
+            using HttpResponseMessage response = await client.PostAsync("http://localhost:81/encounters/activate/" + id, jsonContent);
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            return CreateResponse(jsonResponse.ToResult());
         }
 
+        /*
         [HttpPost("{id:long}/complete")]
         public ActionResult<EncounterResponseDto> Complete(long id)
         {
