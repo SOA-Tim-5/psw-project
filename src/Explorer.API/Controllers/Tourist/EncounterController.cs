@@ -1,7 +1,9 @@
+using System.Text;
 using System.Text.Json;
 using Explorer.API.EncountersDtos;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Encounters.API.Dtos;
+using Explorer.Tours.API.Dtos.TouristPosition;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -30,7 +32,7 @@ namespace Explorer.API.Controllers.Tourist
 
             return CreateResponse(resultModel.ToResult());
         }
-        /*
+        
         [HttpPost("{id:long}/activate")]
         public async Task<ActionResult<EncounterResponseDto>> Activate([FromBody] TouristPositionCreateDto position, long id)
         {
