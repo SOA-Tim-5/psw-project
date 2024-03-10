@@ -44,8 +44,8 @@ namespace Explorer.API.Controllers.Tourist
         public async Task<bool>  CheckIfUserInCompletionRange([FromBody] TouristPositionCreateDto position, long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
+            position.TouristId = userId;
             string url = "http://localhost:81/encounters/isInRange/" + id.ToString() + "/" + position.Longitude.ToString() + "/" + position.Latitude.ToString();
-
             using HttpResponseMessage response = await client.GetAsync(url);
             var result = await response.Content.ReadAsStringAsync();
             var resultModel = JsonSerializer.Deserialize<bool>(result);
