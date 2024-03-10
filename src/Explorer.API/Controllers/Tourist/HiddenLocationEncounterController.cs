@@ -1,14 +1,11 @@
-﻿using System.Text.Json;
-using System.Text;
+﻿using System.Text;
+using System.Text.Json;
+using Explorer.API.EncountersDtos;
 using Explorer.Encounters.API.Dtos;
 using Explorer.Tours.API.Dtos.TouristPosition;
-﻿using Explorer.API.EncountersDtos;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Text.Json;
-using System.Text;
-using Explorer.Encounters.API.Dtos;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -21,14 +18,18 @@ namespace Explorer.API.Controllers.Tourist
         public HiddenLocationEncounterController()
         {
         }
-        /*
+       
         [HttpGet("{id:long}")]
-        public ActionResult<EncounterResponseDto> GetHiddenLocationEncounterById(long id)
+        public async Task<ActionResult<EncounterResponseDto>> GetHiddenLocationEncounterById(long id)
         {
-            var result = _encounterService.GetHiddenLocationEncounterById(id);
-            return CreateResponse(result);
+            string url = "http://localhost:81/encounters/hidden/"+id.ToString();
+
+            using HttpResponseMessage response = await client.GetAsync(url);
+            var result = await response.Content.ReadAsStringAsync();
+            var resultModel = JsonSerializer.Deserialize<HiddenLocationEncounterResponseDto>(result);
+            return CreateResponse(resultModel.ToResult());
         }
-        */
+
         [HttpPost("{id:long}/complete")]
         public async Task<ActionResult<EncounterResponseDto>> Complete([FromBody] TouristPositionCreateDto position, long id)
         {
@@ -38,15 +39,21 @@ namespace Explorer.API.Controllers.Tourist
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return CreateResponse(jsonResponse.ToResult());
         }
-        /*
-
+        
         [HttpPost("{id:long}/check-range")]
-        public bool CheckIfUserInCompletionRange([FromBody] TouristPositionCreateDto position, long id)
+        public async Task<bool>  CheckIfUserInCompletionRange([FromBody] TouristPositionCreateDto position, long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            return _encounterService.CheckIfUserInCompletionRange(userId, id, position.Longitude, position.Latitude);
+            string url = "http://localhost:81/encounters/isInRange/" + id.ToString() + "/" + position.Longitude.ToString() + "/" + position.Latitude.ToString();
+
+            using HttpResponseMessage response = await client.GetAsync(url);
+            var result = await response.Content.ReadAsStringAsync();
+            var resultModel = JsonSerializer.Deserialize<bool>(result);
+
+            return resultModel;
+            
         }
-        */
+
         [HttpPost("create")]
         public async Task<ActionResult<HiddenLocationEncounterResponseDto>> Create([FromBody] HiddenLocationEncounterCreateDto encounter)
         {
