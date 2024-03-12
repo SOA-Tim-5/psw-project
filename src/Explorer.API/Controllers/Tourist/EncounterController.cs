@@ -42,6 +42,7 @@ namespace Explorer.API.Controllers.Tourist
             using StringContent jsonContent = new(JsonSerializer.Serialize(position), Encoding.UTF8, "application/json");
             using HttpResponseMessage response = await client.PostAsync("http://localhost:81/encounters/activate/" + id, jsonContent);
             var jsonResponse = await response.Content.ReadAsStringAsync();
+            var resultModel = JsonSerializer.Deserialize<EncounterResponseDto>(jsonResponse);
             return CreateResponse(jsonResponse.ToResult());
         }
 
