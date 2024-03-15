@@ -29,7 +29,7 @@ namespace Explorer.API.Controllers.Tourist
             {
                 var touristProgress = await touristProgressResponse.Content.ReadAsStringAsync();
                 var touristProgressModel = JsonSerializer.Deserialize<TouristProgressDto>(touristProgress);
-                if( touristProgressModel.Xp>=10)
+                if (touristProgressModel.Level>=10)
                 {
                     using StringContent jsonContent = new(JsonSerializer.Serialize(encounter), Encoding.UTF8, "application/json");
                     using HttpResponseMessage response = await client.PostAsync("http://localhost:81/encounters/misc", jsonContent);
