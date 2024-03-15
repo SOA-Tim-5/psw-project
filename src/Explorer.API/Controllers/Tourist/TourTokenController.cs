@@ -1,9 +1,8 @@
-﻿using Explorer.Payments.API.Dtos;
+﻿using System.Security.Claims;
+using Explorer.Payments.API.Dtos;
 using Explorer.Payments.API.Public;
-using Explorer.Tours.Core.Domain.Tours;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 
 namespace Explorer.API.Controllers.Tourist
 {
@@ -11,6 +10,7 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/token")]
     public class TourTokenController : BaseApiController
     {
+        /*
         private readonly ITourTokenService _tokenService;
 
         public TourTokenController(ITourTokenService tokenService)
@@ -55,5 +55,6 @@ namespace Explorer.API.Controllers.Tourist
             var result = _tokenService.AddTokensByBundle(userId, bundleId);
             return CreateResponse(result);
         }
+        */
     }
 }

@@ -6,7 +6,6 @@ using Explorer.Stakeholders.Core.Domain;
 using Explorer.Stakeholders.Core.Domain.Problems;
 using Explorer.Stakeholders.Core.Domain.RepositoryInterfaces;
 using Explorer.Stakeholders.Core.Utilities;
-using Explorer.Tours.API.Internal;
 using FluentResults;
 
 namespace Explorer.Stakeholders.Core.UseCases
@@ -14,16 +13,16 @@ namespace Explorer.Stakeholders.Core.UseCases
     public class ProblemService : CrudService<ProblemResponseDto, Problem>, IProblemService
     {
         private readonly IProblemRepository _problemRepository;
-        private readonly IInternalTourService _tourService;
+        //private readonly IInternalTourService _tourService;
         private readonly IProblemResolvingNotificationService _problemResolvingNotificationService;
         private readonly IUserRepository _userRepository;
         private readonly IMapper _mapper;
 
-        public ProblemService(ICrudRepository<Problem> repository, IMapper mapper, IProblemRepository problemRepository, IInternalTourService tourService, IUserRepository userRepository, IProblemResolvingNotificationService problemResolvingNotificationService) : base(repository, mapper)
+        public ProblemService(ICrudRepository<Problem> repository, IMapper mapper, IProblemRepository problemRepository, IUserRepository userRepository, IProblemResolvingNotificationService problemResolvingNotificationService) : base(repository, mapper)
         {
             _problemRepository = problemRepository;
             _mapper = mapper;
-            _tourService = tourService;
+            //_tourService = tourService;
             _userRepository = userRepository;
             _problemResolvingNotificationService = problemResolvingNotificationService;
         }
@@ -55,6 +54,7 @@ namespace Explorer.Stakeholders.Core.UseCases
             {
                 try
                 {
+                    /*
                     problem.SetDeadline(deadline);
                     var result = CrudRepository.Update(problem);
                     var tourName = _tourService.GetToursName(problem.TourId);
@@ -63,6 +63,8 @@ namespace Explorer.Stakeholders.Core.UseCases
                     var notification = new ProblemResolvingNotification(problem.Id, problem.Answer.AuthorId, adminID, message, DateTime.UtcNow, header);
                     _problemResolvingNotificationService.Create(notification);
                     return MapToDto<ProblemResponseDto>(result);
+                    */
+                    return null;
                 }
                 catch (KeyNotFoundException e)
                 {
@@ -80,16 +82,19 @@ namespace Explorer.Stakeholders.Core.UseCases
         {
             try
             {
-                var problem = _problemRepository.Get(problemId);
-                if (problem.IsAnswered) throw new Exception();
+                /*
+                 var problem = _problemRepository.Get(problemId);
+                 if (problem.IsAnswered) throw new Exception();
 
-                problem.CreateAnswer(problemAnswer.Answer, problemAnswer.AuthorId);
-                CrudRepository.Update(problem);
-                var header = NotificationGenerator.GenerateAnswerHeader(_tourService.GetToursName(problem.TourId));
+                 problem.CreateAnswer(problemAnswer.Answer, problemAnswer.AuthorId);
+                 CrudRepository.Update(problem);
+                 var header = NotificationGenerator.GenerateAnswerHeader(_tourService.GetToursName(problem.TourId));
 
-                var notification = new ProblemResolvingNotification(problem.Id, problem.TouristId, problem.Answer.AuthorId, problemAnswer.Answer, DateTime.UtcNow, header);
-                _problemResolvingNotificationService.Create(notification);
-                return Result.Ok();
+                 var notification = new ProblemResolvingNotification(problem.Id, problem.TouristId, problem.Answer.AuthorId, problemAnswer.Answer, DateTime.UtcNow, header);
+                 _problemResolvingNotificationService.Create(notification);
+                 return Result.Ok();
+                */
+                return null;
             }
             catch (Exception e)
             {
@@ -101,6 +106,7 @@ namespace Explorer.Stakeholders.Core.UseCases
         {
             try
             {
+                /*
                 var problem = _problemRepository.Get(problemId);
                 if (!problem.IsAnswered) throw new Exception();
 
@@ -126,6 +132,8 @@ namespace Explorer.Stakeholders.Core.UseCases
                 _problemResolvingNotificationService.Create(notification);
 
                 return _mapper.Map<ProblemCommentResponseDto>(comment);
+                */
+                return null;
             }
             catch (Exception e)
             {
@@ -154,6 +162,7 @@ namespace Explorer.Stakeholders.Core.UseCases
 
         public Result<PagedResult<ProblemResponseDto>> GetAll(int page, int pageSize)
         {
+            /*
             var results = MapToDto<ProblemResponseDto>(_problemRepository.GetAll(page, pageSize));
             foreach (var problemDto in results.Value.Results)
             {
@@ -162,18 +171,24 @@ namespace Explorer.Stakeholders.Core.UseCases
             }
 
             return results;
+            */
+            return null;
         }
 
         public Result<ProblemResponseDto> Get(long id)
         {
+            /*
             var result = MapToDto<ProblemResponseDto>(_problemRepository.Get(id));
             result.TourName = _tourService.GetToursName(result.TourId);
             result.TourAuthorId = _tourService.GetAuthorsId(result.TourId);
             return result;
+            */
+            return null;
         }
 
         public Result<PagedResult<ProblemResponseDto>> GetByUserId(int page, int pageSize, long id)
         {
+            /*
             var results = MapToDto<ProblemResponseDto>(_problemRepository.GetByUserId(page, pageSize, id));
             foreach (var problemDto in results.Value.Results)
             {
@@ -182,10 +197,13 @@ namespace Explorer.Stakeholders.Core.UseCases
             }
 
             return results;
+            */
+            return null;
         }
 
         public Result<PagedResult<ProblemResponseDto>> GetByAuthor(int page, int pageSize, long id)
         {
+            /*
             var results = MapToDto<ProblemResponseDto>(_problemRepository.GetByAuthor(page, pageSize, _tourService.GetAuthorsTours(id).ToList()));
             foreach (var problemDto in results.Value.Results)
             {
@@ -194,6 +212,8 @@ namespace Explorer.Stakeholders.Core.UseCases
             }
 
             return results;
+            */
+            return null;
         }
     }
 }

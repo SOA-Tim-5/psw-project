@@ -1,7 +1,11 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
+using System.Text;
+using System.Text.Json;
+using Explorer.API.EncountersDtos;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Encounters.API.Dtos;
-using Explorer.Encounters.API.Public;
+using Explorer.Stakeholders.Core.Domain;
 using Explorer.Tours.API.Dtos.TouristPosition;
+using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,38 +15,70 @@ namespace Explorer.API.Controllers.Tourist
     [Route("api/tourist/encounter")]
     public class EncounterController : BaseApiController
     {
-        private readonly IEncounterService _encounterService;
-        private readonly ITouristProgressService _progressService;
-        public EncounterController(IEncounterService encounterService, ITouristProgressService progressService)
-        {
-            _encounterService = encounterService;
-            _progressService = progressService;
-        }
+        static readonly HttpClient client = new HttpClient();
 
+        public EncounterController()
+        {
+        }
+        
         [HttpGet("{encounterId:long}/instance")]
-        public ActionResult<EncounterResponseDto> GetInstance(long encounterId)
+        public async Task<ActionResult<EncounterResponseDto>> GetInstance(long encounterId)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            var result = _encounterService.GetInstance(userId, encounterId);
-            return CreateResponse(result);
-        }
+            string url = "http://localhost:81/encounters/instance/" + userId.ToString() + "/" + encounterId.ToString() + "/encounter";
+            using HttpResponseMessage response = await client.GetAsync(url);
+            var result = await response.Content.ReadAsStringAsync();
+            var resultModel = JsonSerializer.Deserialize<EncounterInstanceResponseDto>(result);
 
+
+            return CreateResponse(resultModel.ToResult());
+        }
+        
         [HttpPost("{id:long}/activate")]
-        public ActionResult<EncounterResponseDto> Activate([FromBody] TouristPositionCreateDto position, long id)
+        public async Task<ActionResult<EncounterResponseDto>> Activate([FromBody] TouristPositionCreateDto position, long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            var result = _encounterService.ActivateEncounter(userId, id, position.Longitude, position.Latitude);
-            return CreateResponse(result);
+            position.TouristId = userId;
+            using StringContent jsonContent = new(JsonSerializer.Serialize(position), Encoding.UTF8, "application/json");
+            using HttpResponseMessage response = await client.PostAsync("http://localhost:81/encounters/activate/" + id, jsonContent);
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            var resultModel = JsonSerializer.Deserialize<EncounterResponseDto>(jsonResponse);
+            return CreateResponse(jsonResponse.ToResult());
         }
 
-        [HttpPost("{id:long}/complete")]
-        public ActionResult<EncounterResponseDto> Complete(long id)
+        
+        [HttpPost("{id:long}/complete/misc")]
+        public async Task<ActionResult<EncounterResponseDto>> Complete(long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            var result = _encounterService.CompleteEncounter(userId, id);
-            return CreateResponse(result);
+            string url = "http://localhost:81/encounters/complete/"+ userId.ToString()+"/"+id.ToString()+"/misc";
+
+            using HttpResponseMessage response = await client.GetAsync(url);
+
+            var result = await response.Content.ReadAsStringAsync();
+            var resultModel = JsonSerializer.Deserialize<TouristProgressDto>(result);
+
+
+            return CreateResponse(resultModel.ToResult());
         }
 
+        [HttpPost("{id:long}/complete/social")]
+        public async Task<ActionResult<EncounterResponseDto>> CompleteSocialEncounter([FromBody] TouristPositionCreateDto position, long id)
+        {
+            long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
+            string url = "http://localhost:81/encounters/complete/" + id.ToString() + "/social";
+            position.TouristId = userId;
+            using StringContent jsonContent = new(JsonSerializer.Serialize(position), Encoding.UTF8, "application/json");
+            using HttpResponseMessage response = await client.PostAsync(url, jsonContent);
+
+            var result = await response.Content.ReadAsStringAsync();
+            var resultModel = JsonSerializer.Deserialize<TouristProgressDto>(result);
+
+
+            return CreateResponse(resultModel.ToResult());
+        }
+
+        /*
         [HttpGet("{id:long}/cancel")]
         public ActionResult<EncounterResponseDto> Cancel(long id)
         {
@@ -57,28 +93,65 @@ namespace Explorer.API.Controllers.Tourist
             var result = _encounterService.Get(id);
             return CreateResponse(result);
         }
-
+        */
         [HttpGet]
-        public ActionResult<PagedResult<EncounterResponseDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<ActionResult<PagedResult<EncounterResponseDto>>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _encounterService.GetPaged(page, pageSize);
-            return CreateResponse(result);
+            string url = "http://localhost:81/encounters";
+
+            using HttpResponseMessage response = await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+
+                return CreateResponse(jsonResponse.ToResult());
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode);
+            }
         }
 
         [HttpPost("in-range-of")]
-        public ActionResult<PagedResult<EncounterResponseDto>> GetAllInRangeOf([FromBody] UserPositionWithRangeDto position, [FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<ActionResult<PagedResult<EncounterResponseDto>>> GetAllInRangeOf([FromBody] UserPositionWithRangeDto position, [FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _encounterService.GetAllInRangeOf(position.Range, position.Longitude, position.Latitude, page, pageSize);
-            return CreateResponse(result);
+            string url = "http://localhost:81/encounters/"+position.Range.ToString()+"/"+position.Longitude.ToString()+"/"+position.Latitude.ToString();
+
+            using HttpResponseMessage response = await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+
+                return CreateResponse(jsonResponse.ToResult());
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode);
+            }
         }
 
 
         [HttpGet("done-encounters")]
-        public ActionResult<PagedResult<EncounterResponseDto>> GetAllDoneByUser(int currentUserId, [FromQuery] int page, [FromQuery] int pageSize)
+        public async Task<ActionResult<PagedResult<EncounterResponseDto>>> GetAllDoneByUser(int currentUserId, [FromQuery] int page, [FromQuery] int pageSize)
         {
-            var result = _encounterService.GetAllDoneByUser(currentUserId, page, pageSize);
-            return CreateResponse(result);
+            string url = $"http://localhost:81/encounters/doneByUser/{currentUserId}?";
+
+            using HttpResponseMessage response = await client.GetAsync(url);
+
+            if (response.IsSuccessStatusCode)
+            {
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+
+                return CreateResponse(jsonResponse.ToResult());
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode);
+            }
         }
+        /*
 
         [HttpGet("active")]
         public ActionResult<PagedResult<EncounterResponseDto>> GetActive([FromQuery] int page, [FromQuery] int pageSize)
@@ -99,14 +172,23 @@ namespace Explorer.API.Controllers.Tourist
 
             return CreateResponse(result);
         }
-
+        */
         [HttpGet("progress")]
-        public ActionResult<TouristProgressResponseDto> GetProgress()
+        public async Task<ActionResult<TouristProgressDto>> GetProgress()
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            var result = _progressService.GetByUserId(userId);
 
-            return CreateResponse(result);
+            string url = $"http://localhost:81/encounters/touristProgress/{userId}?";
+
+            using HttpResponseMessage touristProgressResponse = await client.GetAsync(url);
+           
+            var touristProgress = await touristProgressResponse.Content.ReadAsStringAsync();
+            var touristProgressModel = JsonSerializer.Deserialize<TouristProgressDto>(touristProgress);
+
+
+            return CreateResponse(touristProgressModel.ToResult());
+            
         }
+        
     }
 }

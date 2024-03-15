@@ -1,6 +1,4 @@
 ﻿using Explorer.BuildingBlocks.Core.Domain;
-using Explorer.Payments.Core.Domain.Bundles;
-using Explorer.Tours.API.Dtos;
 
 namespace Explorer.Payments.Core.Domain.ShoppingCarts;
 

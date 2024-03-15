@@ -1,6 +1,4 @@
-﻿using Explorer.Tours.API.Dtos.TouristPosition;
-using Explorer.Tours.API.Public.TourExecution;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Explorer.API.Controllers.Tourist.TourExecution;
@@ -9,6 +7,7 @@ namespace Explorer.API.Controllers.Tourist.TourExecution;
 [Route("api/tour-execution/tourists")]
 public class TouristPositionController : BaseApiController
 {
+    /*
     private readonly ITouristPositionService _touristPositionService;
 
     public TouristPositionController(ITouristPositionService touristPositionService)
@@ -36,4 +35,5 @@ public class TouristPositionController : BaseApiController
         var result = _touristPositionService.GetByTouristId(touristId);
         return CreateResponse(result);
     }
+    */
 }
