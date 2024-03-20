@@ -1,0 +1,21 @@
+version: '3.9'
+
+services:
+  smart-tutor-migration:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: execute-migration
+    networks:
+      - explorer-v1
+    environment:
+      DATABASE_HOST: explorer-v1
+      DATABASE_USERNAME: postgres
+      DATABASE_PASSWORD: super
+      DATABASE_SCHEMA: explorer-v1
+
+networks:
+  database:
+    name: explorer-v1
+    driver: bridge
+    external: true

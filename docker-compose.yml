@@ -1,0 +1,41 @@
+version: '3.9'
+
+services:
+  explorer:
+    build:
+      dockerfile: Dockerfile
+      context: .
+      target: final
+    restart: on-failure
+    networks:
+      - explorer-v1
+    ports:
+      - "44333:44333"
+    environment:
+      DATABASE_HOST: explorer-v1
+      DATABASE_PORT: 5432
+      DATABASE_PASSWORD: super
+      DATABASE_USER: postgres
+      DATABASE_SCHEMA: explorer-v1
+    depends_on:
+      - explorer-v1
+  database:
+    image: postgres:13
+    restart: always
+    networks:
+      - explorer-v1
+    environment:
+      POSTGRES_PASSWORD: super
+      POSTGRES_USER: postgres
+      POSTGRES_DB: explorer-v1
+    ports:
+      - "5432:5432"
+
+volumes:
+  database-data:
+    name: explorer-v1
+
+networks:
+  database:
+    name: explorer-v1
+    driver: bridge
