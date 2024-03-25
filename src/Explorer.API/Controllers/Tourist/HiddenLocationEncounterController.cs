@@ -22,7 +22,7 @@ namespace Explorer.API.Controllers.Tourist
         [HttpGet("{id:long}")]
         public async Task<ActionResult<EncounterResponseDto>> GetHiddenLocationEncounterById(long id)
         {
-            string url = "http://localhost:81/encounters/hidden/"+id.ToString();
+            string url = "http://host.docker.internal:81/encounters/hidden/" + id.ToString();
 
             using HttpResponseMessage response = await client.GetAsync(url);
             var result = await response.Content.ReadAsStringAsync();
@@ -36,7 +36,7 @@ namespace Explorer.API.Controllers.Tourist
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
             position.TouristId = userId;
             using StringContent jsonContent = new(JsonSerializer.Serialize(position), Encoding.UTF8, "application/json");
-            using HttpResponseMessage response = await client.PostAsync("http://localhost:81/encounters/complete/" + id, jsonContent);
+            using HttpResponseMessage response = await client.PostAsync("http://host.docker.internal:81/encounters/complete/" + id, jsonContent);
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return CreateResponse(jsonResponse.ToResult());
         }
@@ -46,7 +46,7 @@ namespace Explorer.API.Controllers.Tourist
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
             position.TouristId = userId;
-            string url = "http://localhost:81/encounters/isInRange/" + id.ToString() + "/" + position.Longitude.ToString() + "/" + position.Latitude.ToString();
+            string url = "http://host.docker.internal:81/encounters/isInRange/" + id.ToString() + "/" + position.Longitude.ToString() + "/" + position.Latitude.ToString();
             using HttpResponseMessage response = await client.GetAsync(url);
             var result = await response.Content.ReadAsStringAsync();
             var resultModel = JsonSerializer.Deserialize<bool>(result);
@@ -60,7 +60,7 @@ namespace Explorer.API.Controllers.Tourist
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
 
-            string url = $"http://localhost:81/encounters/touristProgress/{userId}?";
+            string url = $"http://host.docker.internal:81/encounters/touristProgress/{userId}?";
 
             using HttpResponseMessage touristProgressResponse = await client.GetAsync(url);
             if (touristProgressResponse.IsSuccessStatusCode)
@@ -70,7 +70,7 @@ namespace Explorer.API.Controllers.Tourist
                 if (touristProgressModel.Xp >= 10)
                 {
                     using StringContent jsonContent = new(JsonSerializer.Serialize(encounter), Encoding.UTF8, "application/json");
-                    using HttpResponseMessage response = await client.PostAsync("http://localhost:81/encounters/hidden", jsonContent);
+                    using HttpResponseMessage response = await client.PostAsync("http://host.docker.internal:81/encounters/hidden", jsonContent);
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     return CreateResponse(jsonResponse.ToResult());
                 }

@@ -25,7 +25,7 @@ namespace Explorer.API.Controllers.Tourist
         public async Task<ActionResult<EncounterResponseDto>> GetInstance(long encounterId)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            string url = "http://localhost:81/encounters/instance/" + userId.ToString() + "/" + encounterId.ToString() + "/encounter";
+            string url = "http://host.docker.internal:81/encounters/instance/" + userId.ToString() + "/" + encounterId.ToString() + "/encounter";
             using HttpResponseMessage response = await client.GetAsync(url);
             var result = await response.Content.ReadAsStringAsync();
             var resultModel = JsonSerializer.Deserialize<EncounterInstanceResponseDto>(result);
@@ -40,7 +40,7 @@ namespace Explorer.API.Controllers.Tourist
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
             position.TouristId = userId;
             using StringContent jsonContent = new(JsonSerializer.Serialize(position), Encoding.UTF8, "application/json");
-            using HttpResponseMessage response = await client.PostAsync("http://localhost:81/encounters/activate/" + id, jsonContent);
+            using HttpResponseMessage response = await client.PostAsync("http://host.docker.internal:81/encounters/activate/" + id, jsonContent);
             var jsonResponse = await response.Content.ReadAsStringAsync();
             var resultModel = JsonSerializer.Deserialize<EncounterResponseDto>(jsonResponse);
             return CreateResponse(jsonResponse.ToResult());
@@ -51,7 +51,7 @@ namespace Explorer.API.Controllers.Tourist
         public async Task<ActionResult<EncounterResponseDto>> Complete(long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            string url = "http://localhost:81/encounters/complete/"+ userId.ToString()+"/"+id.ToString()+"/misc";
+            string url = "http://host.docker.internal:81/encounters/complete/" + userId.ToString()+"/"+id.ToString()+"/misc";
 
             using HttpResponseMessage response = await client.GetAsync(url);
 
@@ -66,7 +66,7 @@ namespace Explorer.API.Controllers.Tourist
         public async Task<ActionResult<EncounterResponseDto>> CompleteSocialEncounter([FromBody] TouristPositionCreateDto position, long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            string url = "http://localhost:81/encounters/complete/" + id.ToString() + "/social";
+            string url = "http://host.docker.internal:81/encounters/complete/" + id.ToString() + "/social";
             position.TouristId = userId;
             using StringContent jsonContent = new(JsonSerializer.Serialize(position), Encoding.UTF8, "application/json");
             using HttpResponseMessage response = await client.PostAsync(url, jsonContent);
@@ -97,7 +97,7 @@ namespace Explorer.API.Controllers.Tourist
         [HttpGet]
         public async Task<ActionResult<PagedResult<EncounterResponseDto>>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
-            string url = "http://localhost:81/encounters";
+            string url = "http://host.docker.internal:81/encounters";
 
             using HttpResponseMessage response = await client.GetAsync(url);
 
@@ -116,7 +116,7 @@ namespace Explorer.API.Controllers.Tourist
         [HttpPost("in-range-of")]
         public async Task<ActionResult<PagedResult<EncounterResponseDto>>> GetAllInRangeOf([FromBody] UserPositionWithRangeDto position, [FromQuery] int page, [FromQuery] int pageSize)
         {
-            string url = "http://localhost:81/encounters/"+position.Range.ToString()+"/"+position.Longitude.ToString()+"/"+position.Latitude.ToString();
+            string url = "http://host.docker.internal:81/encounters/" + position.Range.ToString()+"/"+position.Longitude.ToString()+"/"+position.Latitude.ToString();
 
             using HttpResponseMessage response = await client.GetAsync(url);
 
@@ -136,7 +136,7 @@ namespace Explorer.API.Controllers.Tourist
         [HttpGet("done-encounters")]
         public async Task<ActionResult<PagedResult<EncounterResponseDto>>> GetAllDoneByUser(int currentUserId, [FromQuery] int page, [FromQuery] int pageSize)
         {
-            string url = $"http://localhost:81/encounters/doneByUser/{currentUserId}?";
+            string url = $"http://host.docker.internal:81/encounters/doneByUser/{currentUserId}?";
 
             using HttpResponseMessage response = await client.GetAsync(url);
 
@@ -178,7 +178,7 @@ namespace Explorer.API.Controllers.Tourist
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
 
-            string url = $"http://localhost:81/encounters/touristProgress/{userId}?";
+            string url = $"http://host.docker.internal:81/encounters/touristProgress/{userId}?";
 
             using HttpResponseMessage touristProgressResponse = await client.GetAsync(url);
            

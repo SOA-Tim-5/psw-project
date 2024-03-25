@@ -22,7 +22,7 @@ namespace Explorer.API.Controllers.Tourist
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
 
-            string url = $"http://localhost:81/encounters/touristProgress/{userId}?";
+            string url = $"http://host.docker.internal:81/encounters/touristProgress/{userId}?";
 
             using HttpResponseMessage touristProgressResponse = await client.GetAsync(url);
             if(touristProgressResponse.IsSuccessStatusCode)
@@ -32,7 +32,7 @@ namespace Explorer.API.Controllers.Tourist
                 if (touristProgressModel.Level>=10)
                 {
                     using StringContent jsonContent = new(JsonSerializer.Serialize(encounter), Encoding.UTF8, "application/json");
-                    using HttpResponseMessage response = await client.PostAsync("http://localhost:81/encounters/misc", jsonContent);
+                    using HttpResponseMessage response = await client.PostAsync("http://host.docker.internal:81/encounters/misc", jsonContent);
                     var jsonResponse = await response.Content.ReadAsStringAsync();
                     return CreateResponse(jsonResponse.ToResult());
                 }
