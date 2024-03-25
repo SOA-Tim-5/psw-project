@@ -28,7 +28,7 @@ public class KeyPointController : BaseApiController
         keyPoint.TourId = tourId;
         //var result = _keyPointService.Create(keyPoint);
         using StringContent jsonContent = new(JsonSerializer.Serialize(keyPoint), Encoding.UTF8, "application/json");
-        using HttpResponseMessage response = await client.PostAsync("http://localhost:88/keypoint/create", jsonContent);
+        using HttpResponseMessage response = await client.PostAsync("http://host.docker.internal:88/keypoint/create", jsonContent);
         var jsonResponse = await response.Content.ReadAsStringAsync();
         return CreateResponse(jsonResponse.ToResult());
         //return CreateResponse(result);

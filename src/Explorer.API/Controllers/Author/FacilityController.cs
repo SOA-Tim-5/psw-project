@@ -43,7 +43,7 @@ namespace Explorer.API.Controllers.Author
             var id = long.Parse(identity.FindFirst("id").Value);
 
             // Pravljenje URL-a za pozivanje GetByAuthorId metode
-            string url = $"http://localhost:88/facility/get/{id}?page={page}&pageSize={pageSize}";
+            string url = $"http://host.docker.internal:88/facility/get/{id}?page={page}&pageSize={pageSize}";
 
             // Slanje GET zahteva
             using HttpResponseMessage response = await client.GetAsync(url);
@@ -88,7 +88,7 @@ namespace Explorer.API.Controllers.Author
             var id = long.Parse(identity.FindFirst("id").Value);
             facility.AuthorId = id;
             using StringContent jsonContent = new(JsonSerializer.Serialize(facility), Encoding.UTF8, "application/json");
-            using HttpResponseMessage response = await client.PostAsync("http://localhost:88/facility/create", jsonContent);
+            using HttpResponseMessage response = await client.PostAsync("http://host.docker.internal:88/facility/create", jsonContent);
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return CreateResponse(jsonResponse.ToResult());
             //return CreateResponse(result);

@@ -15,7 +15,7 @@ RUN dotnet build Explorer.API/Explorer.API.csproj -c Release
 FROM build as publish
 RUN dotnet publish Explorer.API/Explorer.API.csproj -c Release -o /app/publish
 
-ENV ASPNETCORE_URLS=http://+:44333
+ENV ASPNETCORE_URLS=http://+:80
 FROM base AS final
 COPY --from=publish /app .
 WORKDIR /app/publish

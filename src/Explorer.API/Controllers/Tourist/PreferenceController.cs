@@ -39,7 +39,7 @@ namespace Explorer.API.Controllers.Tourist
             {
                 id = int.Parse(identity.FindFirst("id").Value);
             }
-            string url = $"http://localhost:88/preferences/get/{id}";
+            string url = $"http://host.docker.internal:88/preferences/get/{id}";
 
             // Slanje GET zahteva
             using HttpResponseMessage response = await client.GetAsync(url);
@@ -70,7 +70,7 @@ namespace Explorer.API.Controllers.Tourist
        {
            preference.UserId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
            using StringContent jsonContent = new(JsonSerializer.Serialize(preference), Encoding.UTF8, "application/json");
-           using HttpResponseMessage response = await client.PostAsync("http://localhost:88/preference/create", jsonContent);
+           using HttpResponseMessage response = await client.PostAsync("http://host.docker.internal:88/preference/create", jsonContent);
            var jsonResponse = await response.Content.ReadAsStringAsync();
            return CreateResponse(jsonResponse.ToResult());
        }

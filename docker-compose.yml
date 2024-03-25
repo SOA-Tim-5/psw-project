@@ -8,34 +8,63 @@ services:
       target: final
     restart: on-failure
     networks:
-      - explorer-v1
+      - database
     ports:
-      - "44333:44333"
+      - "44333:80"
     environment:
-      DATABASE_HOST: explorer-v1
+      DATABASE_HOST: database
       DATABASE_PORT: 5432
       DATABASE_PASSWORD: super
       DATABASE_USER: postgres
-      DATABASE_SCHEMA: explorer-v1
+      DATABASE_SCHEMA: explorer
     depends_on:
-      - explorer-v1
+      - database
+  encounters:
+    image: encounters
+    restart: always
+    networks:
+      - database
+    ports:
+      - "81:81"
+    environment:
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
+      DATABASE_PASSWORD: super
+      DATABASE_USER: postgres
+      DATABASE_SCHEMA: explorer
+    depends_on:
+      - explorer
+      - database
+  tours:
+    image: tours
+    restart: always
+    networks:
+      - database
+    ports:
+      - "88:88"
+    environment:
+      DATABASE_HOST: database
+      DATABASE_PORT: 5432
+      DATABASE_PASSWORD: super
+      DATABASE_USER: postgres
+      DATABASE_SCHEMA: explorer
+    depends_on:
+      - explorer
+      - database
   database:
     image: postgres:13
     restart: always
     networks:
-      - explorer-v1
+      - database
     environment:
       POSTGRES_PASSWORD: super
       POSTGRES_USER: postgres
-      POSTGRES_DB: explorer-v1
+      POSTGRES_DB: explorer
     ports:
       - "5432:5432"
-
-volumes:
-  database-data:
-    name: explorer-v1
-
+    
 networks:
   database:
-    name: explorer-v1
+    name: database
     driver: bridge
+    attachable: true
