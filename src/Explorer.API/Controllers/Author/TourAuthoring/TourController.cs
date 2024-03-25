@@ -105,7 +105,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
                 tour.AuthorId = long.Parse(identity.FindFirst("id").Value);
             }
             using StringContent jsonContent = new(JsonSerializer.Serialize(tour), Encoding.UTF8, "application/json");
-            using HttpResponseMessage response = await client.PostAsync("http://localhost:88/tour/create", jsonContent);
+            using HttpResponseMessage response = await client.PostAsync("http://host.docker.internal:88/tour/create", jsonContent);
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return CreateResponse(jsonResponse.ToResult());
         }

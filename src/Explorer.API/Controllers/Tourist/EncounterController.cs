@@ -116,7 +116,7 @@ namespace Explorer.API.Controllers.Tourist
         [HttpPost("in-range-of")]
         public async Task<ActionResult<PagedResult<EncounterResponseDto>>> GetAllInRangeOf([FromBody] UserPositionWithRangeDto position, [FromQuery] int page, [FromQuery] int pageSize)
         {
-            string url = "http://localhost:81/encounters/"+position.Range.ToString()+"/"+position.Longitude.ToString()+"/"+position.Latitude.ToString();
+            string url = "http://host.docker.internal:81/encounters/"+position.Range.ToString()+"/"+position.Longitude.ToString()+"/"+position.Latitude.ToString();
 
             using HttpResponseMessage response = await client.GetAsync(url);
 
@@ -178,7 +178,7 @@ namespace Explorer.API.Controllers.Tourist
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
 
-            string url = $"http://localhost:81/encounters/touristProgress/{userId}?";
+            string url = $"http://psw-project-encounters-1:81/encounters/touristProgress/{userId}?";
 
             using HttpResponseMessage touristProgressResponse = await client.GetAsync(url);
            
