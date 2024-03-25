@@ -30,7 +30,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
         {
             
             // Pravljenje URL-a za pozivanje GetByAuthorId metode
-            string url = $"http://localhost:88/equipment/get/?page={page}&pageSize={pageSize}";
+            string url = $"http://host.docker.internal:88/equipment/get/?page={page}&pageSize={pageSize}";
 
             // Slanje GET zahteva
             using HttpResponseMessage response = await client.GetAsync(url);
@@ -58,7 +58,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
             //var result = _equipmentService.Create(equipment);
             //return CreateResponse(result);
             using StringContent jsonContent = new(JsonSerializer.Serialize(equipment), Encoding.UTF8, "application/json");
-            using HttpResponseMessage response = await client.PostAsync("http://localhost:88/equipment/create", jsonContent);
+            using HttpResponseMessage response = await client.PostAsync("http://host.docker.internal:88/equipment/create", jsonContent);
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return CreateResponse(jsonResponse.ToResult());
         }
