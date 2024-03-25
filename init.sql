@@ -181,6 +181,6 @@ INSERT INTO blog."Comments" ("Id", "AuthorId", "BlogId", "CreatedAt", "UpdatedAt
 
 -- *********************** TOURIST_PROGRESS ******************************
 
-INSERT INTO encounters."TouristProgress" ("Id", "UserId", "Xp", "Level") VALUES (-1, -169, 85, 12);
-INSERT INTO encounters."TouristProgress" ("Id", "UserId", "Xp", "Level") VALUES (-1, -170, 10, 1);
-INSERT INTO encounters."TouristProgress" ("Id", "UserId", "Xp", "Level") VALUES (-1, -171, 1, 1);
+INSERT INTO encounters."tourist_progresses" ("id", "user_id", "xp", "level") VALUES (-1, -169, 85, 12);
+INSERT INTO encounters."tourist_progresses" ("id", "user_id", "xp", "level") VALUES (-1, -170, 10, 1);
+INSERT INTO encounters."tourist_progresses" ("id", "user_id", "xp", "level") VALUES (-1, -171, 1, 1);
