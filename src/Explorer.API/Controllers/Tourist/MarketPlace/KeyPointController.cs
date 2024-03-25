@@ -27,7 +27,7 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
         {
             
             // Pravljenje URL-a za pozivanje GetByAuthorId metode
-            string url = $"http://localhost:88/tours/getKeypoints/{tourId}";
+            string url = $"http://host.docker.internal:88/tours/getKeypoints/{tourId}";
 
             // Slanje GET zahteva
             using HttpResponseMessage response = await client.GetAsync(url);
