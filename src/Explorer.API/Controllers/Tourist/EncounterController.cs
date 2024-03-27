@@ -43,7 +43,7 @@ namespace Explorer.API.Controllers.Tourist
             using HttpResponseMessage response = await client.PostAsync("http://host.docker.internal:81/encounters/activate/" + id, jsonContent);
             var jsonResponse = await response.Content.ReadAsStringAsync();
             var resultModel = JsonSerializer.Deserialize<EncounterResponseDto>(jsonResponse);
-            return CreateResponse(jsonResponse.ToResult());
+            return CreateResponse(resultModel.ToResult());
         }
 
         
@@ -56,10 +56,10 @@ namespace Explorer.API.Controllers.Tourist
             using HttpResponseMessage response = await client.GetAsync(url);
 
             var result = await response.Content.ReadAsStringAsync();
-            var resultModel = JsonSerializer.Deserialize<TouristProgressDto>(result);
+            //var resultModel = JsonSerializer.Deserialize<TouristProgressDto>(result);
 
 
-            return CreateResponse(resultModel.ToResult());
+            return CreateResponse(result.ToResult());
         }
 
         [HttpPost("{id:long}/complete/social")]
@@ -185,10 +185,10 @@ namespace Explorer.API.Controllers.Tourist
             using HttpResponseMessage touristProgressResponse = await client.GetAsync(url);
            
             var touristProgress = await touristProgressResponse.Content.ReadAsStringAsync();
-            var touristProgressModel = JsonSerializer.Deserialize<TouristProgressDto>(touristProgress);
+           // var touristProgressModel = JsonSerializer.Deserialize<TouristProgressDto>(touristProgress);
 
 
-            return CreateResponse(touristProgressModel.ToResult());
+            return CreateResponse(touristProgress.ToResult());
             
         }
         
