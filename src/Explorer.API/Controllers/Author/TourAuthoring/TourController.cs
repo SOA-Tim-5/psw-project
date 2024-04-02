@@ -49,7 +49,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             var id = long.Parse(identity.FindFirst("id").Value);
 
             // Pravljenje URL-a za pozivanje GetByAuthorId metode
-            string url = $"http://localhost:88/tours/get/{id}?page={page}&pageSize={pageSize}";
+            string url = $"http://host.docker.internal:88/tours/get/{id}?page={page}&pageSize={pageSize}";
 
             // Slanje GET zahteva
             using HttpResponseMessage response = await client.GetAsync(url);
@@ -59,6 +59,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             {
                 // Čitanje odgovora kao string
                 string jsonResponse = await response.Content.ReadAsStringAsync();
+                //var resultModel = JsonSerializer.Deserialize<List<TourResponseDto>>(jsonResponse);
 
                 // Kreiranje odgovora
                 return CreateResponse(jsonResponse.ToResult());
@@ -105,7 +106,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
                 tour.AuthorId = long.Parse(identity.FindFirst("id").Value);
             }
             using StringContent jsonContent = new(JsonSerializer.Serialize(tour), Encoding.UTF8, "application/json");
-            using HttpResponseMessage response = await client.PostAsync("http://localhost:88/tour/create", jsonContent);
+            using HttpResponseMessage response = await client.PostAsync("http://host.docker.internal:88/tour/create", jsonContent);
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return CreateResponse(jsonResponse.ToResult());
         }
