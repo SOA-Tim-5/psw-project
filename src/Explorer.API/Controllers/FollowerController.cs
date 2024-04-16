@@ -1,4 +1,5 @@
-﻿using Explorer.BuildingBlocks.Core.UseCases;
+﻿using Explorer.API.FollowerDtos;
+using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
 using Explorer.Stakeholders.API.Public;
 using Explorer.Stakeholders.Core.Domain;
@@ -6,7 +7,11 @@ using Explorer.Stakeholders.Core.UseCases;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net.Http;
 using System.Security.Claims;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.Json;
 
 namespace Explorer.API.Controllers
 {
@@ -14,6 +19,8 @@ namespace Explorer.API.Controllers
     [Route("api/follower")]
     public class FollowerController : BaseApiController
     {
+
+        static readonly HttpClient client = new HttpClient();
         private readonly IFollowerService _followerService;
         private readonly IUserService _userService;
         public FollowerController(IFollowerService followerService, IUserService userService)
@@ -72,6 +79,16 @@ namespace Explorer.API.Controllers
             }
             var result = _userService.SearchUsers(0, 0, searchUsername, userId);
             return CreateResponse(result);
+        }
+
+        [HttpPost("create-following")]
+        public async Task<ActionResult<FollowerResponseDto>> CreateNewFollowing([FromBody] UserFollowingDto following)
+        {
+            using StringContent jsonContent = new(JsonSerializer.Serialize(following), Encoding.UTF8, "application/json");
+            using HttpResponseMessage response = await client.PostAsync("http://localhost:8090/follower/create", jsonContent);
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            return CreateResponse(jsonResponse.ToResult());
+          
         }
     }
 
