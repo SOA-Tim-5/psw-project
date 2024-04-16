@@ -53,6 +53,13 @@ namespace Explorer.API.Controllers
             var result = _followerService.GetFollowings(page, pageSize, userId);
             return CreateResponse(result);
         }
+        [HttpGet("user-followings/{id}")]
+        public async Task<ActionResult<List<FollowingResponseDto>>> GetUserFollowings(string id)
+        {
+            var followings = await client.GetFromJsonAsync<FollowingResponseDto[]>(
+                "http://localhost:8090/user-followings/" + id);
+            return followings.ToList();
+        }
 
         [HttpDelete("{id:long}")]
         public ActionResult Delete(long id)
@@ -86,10 +93,13 @@ namespace Explorer.API.Controllers
         {
             using StringContent jsonContent = new(JsonSerializer.Serialize(following), Encoding.UTF8, "application/json");
             using HttpResponseMessage response = await client.PostAsync("http://localhost:8090/follower/create", jsonContent);
-            var jsonResponse = await response.Content.ReadAsStringAsync();
-            return CreateResponse(jsonResponse.ToResult());
-          
+            var res = await response.Content.ReadFromJsonAsync<FollowerResponseDto>();
+            Console.WriteLine("JSONCONTENT "+ jsonContent);
+
+            
+            return res;
         }
     }
+
 
 }
