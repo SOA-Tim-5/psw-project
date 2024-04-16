@@ -40,7 +40,7 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
             var id = long.Parse(identity.FindFirst("id").Value);
 
             // Pravljenje URL-a za pozivanje GetByAuthorId metode
-            string url = $"http://localhost:88/tours/getTour/{tourId}";
+            string url = $"http://psw-project-tours-1:88/tours/getTour/{tourId}";
 
             // Slanje GET zahteva
             using HttpResponseMessage response = await client.GetAsync(url);

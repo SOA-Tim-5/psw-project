@@ -22,7 +22,7 @@ namespace Explorer.API.Controllers.Administrator
         {
             /*var result = _publicKeyPointRequestService.GetPagedWithName(page, pageSize);
             return CreateResponse(result);*/
-            string url = $"http://localhost:88/publicKeyPointRequest/get/?page={page}&pageSize={pageSize}";
+            string url = $"http://host.docker.internal:88/publicKeyPointRequest/get/?page={page}&pageSize={pageSize}";
 
             // Slanje GET zahteva
             using HttpResponseMessage response = await client.GetAsync(url);
@@ -53,7 +53,7 @@ namespace Explorer.API.Controllers.Administrator
         {
             /*var result = _publicFacilityRequestService.GetPagedWithName(page, pageSize);
             return CreateResponse(result);*/
-            string url = $"http://localhost:88/publicFacilityRequest/get/?page={page}&pageSize={pageSize}";
+            string url = $"http://host.docker.internal:88/publicFacilityRequest/get/?page={page}&pageSize={pageSize}";
 
             // Slanje GET zahteva
             using HttpResponseMessage response = await client.GetAsync(url);

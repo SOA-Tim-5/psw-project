@@ -21,7 +21,7 @@ services:
       - database
   encounters:
     image: encounters
-    restart: always
+    restart: on-failure
     networks:
       - database
     ports:
@@ -37,7 +37,7 @@ services:
       - database
   tours:
     image: tours
-    restart: always
+    restart: on-failure
     networks:
       - database
     ports:
@@ -62,9 +62,19 @@ services:
       POSTGRES_DB: explorer
     ports:
       - "5432:5432"
-    
+    volumes:       
+      - type: volume
+        source: database-data
+        target: /var/lib/postgresql/data
+      - type: bind
+        source: init.sql
+        target: /tmp/explorer-init.sql
+
+volumes:
+  database-data:
+    name: explorer
+
 networks:
   database:
     name: database
-    driver: bridge
-    attachable: true
+    driver: local

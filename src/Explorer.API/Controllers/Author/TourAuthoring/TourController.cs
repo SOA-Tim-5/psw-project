@@ -59,6 +59,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             {
                 // Čitanje odgovora kao string
                 string jsonResponse = await response.Content.ReadAsStringAsync();
+                //var resultModel = JsonSerializer.Deserialize<List<TourResponseDto>>(jsonResponse);
 
                 // Kreiranje odgovora
                 return CreateResponse(jsonResponse.ToResult());
