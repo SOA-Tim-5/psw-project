@@ -1,4 +1,5 @@
-﻿using AutoMapper;
+﻿using System.Text.Json;
+using AutoMapper;
 using Explorer.Blog.API.Dtos;
 using Explorer.Blog.API.Public;
 using Explorer.Blog.Core.Domain.RepositoryInterfaces;
@@ -27,9 +28,39 @@ namespace Explorer.Blog.Core.UseCases
             return MapToDto<BlogResponseDto>(entity);
         }
 
+    
+
+        public async Task<Result<List<BlogResponseDto>>> GetAllFromFollowingUsers(int page, int pageSize, long userId)
+        {
+            var entities = _repository.GetAll(page, pageSize);
+
+            //TODO call follower microservice
+            string url = "http://localhost:8090/user-followings/" + userId.ToString();
+            HttpClient client = new HttpClient();
+            using HttpResponseMessage response = await client.GetAsync(url);
+            var result = await response.Content.ReadAsStringAsync();
+            List<FollowingResponseDto> followings = JsonSerializer.Deserialize<List<FollowingResponseDto>>(result);
+
+            List<BlogResponseDto> blogs = new List<BlogResponseDto>();
+            foreach (var e in entities.Results)
+            {
+                if(followings.Find(f => f.Id == e.AuthorId.ToString()) != null)
+                    blogs.Add(MapToDto<BlogResponseDto>(e));
+            }
+            //var blogs = MapToDto<BlogResponseDto>(entities);
+            foreach (var blog in blogs)
+            {
+                var user = _internalUserService.Get(blog.AuthorId).Value;
+                blog.Author = user;
+            }
+            return blogs;
+        }
+
         public Result<PagedResult<BlogResponseDto>> GetAll(int page, int pageSize)
         {
             var entities = _repository.GetAll(page, pageSize);
+
+
             var result = MapToDto<BlogResponseDto>(entities);
             foreach (var blog in result.Value.Results)
             {
