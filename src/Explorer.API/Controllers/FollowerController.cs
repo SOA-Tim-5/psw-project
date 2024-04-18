@@ -57,14 +57,14 @@ namespace Explorer.API.Controllers
         public async Task<ActionResult<List<FollowingResponseDto>>> GetFollowings(string id)
         {
             var followings = await client.GetFromJsonAsync<FollowingResponseDto[]>(
-                "http://localhost:8090/followings/" + id);
+                "http://host.docker.internal:8090/followings/" + id);
             return followings.ToList();
         }
         [HttpGet("followers/{id}")]
         public async Task<ActionResult<List<FollowingResponseDto>>> GetFollowers(string id)
         {
             var followers = await client.GetFromJsonAsync<FollowingResponseDto[]>(
-                "http://localhost:8090/followers/" + id);
+                "http://host.docker.internal:8090/followers/" + id);
             return followers.ToList();
         }
 
@@ -99,7 +99,7 @@ namespace Explorer.API.Controllers
         public async Task<ActionResult<FollowerResponseDto>> CreateNewFollowing([FromBody] UserFollowingDto following)
         {
             using StringContent jsonContent = new(JsonSerializer.Serialize(following), Encoding.UTF8, "application/json");
-            using HttpResponseMessage response = await client.PostAsync("http://localhost:8090/follower/create", jsonContent);
+            using HttpResponseMessage response = await client.PostAsync("http://host.docker.internal:8090/follower/create", jsonContent);
             var res = await response.Content.ReadFromJsonAsync<FollowerResponseDto>();
             Console.WriteLine("JSONCONTENT "+ jsonContent);
 
@@ -110,7 +110,7 @@ namespace Explorer.API.Controllers
         [HttpGet("recommendations/{id}")]
         public async Task<ActionResult<List<FollowingResponseDto>>> GetFollowerRecommendations(string id)
         {
-            var followers = await client.GetFromJsonAsync<FollowingResponseDto[]>("http://localhost:8090/recommendations/" + id);
+            var followers = await client.GetFromJsonAsync<FollowingResponseDto[]>("http://host.docker.internal:8090/recommendations/" + id);
             return followers.ToList();
         }
     }

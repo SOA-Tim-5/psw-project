@@ -35,7 +35,7 @@ namespace Explorer.Blog.Core.UseCases
             var entities = _repository.GetAll(page, pageSize);
 
             //TODO call follower microservice
-            string url = "http://localhost:8090/user-followings/" + userId.ToString();
+            string url = "http://host.docker.internal:8090/followings/" + userId.ToString();
             HttpClient client = new HttpClient();
             using HttpResponseMessage response = await client.GetAsync(url);
             var result = await response.Content.ReadAsStringAsync();
