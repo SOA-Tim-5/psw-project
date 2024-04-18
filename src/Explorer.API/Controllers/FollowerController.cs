@@ -29,7 +29,7 @@ namespace Explorer.API.Controllers
             _userService = userService;
         }
 
-        [HttpGet("followers/{id:long}")]
+        /*[HttpGet("followers/{id:long}")]
         public ActionResult<PagedResult<FollowerResponseWithUserDto>> GetFollowers([FromQuery] int page, [FromQuery] int pageSize, long id)
         {
             long userId = id;
@@ -52,13 +52,20 @@ namespace Explorer.API.Controllers
             }
             var result = _followerService.GetFollowings(page, pageSize, userId);
             return CreateResponse(result);
-        }
-        [HttpGet("user-followings/{id}")]
-        public async Task<ActionResult<List<FollowingResponseDto>>> GetUserFollowings(string id)
+        }*/
+        [HttpGet("followings/{id}")]
+        public async Task<ActionResult<List<FollowingResponseDto>>> GetFollowings(string id)
         {
             var followings = await client.GetFromJsonAsync<FollowingResponseDto[]>(
-                "http://localhost:8090/user-followings/" + id);
+                "http://localhost:8090/followings/" + id);
             return followings.ToList();
+        }
+        [HttpGet("followers/{id}")]
+        public async Task<ActionResult<List<FollowingResponseDto>>> GetFollowers(string id)
+        {
+            var followers = await client.GetFromJsonAsync<FollowingResponseDto[]>(
+                "http://localhost:8090/followers/" + id);
+            return followers.ToList();
         }
 
         [HttpDelete("{id:long}")]
