@@ -106,6 +106,13 @@ namespace Explorer.API.Controllers
             
             return res;
         }
+
+        [HttpGet("recommendations/{id}")]
+        public async Task<ActionResult<List<FollowingResponseDto>>> GetFollowerRecommendations(string id)
+        {
+            var followers = await client.GetFromJsonAsync<FollowingResponseDto[]>("http://localhost:8090/recommendations/" + id);
+            return followers.ToList();
+        }
     }
 
 
