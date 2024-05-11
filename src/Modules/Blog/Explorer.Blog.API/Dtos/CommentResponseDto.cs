@@ -1,6 +1,4 @@
-﻿using Explorer.Stakeholders.API.Dtos;
-
-namespace Explorer.Blog.API.Dtos
+﻿namespace Explorer.Blog.API.Dtos
 {
     public class CommentResponseDto
     {
@@ -10,6 +8,6 @@ namespace Explorer.Blog.API.Dtos
         public DateTime CreatedAt { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public string Text { get; set; }
-        public UserResponseDto Author { get; set; }
+        //public UserResponseDto Author { get; set; }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using Explorer.Blog.Infrastructure.Database;
 using Explorer.BuildingBlocks.Tests;
-using Explorer.Stakeholders.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -14,9 +13,9 @@ public class BlogTestFactory : BaseTestFactory<BlogContext>
         services.Remove(descriptor!);
         services.AddDbContext<BlogContext>(SetupTestContext());
 
-        descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<StakeholdersContext>));
+        /*descriptor = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<StakeholdersContext>));
         services.Remove(descriptor!);
-        services.AddDbContext<StakeholdersContext>(SetupTestContext());
+        services.AddDbContext<StakeholdersContext>(SetupTestContext());*/
 
         return services;
     }

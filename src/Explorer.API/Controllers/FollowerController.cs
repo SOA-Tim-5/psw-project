@@ -1,9 +1,6 @@
 ﻿using Explorer.API.FollowerDtos;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Stakeholders.API.Dtos;
-using Explorer.Stakeholders.API.Public;
-using Explorer.Stakeholders.Core.Domain;
-using Explorer.Stakeholders.Core.UseCases;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -21,12 +18,12 @@ namespace Explorer.API.Controllers
     {
 
         static readonly HttpClient client = new HttpClient();
-        private readonly IFollowerService _followerService;
-        private readonly IUserService _userService;
-        public FollowerController(IFollowerService followerService, IUserService userService)
+        //private readonly IFollowerService _followerService;
+        //private readonly IUserService _userService;
+        public FollowerController(/*IFollowerService followerService, IUserService userService*/)
         {
-            _followerService = followerService;
-            _userService = userService;
+            //_followerService = followerService;
+            //_userService = userService;
         }
 
         /*[HttpGet("followers/{id:long}")]
@@ -68,32 +65,32 @@ namespace Explorer.API.Controllers
             return followers.ToList();
         }
 
-        [HttpDelete("{id:long}")]
-        public ActionResult Delete(long id)
-        {
-            var result = _followerService.Delete(id);
-            return CreateResponse(result);
-        }
+        //[HttpDelete("{id:long}")]
+        //public ActionResult Delete(long id)
+        //{
+        //    var result = _followerService.Delete(id);
+        //    return CreateResponse(result);
+        //}
 
-        [HttpPost]
-        public ActionResult<FollowerResponseDto> Create([FromBody] FollowerCreateDto follower)
-        {
-            var result = _followerService.Create(follower);
-            return CreateResponse(result);
-        }
+        //[HttpPost]
+        //public ActionResult<FollowerResponseDto> Create([FromBody] FollowerCreateDto follower)
+        //{
+        //    var result = _followerService.Create(follower);
+        //    return CreateResponse(result);
+        //}
 
-        [HttpGet("search/{searchUsername}")]
-        public ActionResult<PagedResult<UserResponseDto>> GetSearch([FromQuery] int page, [FromQuery] int pageSize, string searchUsername)
-        {
-            long userId = 0;
-            var identity = HttpContext.User.Identity as ClaimsIdentity;
-            if (identity != null && identity.IsAuthenticated)
-            {
-                userId = long.Parse(identity.FindFirst("id").Value);
-            }
-            var result = _userService.SearchUsers(0, 0, searchUsername, userId);
-            return CreateResponse(result);
-        }
+        //[HttpGet("search/{searchUsername}")]
+        //public ActionResult<PagedResult<UserResponseDto>> GetSearch([FromQuery] int page, [FromQuery] int pageSize, string searchUsername)
+        //{
+        //    long userId = 0;
+        //    var identity = HttpContext.User.Identity as ClaimsIdentity;
+        //    if (identity != null && identity.IsAuthenticated)
+        //    {
+        //        userId = long.Parse(identity.FindFirst("id").Value);
+        //    }
+        //    var result = _userService.SearchUsers(0, 0, searchUsername, userId);
+        //    return CreateResponse(result);
+        //}
 
         [HttpPost("create-following")]
         public async Task<ActionResult<FollowerResponseDto>> CreateNewFollowing([FromBody] UserFollowingDto following)
