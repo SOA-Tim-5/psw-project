@@ -7,6 +7,7 @@ using System.Text;
 using Microsoft.AspNetCore.Http.HttpResults;
 using FluentResults;
 using System.Text.Json;
+using System.Net;
 
 namespace Explorer.API.Controllers;
 
@@ -23,16 +24,20 @@ public class AuthenticationController : BaseApiController
         _walletService = walletService;
     }
 
-   /* [HttpPost]
-    public ActionResult<RegistrationConfirmationTokenDto> RegisterTourist([FromBody] AccountRegistrationDto account)
+    [HttpPost]
+    public async Task<ActionResult<RegistrationConfirmationTokenDto>> RegisterTourist([FromBody] AccountRegistrationDto account)
     {
-        var result = _authenticationService.RegisterTourist(account);
-        if(result.IsSuccess && !result.IsFailed)
-        {
-            _walletService.Create(new Payments.API.Dtos.WalletCreateDto(result.Value.Id));
-        }
-        return CreateResponse(result);
-    }*/
+        //var result = _authenticationService.RegisterTourist(account);
+        //if(result.IsSuccess && !result.IsFailed)
+        //{
+        //    _walletService.Create(new Payments.API.Dtos.WalletCreateDto(result.Value.Id));
+        //}
+        //return CreateResponse(result);
+        using StringContent jsonContent = new(JsonSerializer.Serialize(account), Encoding.UTF8, "application/json");
+        using HttpResponseMessage response = await client.PostAsync("https://localhost:44332/api/users/", jsonContent);
+        var jsonResponse = await response.Content.ReadAsStringAsync();
+        return CreateResponse(jsonResponse.ToResult());
+    }
 
     [HttpPost("login")]
     public async Task<ActionResult<AuthenticationTokensDto>> Login([FromBody] CredentialsDto credentials)
