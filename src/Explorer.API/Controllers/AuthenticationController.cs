@@ -8,6 +8,8 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.AspNetCore.Http.HttpResults;
+using FluentResults;
+using System.Text.Json;
 
 namespace Explorer.API.Controllers;
 
@@ -16,6 +18,7 @@ public class AuthenticationController : BaseApiController
 {
     private readonly IAuthenticationService _authenticationService;
     private readonly IWalletService _walletService;
+    static readonly HttpClient client = new HttpClient();
 
     public AuthenticationController(IAuthenticationService authenticationService, IWalletService walletService)
     {
@@ -35,10 +38,15 @@ public class AuthenticationController : BaseApiController
     }
 
     [HttpPost("login")]
-    public ActionResult<AuthenticationTokensDto> Login([FromBody] CredentialsDto credentials)
+    public async Task<ActionResult<AuthenticationTokensDto>> Login([FromBody] CredentialsDto credentials)
     {
-        var result = _authenticationService.Login(credentials);
-        return CreateResponse(result);
+      
+        using StringContent jsonContent = new(JsonSerializer.Serialize(credentials), Encoding.UTF8, "application/json");
+        using HttpResponseMessage response = await client.PostAsync("https://localhost:44332/api/users/login", jsonContent);
+        var jsonResponse = await response.Content.ReadAsStringAsync();
+        return CreateResponse(jsonResponse.ToResult());
+        //var result = _authenticationService.Login(credentials);
+        //return CreateResponse(result);
     }
 
     [HttpPost("reset-password")]
