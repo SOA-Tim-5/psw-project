@@ -10,8 +10,18 @@ service Follower {
       post: "/api/follower/create-following"
       body: "*"
     };
+    }
+
+    rpc GetFollowerRecommendations(id) returns (ListFollowingResponseDto) {
+    option (google.api.http) = {
+      post: "/api/follower/recommendations/{id}"
+      body: "*"
+    };
+    }
+
 }
-}
+
+
 
 message UserFollowingDto {
      string userId=1;
@@ -32,4 +42,12 @@ message FollowerResponseDto {
     int64 Id=1;
     int64 UserId=2;
     int64 FollowedById=3;
+}
+
+message id {
+    string id=1;
+}
+
+message ListFollowingResponseDto {
+    repeated FollowingResponseDto ResponseList=1 ;
 }

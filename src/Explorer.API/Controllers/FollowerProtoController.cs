@@ -31,8 +31,29 @@ namespace Explorer.API.Controllers.Author
                 Id = response.Id,
                 UserId = response.UserId,
                 FollowedById = response.FollowedById
-            });    
-            }
+            });
+        }
+    
+
+    public override async Task<ListFollowingResponseDto> GetFollowerRecommendations(id id,
+           ServerCallContext context)
+    {
+        var httpHandler = new HttpClientHandler();
+        httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+        var channel = GrpcChannel.ForAddress("http://localhost:8090", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+        var client = new Follower.FollowerClient(channel);
+        var response = await client.GetFollowerRecommendationsAsync(id);
+
+            // Console.WriteLine(response.AccessToken);
+
+            return await Task.FromResult(new ListFollowingResponseDto
+            {
+               ResponseList = { response.ResponseList }
+            }) ;
     }
+}
+
+
 }
 
