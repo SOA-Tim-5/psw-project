@@ -1,0 +1,75 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServiceTranscoding";
+import "Protos/google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service PublicFacilityRequestService {
+    rpc Create(PublicFacilityRequestCreateDto) returns (PublicFacilityRequestResponseDto) {
+        option (google.api.http) = {
+          post: "/api/publicFacilityRequest"
+          body: "*"
+        };
+    }
+    rpc GetAllFacilityRequest(google.protobuf.Empty) returns (PublicFacilityRequestListResponse){
+        option (google.api.http) = {
+          get: "/api/administration/requests/facility"
+        };
+    }
+}
+
+message PublicFacilityRequestCreateDto{
+    int64 Id=1;
+     int64 AuthorId=2;
+ int64 FacilityId=3;
+ enum PublicStatus {
+        Pending=0;
+    Accepted=1;
+    Rejected=2;
+    };
+   PublicStatus Status=4;
+ 
+ int64 Created=5;
+ string AuthorName=6;
+ string AuthorPicture=7;
+}
+
+
+message  PublicFacilityRequestResponseDto{
+    int64 Id=1;
+ int64 FacilityId=2;
+ enum PublicStatus {
+        Pending=0;
+    Accepted=1;
+    Rejected=2;
+    };
+   PublicStatus Status=3;
+   string Comment=4;
+ 
+ int64 Created=5;
+ string AuthorName=6;
+ string FacilityName=7;
+ UserResponseDto Author=8;
+}
+
+message UserResponseDto{
+     int64 Id =1;
+        string Username =2;
+        string ProfilePicture =3;
+        int32 Role=4;
+       bool IsActive=5;
+        repeated FollowerCreateDto Followers = 6;
+}
+
+message FollowerCreateDto{
+    int64 UserId=1;
+    int64 FollowedById=2;
+}
+
+message PublicFacilityRequestListResponse{
+    repeated PublicFacilityRequestResponseDto publicFacilityRequestsResponses =1;
+}
+
+message GetRequestParams{
+    string id=1;
+}

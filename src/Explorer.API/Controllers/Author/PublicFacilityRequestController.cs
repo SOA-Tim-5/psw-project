@@ -23,7 +23,7 @@ namespace Explorer.API.Controllers.Author
         {
             _userService = userService;
         }
-        [HttpPost]
+        //[HttpPost]
         public async Task<ActionResult<PublicFacilityRequestResponseDto>> Create([FromBody] PublicFacilityRequestCreateDto request)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
