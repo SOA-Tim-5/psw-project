@@ -4,7 +4,6 @@ using Explorer.Blog.API.Dtos;
 using Explorer.Blog.API.Public;
 using Explorer.Blog.Core.Domain.RepositoryInterfaces;
 using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Stakeholders.API.Internal;
 using FluentResults;
 
 namespace Explorer.Blog.Core.UseCases
@@ -13,13 +12,13 @@ namespace Explorer.Blog.Core.UseCases
     {
 
         private readonly IBlogRepository _repository;
-        private readonly IInternalUserService _internalUserService;
+        //private readonly IInternalUserService _internalUserService;
         private readonly IMapper _mapper;
-        public BlogService(ICrudRepository<Domain.Blog> crudRepository, IBlogRepository repository, IMapper mapper, IInternalUserService internalUserService) : base(crudRepository, mapper)
+        public BlogService(ICrudRepository<Domain.Blog> crudRepository, IBlogRepository repository, IMapper mapper): base(crudRepository, mapper) //, IInternalUserService internalUserService) 
         {
             _repository = repository;
             _mapper = mapper;
-            _internalUserService = internalUserService;
+            //_internalUserService = internalUserService;
         }
 
         public Result<BlogResponseDto> GetById(long id)
@@ -50,8 +49,8 @@ namespace Explorer.Blog.Core.UseCases
             //var blogs = MapToDto<BlogResponseDto>(entities);
             foreach (var blog in blogs)
             {
-                var user = _internalUserService.Get(blog.AuthorId).Value;
-                blog.Author = user;
+                //var user = _internalUserService.Get(blog.AuthorId).Value;
+                //blog.Author = user;
             }
             return blogs;
         }
@@ -64,8 +63,8 @@ namespace Explorer.Blog.Core.UseCases
             var result = MapToDto<BlogResponseDto>(entities);
             foreach (var blog in result.Value.Results)
             {
-                var user = _internalUserService.Get(blog.AuthorId).Value;
-                blog.Author = user;
+                //var user = _internalUserService.Get(blog.AuthorId).Value;
+                //blog.Author = user;
             }
             return result;
         }
@@ -121,8 +120,8 @@ namespace Explorer.Blog.Core.UseCases
             var result = MapToDto<BlogResponseDto>(entities);
             foreach (var blog in result.Value.Results)
             {
-                var user = _internalUserService.Get(blog.AuthorId).Value;
-                blog.Author = user;
+                //var user = _internalUserService.Get(blog.AuthorId).Value;
+                //blog.Author = user;
             }
             return result;
         }
