@@ -14,6 +14,12 @@ service TourService {
     rpc GetAuthorsTours(GetParams) returns (TourListResponse){
         option (google.api.http) = {
           get: "/api/tour/authors/{id}"
+        };
+    }
+
+    rpc CreateKeyPoint(KeyPointCreateDto) returns (KeyPointResponseDto) {
+        option (google.api.http) = {
+          post: "/api/tour-authoring/tours/{TourId}/key-points"
           body: "*"
         };
     }
@@ -111,4 +117,18 @@ message TourListResponse{
 
 message GetParams{
     string id=1;
+}
+
+message KeyPointCreateDto{
+        string TourId = 1;
+         string Name =2;
+         string Description =3;
+         double Longitude =4;
+         double Latitude =5;
+         string LocationAddress =6;
+         string ImagePath =7;
+         int64 Order =8;
+         optional KeyPointSecretDto Secret =9;
+         bool IsEncounterRequired =10;
+         bool HasEncounter =11;
 }

@@ -47,7 +47,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             });
         }
         
-        public async Task<List<TourResponseDto>> GetAuthorsTours(GetParams message, ServerCallContext context)
+        public override async Task<TourListResponse> GetAuthorsTours(GetParams message, ServerCallContext context)
         {
            
             var httpHandler = new HttpClientHandler();
@@ -60,7 +60,20 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             List<TourResponseDto> rs = new List<TourResponseDto>();
             rs.AddRange(response.TourResponses);
 
-            return await Task.FromResult(rs);
+            return await Task.FromResult(response);
+        }
+        
+        public override async Task<KeyPointResponseDto> CreateKeyPoint(KeyPointCreateDto message, ServerCallContext context)
+        {
+
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:88", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new TourService.TourServiceClient(channel);
+            var response = await client.CreateKeyPointAsync(message);
+
+            return await Task.FromResult(response);
         }
     }
 }
