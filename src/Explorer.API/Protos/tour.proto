@@ -29,6 +29,12 @@ service TourService {
           get: "/api/market-place/tours/{id}"
         };
     }
+
+    rpc GetKeyPoints(GetParams) returns (KeyPointResponseDto){
+        option (google.api.http) = {
+          get: "/api/market-place/tours/{id}/key-points"
+        };
+    }
 }
 
 message TourCreateDto{

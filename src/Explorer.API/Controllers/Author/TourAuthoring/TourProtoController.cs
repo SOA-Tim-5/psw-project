@@ -8,6 +8,7 @@ using GrpcServiceTranscoding;
 using Microsoft.AspNetCore.Mvc;
 using Explorer.Stakeholders.Core.Domain;
 using System.Collections;
+using static Google.Rpc.Context.AttributeContext.Types;
 
 namespace Explorer.API.Controllers.Author.TourAuthoring
 {
@@ -58,7 +59,25 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             var response = await client.GetAuthorsToursAsync(message);
 
             List<TourResponseDto> rs = new List<TourResponseDto>();
-            rs.AddRange(response.TourResponses);
+            
+            foreach(TourResponseDto tr in response.TourResponses)
+            {
+                
+                rs.Add(new TourResponseDto
+                {
+                    Id = tr.Id,
+                    Name = tr.Name,
+                    Description = tr.Description,
+                    AuthorId = tr.AuthorId,
+                    Category = tr.Category,
+                    Status = tr.Status,
+                    Difficulty = tr.Difficulty,
+                    Tags = { tr.Tags },
+                    Price = tr.Price,
+                    IsDeleted = tr.IsDeleted
+                });
+            }
+
 
             return await Task.FromResult(response);
         }
@@ -76,7 +95,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             return await Task.FromResult(response);
         }
 
-        public async Task<TourResponseDto> GetById(GetParams message, ServerCallContext context)
+        public override async Task<TourResponseDto> GetById(GetParams message, ServerCallContext context)
         {
 
             var httpHandler = new HttpClientHandler();
@@ -98,6 +117,29 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
                 Tags = { response.Tags },
                 Price = response.Price,
                 IsDeleted = response.IsDeleted
+            });
+        }
+
+        public override async Task<KeyPointResponseDto> GetKeyPoints(GetParams message, ServerCallContext context)
+        {
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:88", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new TourService.TourServiceClient(channel);
+            var response = await client.GetKeyPointsAsync(message);
+
+            return await Task.FromResult(new KeyPointResponseDto
+            {
+                Id = response.Id,
+                TourId = response.TourId,
+                Name = response.Name,
+                Description = response.Description,
+                Longitude = response.Longitude,
+                Latitude = response.Latitude,
+                LocationAddress = response.LocationAddress,
+                ImagePath = response.ImagePath,
+                Order = response.Order,
             });
         }
     }
