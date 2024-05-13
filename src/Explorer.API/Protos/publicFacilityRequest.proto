@@ -2,7 +2,6 @@ syntax = "proto3";
 
 option csharp_namespace = "GrpcServiceTranscoding";
 import "Protos/google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
 
 service PublicFacilityRequestService {
     rpc Create(PublicFacilityRequestCreateDto) returns (PublicFacilityRequestResponseDto) {
@@ -24,7 +23,7 @@ message PublicFacilityRequestCreateDto{
     };
    PublicStatus Status=4;
  
- google.protobuf.Timestamp Created=5;
+ int64 Created=5;
  string AuthorName=6;
  string AuthorPicture=7;
 }
@@ -41,7 +40,7 @@ message  PublicFacilityRequestResponseDto{
    PublicStatus Status=3;
    string Comment=4;
  
- google.protobuf.Timestamp Created=5;
+ int64 Created=5;
  string AuthorName=6;
  string FacilityName=7;
  UserResponseDto Author=8;
