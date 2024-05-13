@@ -38,7 +38,7 @@ namespace Explorer.API.Controllers.Author
             }); ;
         }
 
-        public async Task<List<FacilityResponseDto>> GetByAuthorId(GetParams message, ServerCallContext context)
+        public async Task<List<FacilityResponseDto>> GetByAuthorId(GetFacilityParams message, ServerCallContext context)
         {
 
             var httpHandler = new HttpClientHandler();

@@ -50,7 +50,8 @@
 		<Protobuf Include="Protos\authentication.proto" />
 		<Protobuf Include="Protos\encounter.proto" />
 		<Protobuf Include="Protos\tour.proto" />
-		<Protobuf Include="Protos\facility.proto" />
+		<Protobuf Include="Protos\facility\facility.proto" />
+		<Protobuf Include="Protos\publicFacilityRequest.proto" />
 	</ItemGroup>
 
 </Project>

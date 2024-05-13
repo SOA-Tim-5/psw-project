@@ -10,7 +10,7 @@ service FacilityService {
           body: "*"
         };
     }
-    rpc GetByAuthorId(GetParams) returns (FacilityListResponse){
+    rpc GetByAuthorId(GetFacilityParams) returns (FacilityListResponse){
         option (google.api.http) = {
           get: "/api/facility/authorsFacilities/{id}"
         };
@@ -61,6 +61,6 @@ message FacilityListResponse{
     repeated FacilityResponseDto facilityResponses =1;
 }
 
-message GetParams{
+message GetFacilityParams{
     string id=1;
 }
