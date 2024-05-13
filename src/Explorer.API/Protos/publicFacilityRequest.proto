@@ -2,12 +2,18 @@ syntax = "proto3";
 
 option csharp_namespace = "GrpcServiceTranscoding";
 import "Protos/google/api/annotations.proto";
+import "google/protobuf/empty.proto";
 
 service PublicFacilityRequestService {
     rpc Create(PublicFacilityRequestCreateDto) returns (PublicFacilityRequestResponseDto) {
         option (google.api.http) = {
           post: "/api/publicFacilityRequest"
           body: "*"
+        };
+    }
+    rpc GetAllFacilityRequest(google.protobuf.Empty) returns (PublicFacilityRequestListResponse){
+        option (google.api.http) = {
+          get: "/api/administration/requests/facility"
         };
     }
 }
