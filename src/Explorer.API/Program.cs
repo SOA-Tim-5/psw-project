@@ -1,3 +1,5 @@
+using Explorer.API.Controllers;
+using Explorer.API.Controllers.Author;
 using Explorer.API.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,13 +13,15 @@ builder.Services.ConfigureAuth();
 
 builder.Services.RegisterModules();
 
+builder.Services.AddGrpc().AddJsonTranscoding();
+
 var app = builder.Build();
 
 //if (app.Environment.IsDevelopment())
 //{
-    app.UseDeveloperExceptionPage();
-    app.UseSwagger();
-    app.UseSwaggerUI();
+app.UseDeveloperExceptionPage();
+   // app.UseSwagger();
+   // app.UseSwaggerUI();
 //}
 //else
 //{
@@ -33,6 +37,8 @@ app.UseAuthorization();
 app.UseStaticFiles();
 
 app.MapControllers();
+//app.MapGrpcService<AuthenticationProtoController>();
+app.MapGrpcService<MiscEncounterProtoController>();
 
 app.Run();
 

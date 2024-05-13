@@ -22,8 +22,6 @@ services:
   encounters:
     image: encounters
     restart: on-failure
-    ports:
-      - "81:81"
     environment:
       # NoSQL: environment variable holding connection URI for Mongo database
       # protocol://username:password@hostname:port
@@ -38,22 +36,6 @@ services:
     depends_on:
       mongo:
         condition: service_healthy
-  tours:
-    image: tours
-    restart: on-failure
-    networks:
-      - database
-    ports:
-      - "88:88"
-    environment:
-      DATABASE_HOST: database
-      DATABASE_PORT: 5432
-      DATABASE_PASSWORD: super
-      DATABASE_USER: postgres
-      DATABASE_SCHEMA: explorer
-    depends_on:
-      - explorer
-      - database
   database:
     image: postgres:13
     restart: always
@@ -72,21 +54,6 @@ services:
       - type: bind
         source: init.sql
         target: /tmp/explorer-init.sql
-
-  followers:
-    image: followers
-    restart: on-failure
-    ports:
-      - "8090:8090"
-    environment:
-      # NoSQL: environment variable holding connection URI for Neo4J database
-      # Local DB instance
-      - NEO4J_DB=bolt://neo4j:7687
-      - NEO4J_USERNAME=neo4j
-      - NEO4J_PASS=ivanaanja
-    depends_on:
-      neo4j:
-        condition: service_healthy
   
 # NoSQL: MongoDB
   mongo:
@@ -124,39 +91,12 @@ services:
     volumes:
       - mongo_express_data:/data/db
 
-  # NoSQL: Neo4J DB
-  neo4j:
-    image: neo4j
-    restart: always
-    ports:
-      # bolt
-      - "7687:7687"
-      # http
-      - "7474:7474"
-      # https
-      - "7473:7473"
-    # Docker healtcheck - checks if database is "alive"
-    healthcheck:
-      # test: [ "CMD-SHELL", "echo RETURN 1 | cypher-shell -a <NEO4J_dbms_connector_bolt_listen__address> -u <user defined username> -p <user defined password> || exit 1" ]
-      test:
-        [
-          "CMD-SHELL",
-          "echo RETURN 1 | cypher-shell -a bolt://neo4j:7687 -u neo4j -p ivanaanja || exit 1",
-        ]
-      interval: 5s
-      timeout: 5s
-      retries: 10
-    environment:
-      - NEO4J_AUTH=neo4j/ivanaanja
-    volumes:
-      - neo4j_data:/data
 
 volumes:
   database-data:
     name: explorer
   mongo_store:
   mongo_express_data:
-  neo4j_data:
 
 networks:
   database:

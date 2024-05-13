@@ -10,8 +10,6 @@ using Explorer.Payments.Core.Domain;
 using Explorer.Payments.Infrastructure.Database;
 using Explorer.Tours.API.Dtos;
 using Explorer.Tours.API.Public;
-using Explorer.Tours.Core.Domain.Tours;
-using Explorer.Tours.Infrastructure.Database;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Shouldly;
