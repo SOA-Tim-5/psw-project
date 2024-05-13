@@ -52,6 +52,7 @@
 		<Protobuf Include="Protos\facility\facility.proto" />
 		<Protobuf Include="Protos\publicFacilityRequest.proto" />
 		<Protobuf Include="Protos\equipment.proto" />
+		<Protobuf Include="Protos\preference.proto" />
 	</ItemGroup>
 
 </Project>

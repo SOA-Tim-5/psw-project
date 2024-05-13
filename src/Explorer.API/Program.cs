@@ -2,6 +2,7 @@ using Explorer.API.Controllers;
 using Explorer.API.Controllers.Administrator.Administration;
 using Explorer.API.Controllers.Author;
 using Explorer.API.Controllers.Author.TourAuthoring;
+using Explorer.API.Controllers.Tourist;
 using Explorer.API.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -45,6 +46,7 @@ app.MapGrpcService<TourProtoController>();
 app.MapGrpcService<FacilityProtoController>();
 app.MapGrpcService<PublicFacilityRequestProtoController>();
 app.MapGrpcService<EquipmentProtoController>();
+app.MapGrpcService<PreferenceProtoController>();
 app.Run();
 
 // Required for automated tests
