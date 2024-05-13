@@ -20,7 +20,7 @@ namespace Explorer.API.Controllers.Author
         {
             var httpHandler = new HttpClientHandler();
             httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-            var channel = GrpcChannel.ForAddress("http://encounters:81", new GrpcChannelOptions { HttpHandler = httpHandler });
+            var channel = GrpcChannel.ForAddress("http://localhost:81", new GrpcChannelOptions { HttpHandler = httpHandler });
 
             var client = new Encounter.EncounterClient(channel);
             var response = await client.CreateMiscEncounterAsync(message);

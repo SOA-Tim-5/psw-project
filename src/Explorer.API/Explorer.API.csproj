@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\follower.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Startup\templateMail.html" />
   </ItemGroup>
 
@@ -49,6 +53,7 @@
 		<Folder Include="Controllers\Tourist\" />
 		<Folder Include="Controllers\Administrator\" />
 		<Protobuf Include="Protos\authentication.proto" />
+		<Protobuf Include="Protos\follower.proto" />
 		<Protobuf Include="Protos\encounter.proto" />
 	</ItemGroup>
 

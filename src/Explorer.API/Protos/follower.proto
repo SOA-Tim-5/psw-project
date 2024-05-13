@@ -1,0 +1,29 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServiceTranscoding";
+import "Protos/google/api/annotations.proto";
+option go_package = "proto/follower";
+
+service Follower {
+    rpc CreateMiscEncounter(UserFollowingDto) returns (FollowingResponseDto) {
+    option (google.api.http) = {
+      post: "/api/author/misc-encounter/createMisc"
+      body: "*"
+    };
+}
+}
+
+message UserFollowingDto {
+     string userId=1;
+     string username=2;
+     string image=3;
+     string followingUserId=4;
+     string followingUsername=5;
+     string followingImage=6;
+}
+
+message FollowingResponseDto {
+    string Id=1;
+    string Username=2;
+    string Image=3;
+}
