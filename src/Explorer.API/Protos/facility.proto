@@ -1,0 +1,66 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServiceTranscoding";
+import "Protos/google/api/annotations.proto";
+
+service FacilityService {
+    rpc Create(FacilityCreateDto) returns (FacilityResponseDto) {
+        option (google.api.http) = {
+          post: "/api/facility"
+          body: "*"
+        };
+    }
+    rpc GetByAuthorId(GetParams) returns (FacilityListResponse){
+        option (google.api.http) = {
+          get: "/api/facility/authorsFacilities/{id}"
+        };
+    }
+}
+
+message FacilityCreateDto{
+     string Name=1;
+ string Description=2;
+ string ImagePath =3;
+   int64 AuthorId=4;
+ enum FacilityCategory {
+        Draft = 0;
+        Published = 1;
+        Archived = 2;
+        Ready =3;
+    };
+ FacilityCategory Category=5;
+ double Longitude=6;
+ double Latitude=7;
+}
+
+
+message FacilityResponseDto{
+    int64 Id=1;
+     string Name=2;
+ string Description=3;
+ string ImagePath =4;
+   int64 AuthorId=5;
+ enum FacilityCategory {
+        Restaurant=0;
+    ParkingLot=1;
+    Toilet=2;
+    Hospital=3;
+    Cafe=4;
+    Pharmacy=5;
+    ExchangeOffice=6;
+    BusStop=7;
+    Shop=8;
+    Other=9;
+    };
+ FacilityCategory Category=6;
+ double Longitude=7;
+ double Latitude=8;
+}
+
+message FacilityListResponse{
+    repeated FacilityResponseDto facilityResponses =1;
+}
+
+message GetParams{
+    string id=1;
+}
