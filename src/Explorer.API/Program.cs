@@ -1,5 +1,6 @@
 using Explorer.API.Controllers;
 using Explorer.API.Controllers.Author;
+using Explorer.API.Controllers.Author.TourAuthoring;
 using Explorer.API.Startup;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -39,6 +40,7 @@ app.UseStaticFiles();
 app.MapControllers();
 //app.MapGrpcService<AuthenticationProtoController>();
 app.MapGrpcService<MiscEncounterProtoController>();
+app.MapGrpcService<TourProtoController>();
 
 app.Run();
 

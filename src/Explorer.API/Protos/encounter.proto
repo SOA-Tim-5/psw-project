@@ -2,7 +2,6 @@ syntax = "proto3";
 
 option csharp_namespace = "GrpcServiceTranscoding";
 import "Protos/google/api/annotations.proto";
-option go_package = "proto/encounter";
 
 service Encounter {
     rpc CreateMiscEncounter(MiscEncounterCreateDto) returns (MiscEncounterResponseDto) {

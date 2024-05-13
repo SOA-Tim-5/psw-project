@@ -1,0 +1,114 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServiceTranscoding";
+import "Protos/google/api/annotations.proto";
+
+service TourService {
+    rpc Create(TourCreateDto) returns (TourResponseDto) {
+        option (google.api.http) = {
+          post: "/api/tour"
+          body: "*"
+        };
+    }
+  
+    rpc GetAuthorsTours(GetParams) returns (TourListResponse){
+        option (google.api.http) = {
+          get: "/api/tour/authors/{id}"
+          body: "*"
+        };
+    }
+}
+
+message TourCreateDto{
+     int64 AuthorId=1;
+ string Name=2;
+ string Description=3;
+ int32 Difficulty =4;
+     repeated string Tags=5;
+ enum TourStatus {
+        Draft = 0;
+        Published = 1;
+        Archived = 2;
+        Ready =3;
+    };
+ TourStatus Status=6;
+ double Price= 7;
+ bool IsDeleted=8;
+     double Distance=9;
+ enum TourCategory {
+        Adventure = 0;
+        FamilyTrips = 1;
+        Cruise = 2;
+        Cultural =3;
+    };
+ TourCategory Category=10;
+}
+
+message KeyPointSecretDto{
+    repeated string Images =1;
+    string Description=2;
+}
+
+message KeyPointResponseDto{
+     int64 Id =1;
+        int64 TourId=2;
+        string Name =3;
+        string Description =4;
+        double Longitude=5;
+       double Latitude=6;
+        string LocationAddress=7;
+        string ImagePath=8;
+        int64 Order=9;
+        optional bool HaveSecret=10;
+        optional KeyPointSecretDto Secret=11;
+}
+
+message TourDurationResponseDto{
+    int32 Duration=1;
+    enum TransportTypeE
+    {
+        Walking=0;
+        Bicycle=1;
+        Car=2;
+    };
+    TransportTypeE TransportType=2;
+}
+
+message TourResponseDto{
+     int64 Id=1;
+    optional int64 AuthorId=2;
+    string Name=3;
+    string Description=4;
+    int32 Difficulty=5;
+    repeated string Tags=6;
+    enum TourStatus {
+        Draft = 0;
+        Published = 1;
+        Archived = 2;
+        Ready =3;
+    };
+    TourStatus Status=7;
+    double Price=8;
+    bool IsDeleted =9;
+    double Distance =10;
+    optional double AverageRating =11;
+    repeated KeyPointResponseDto KeyPoints=12;
+    repeated TourDurationResponseDto Durations =13;
+    int64 PublishDate =14;
+    int64 ArchiveDate =15;
+     enum TourCategory {
+        Adventure = 0;
+        FamilyTrips = 1;
+        Cruise = 2;
+        Cultural =3;
+    };
+    TourCategory Category=16;
+}
+
+message TourListResponse{
+    repeated TourResponseDto tourResponses =1;
+}
+
+message GetParams{
+    string id=1;
+}
