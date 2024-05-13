@@ -21,7 +21,7 @@ namespace Explorer.API.Controllers.Tourist
         {
         }
         
-        [HttpGet("{encounterId:long}/instance")]
+        //[HttpGet("{encounterId:long}/instance")]
         public async Task<ActionResult<EncounterResponseDto>> GetInstance(long encounterId)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
@@ -34,7 +34,7 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(resultModel.ToResult());
         }
         
-        [HttpPost("{id:long}/activate")]
+        //[HttpPost("{id:long}/activate")]
         public async Task<ActionResult<EncounterResponseDto>> Activate([FromBody] TouristPositionCreateDto position, long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
@@ -47,7 +47,7 @@ namespace Explorer.API.Controllers.Tourist
         }
 
         
-        [HttpPost("{id:long}/complete/misc")]
+        //[HttpPost("{id:long}/complete/misc")]
         public async Task<ActionResult<EncounterResponseDto>> Complete(long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
@@ -62,7 +62,7 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result.ToResult());
         }
 
-        [HttpPost("{id:long}/complete/social")]
+        //[HttpPost("{id:long}/complete/social")]
         public async Task<ActionResult<EncounterResponseDto>> CompleteSocialEncounter([FromBody] TouristPositionCreateDto position, long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
@@ -94,7 +94,7 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
         */
-        [HttpGet]
+       // [HttpGet]
         public async Task<ActionResult<PagedResult<EncounterResponseDto>>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
             string url = "http://host.docker.internal:81/encounters";
@@ -113,7 +113,7 @@ namespace Explorer.API.Controllers.Tourist
             }
         }
 
-        [HttpPost("in-range-of")]
+       // [HttpPost("in-range-of")]
         public async Task<ActionResult<PagedResult<EncounterResponseDto>>> GetAllInRangeOf([FromBody] UserPositionWithRangeDto position, [FromQuery] int page, [FromQuery] int pageSize)
         {
             string url = "http://host.docker.internal:81/encounters/" + position.Range.ToString()+"/"+position.Longitude.ToString()+"/"+position.Latitude.ToString();
@@ -174,7 +174,7 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(result);
         }
         */
-        [HttpGet("progress")]
+       // [HttpGet("progress")]
         public async Task<ActionResult<TouristProgressDto>> GetProgress()
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);

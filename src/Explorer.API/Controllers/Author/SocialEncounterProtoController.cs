@@ -14,7 +14,7 @@ namespace Explorer.API.Controllers.Author
             _logger = logger;
         }
 
-        public override async Task<EncounterResponseDto> CreateSocialEncounter(SocialEncounterCreateDto message,
+        public override async Task<EncounterResponseDto> CreateSocialEncounter(SocialEncounterCreateDto request,
             ServerCallContext context)
         {
             var httpHandler = new HttpClientHandler();
@@ -22,7 +22,7 @@ namespace Explorer.API.Controllers.Author
             var channel = GrpcChannel.ForAddress("http://localhost:81", new GrpcChannelOptions { HttpHandler = httpHandler });
 
             var client = new Encounter.EncounterClient(channel);
-            var response = await client.CreateSocialEncounterAsync(message);
+            var response = await client.CreateSocialEncounterAsync(request);
 
             // Console.WriteLine(response.AccessToken);
 

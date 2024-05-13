@@ -18,7 +18,7 @@ namespace Explorer.API.Controllers.Author
         {
         }
 
-        [HttpPost("create")]
+        //[HttpPost("create")]
         public async Task<ActionResult<HiddenLocationEncounterResponseDto>> Create([FromBody] HiddenLocationEncounterCreateDto encounter)
         {
             using StringContent jsonContent = new(JsonSerializer.Serialize(encounter), Encoding.UTF8, "application/json");

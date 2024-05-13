@@ -46,7 +46,6 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Controllers\Tourist\" />
 		<Folder Include="Controllers\Administrator\" />
 		<Protobuf Include="Protos\authentication.proto" />
 		<Protobuf Include="Protos\encounter.proto" />

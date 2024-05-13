@@ -39,7 +39,7 @@ namespace Explorer.API.Controllers.Author
                 Radius = response.Radius,
                 XpReward = response.XpReward
             });    
-            }
+        }
     }
 }
 
