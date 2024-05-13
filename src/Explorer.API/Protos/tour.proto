@@ -17,6 +17,12 @@ service TourService {
           body: "*"
         };
     }
+
+    rpc GetById(GetParams) returns (TourResponseDto){
+        option (google.api.http) = {
+          get: "/api/market-place/tours/{id}"
+        };
+    }
 }
 
 message TourCreateDto{

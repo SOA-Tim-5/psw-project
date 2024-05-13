@@ -62,5 +62,30 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
 
             return await Task.FromResult(rs);
         }
+
+        public async Task<TourResponseDto> GetById(GetParams message, ServerCallContext context)
+        {
+
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:88", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new TourService.TourServiceClient(channel);
+            var response = await client.GetByIdAsync(message);
+
+            return await Task.FromResult(new TourResponseDto
+            {
+                Id = response.Id,
+                Name = response.Name,
+                Description = response.Description,
+                AuthorId = response.AuthorId,
+                Category = response.Category,
+                Status = response.Status,
+                Difficulty = response.Difficulty,
+                Tags = { response.Tags },
+                Price = response.Price,
+                IsDeleted = response.IsDeleted
+            });
+        }
     }
 }
