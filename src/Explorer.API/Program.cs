@@ -1,6 +1,7 @@
 using Explorer.API.Controllers;
 using Explorer.API.Controllers.Author;
 using Explorer.API.Startup;
+using Microsoft.AspNetCore.Server.Kestrel.Core;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -13,9 +14,15 @@ builder.Services.ConfigureAuth();
 
 builder.Services.RegisterModules();
 
-builder.Services.AddGrpc().AddJsonTranscoding();
+builder.Services.AddGrpc(options =>
+{
+    options.EnableDetailedErrors = true; // Ovo omogu?ava detaljnije greške u razvojnom okruženju
+}).AddJsonTranscoding();
+
+
 
 var app = builder.Build();
+
 
 //if (app.Environment.IsDevelopment())
 //{
@@ -37,14 +44,17 @@ app.UseAuthorization();
 app.UseStaticFiles();
 
 app.MapControllers();
-//app.MapGrpcService<AuthenticationProtoController>();
-app.MapGrpcService<MiscEncounterProtoController>();
 app.MapGrpcService<AuthenticationProtoController>();
+app.MapGrpcService<MiscEncounterProtoController>();
 
 app.Run();
 
 // Required for automated tests
 namespace Explorer.API
 {
-    public partial class Program { }
+    public partial class Program { 
+    
+    
+    
+    }
 }

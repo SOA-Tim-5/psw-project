@@ -24,7 +24,7 @@ public class AuthenticationController : BaseApiController
         _walletService = walletService;
     }
 
-    [HttpPost]
+    //[HttpPost]
     public async Task<ActionResult<RegistrationConfirmationTokenDto>> RegisterTourist([FromBody] AccountRegistrationDto account)
     {
         //var result = _authenticationService.RegisterTourist(account);
@@ -39,7 +39,7 @@ public class AuthenticationController : BaseApiController
         return CreateResponse(jsonResponse.ToResult());
     }
 
-    [HttpPost("login")]
+    //[HttpPost("login")]
     public async Task<ActionResult<AuthenticationTokensDto>> Login([FromBody] CredentialsDto credentials)
     {
       
