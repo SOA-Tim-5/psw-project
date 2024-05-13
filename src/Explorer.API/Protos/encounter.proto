@@ -2,12 +2,25 @@ syntax = "proto3";
 
 option csharp_namespace = "GrpcServiceTranscoding";
 import "Protos/google/api/annotations.proto";
-option go_package = "proto/encounter";
+
+package Encounter;
 
 service Encounter {
     rpc CreateMiscEncounter(MiscEncounterCreateDto) returns (MiscEncounterResponseDto) {
     option (google.api.http) = {
       post: "/api/author/misc-encounter/createMisc"
+      body: "*"
+    };
+    }
+    rpc CreateSocialEncounter(SocialEncounterCreateDto) returns (EncounterResponseDto) {
+    option (google.api.http) = {
+      post: "/api/author/social-encounter/create"
+      body: "*"
+    };
+    }
+    rpc CreateHiddenLocationEncounter(HiddenLocationEncounterCreateDto) returns (HiddenLocationEncounterResponseDto) {
+    option (google.api.http) = {
+      post: "/api/author/hidden-location-encounter/create"
       body: "*"
     };
 }
@@ -46,4 +59,85 @@ bool ChallengeDone=2;
         Archived = 2;
     };
  EncounterStatus Status=10;
+}
+
+message SocialEncounterCreateDto
+{
+     string Title =1;
+     string Description =2;
+     string Picture =3;
+     double Longitude=4;
+     double Latitude =5;
+     double Radius=6;
+     int32 XpReward =7;
+     enum EncounterStatus {
+        Active = 0;
+        Draft = 1;
+        Archived = 2;
+    };
+     EncounterStatus Status =8;
+     int32 PeopleNumber=9;
+}
+
+message EncounterResponseDto
+{
+    int64 Id=1;
+     string Title =2;
+ string Description =3;
+     string Picture =4;
+     double Longitude=5;
+     double Latitude =6;
+     double Radius=7;
+     int32 XpReward =8;
+     enum EncounterStatus {
+        Active = 0;
+        Draft = 1;
+        Archived = 2;
+    };
+     EncounterStatus Status =9;
+      enum EncounterType {
+        Social = 0;
+        Hidden = 1;
+        Misc = 2;
+        Keypoint = 3;
+    };
+EncounterType Type=10;
+}
+
+
+message HiddenLocationEncounterCreateDto{
+     double PictureLongitude=1;
+    double PictureLatitude=2;
+     string Title=3;
+     string Description =4;
+     string Picture=5;
+    double Longitude =6;
+    double Latitude =7;
+     double Radius=8;
+     int32 XpReward=9;
+      enum EncounterStatus {
+        Active = 0;
+        Draft = 1;
+        Archived = 2;
+    };
+     EncounterStatus Status=10;
+}
+
+message HiddenLocationEncounterResponseDto{
+        int64 Id =1;
+        double PictureLongitude =2;
+        double PictureLatitude =3;
+        string Title=4;
+        string Description =5;
+        string Picture=6;
+        double Longitude=7;
+        double Latitude=8;
+        double Radius=9;
+        int32 XpReward=10;
+         enum EncounterStatus {
+        Active = 0;
+        Draft = 1;
+        Archived = 2;
+    };
+        EncounterStatus Status=11;
 }
