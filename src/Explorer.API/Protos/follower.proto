@@ -19,6 +19,20 @@ service Follower {
     };
     }
 
+     rpc GetFollowings(id) returns (ListFollowingResponseDto) {
+     option (google.api.http) = {
+      post: "/api/follower/followings/{id}"
+      body: "*"
+    };
+    }
+
+    rpc GetFollowers(id) returns (ListFollowingResponseDto) {
+     option (google.api.http) = {
+      post: "/api/follower/followers/{id}"
+      body: "*"
+    };
+    }
+
 }
 
 

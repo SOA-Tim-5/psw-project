@@ -52,7 +52,44 @@ namespace Explorer.API.Controllers.Author
                ResponseList = { response.ResponseList }
             }) ;
     }
-}
+
+
+        public override async Task<ListFollowingResponseDto> GetFollowings(id id,
+               ServerCallContext context)
+        {
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:8090", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new Follower.FollowerClient(channel);
+            var response = await client.GetFollowingsAsync(id);
+
+            // Console.WriteLine(response.AccessToken);
+
+            return await Task.FromResult(new ListFollowingResponseDto
+            {
+                ResponseList = { response.ResponseList }
+            });
+        }
+
+        public override async Task<ListFollowingResponseDto> GetFollowers(id id,
+               ServerCallContext context)
+        {
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:8090", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new Follower.FollowerClient(channel);
+            var response = await client.GetFollowersAsync(id);
+
+            // Console.WriteLine(response.AccessToken);
+
+            return await Task.FromResult(new ListFollowingResponseDto
+            {
+                ResponseList = { response.ResponseList }
+            });
+        }
+    }
 
 
 }
