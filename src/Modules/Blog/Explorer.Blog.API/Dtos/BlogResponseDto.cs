@@ -1,5 +1,4 @@
-﻿using Explorer.Stakeholders.API.Dtos;
-
+﻿
 namespace Explorer.Blog.API.Dtos
 {
     public enum BlogStatus { Draft, Published, Closed, Active, Famous };
@@ -19,7 +18,7 @@ namespace Explorer.Blog.API.Dtos
         public long UpvoteCount { get; set; }
         public long DownvoteCount { get; set; }
         public int AuthorId { get; set; }
-        public UserResponseDto Author { get; set; }
+        //public UserResponseDto Author { get; set; }
         public long? ClubId { get; set; }
     }
 }
