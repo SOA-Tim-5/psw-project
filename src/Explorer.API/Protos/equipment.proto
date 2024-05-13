@@ -1,0 +1,41 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServiceTranscoding";
+import "Protos/google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service EquipmentService {
+    rpc Create(EquipmentCreateDto) returns (EquipmentResponseDto) {
+        option (google.api.http) = {
+          post: "/api/administration/equipment"
+          body: "*"
+        };
+    }
+    rpc GetAll(google.protobuf.Empty) returns (EquipmentListResponse){
+        option (google.api.http) = {
+          get: "/api/administration/equipment"
+        };
+    }
+    
+}
+
+message EquipmentCreateDto{
+    string Name=1;
+    string Description=2;
+}
+
+
+message  EquipmentResponseDto{
+    int64 Id=1;
+    string Name=2;
+    string Description=3;
+}
+
+
+message EquipmentListResponse{
+    repeated EquipmentResponseDto equipmentResponses =1;
+}
+
+message GetEquipmentParams{
+    string id=1;
+}

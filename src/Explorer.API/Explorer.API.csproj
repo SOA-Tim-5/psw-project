@@ -46,12 +46,12 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Controllers\Administrator\" />
 		<Protobuf Include="Protos\authentication.proto" />
 		<Protobuf Include="Protos\encounter.proto" />
 		<Protobuf Include="Protos\tour.proto" />
 		<Protobuf Include="Protos\facility\facility.proto" />
 		<Protobuf Include="Protos\publicFacilityRequest.proto" />
+		<Protobuf Include="Protos\equipment.proto" />
 	</ItemGroup>
 
 </Project>
