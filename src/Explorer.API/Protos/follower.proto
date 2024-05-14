@@ -14,21 +14,21 @@ service Follower {
 
     rpc GetFollowerRecommendations(id) returns (ListFollowingResponseDto) {
     option (google.api.http) = {
-      post: "/api/follower/recommendations/{id}"
+      post: "/api/follower/recommendations/{Id}"
       body: "*"
     };
     }
 
      rpc GetFollowings(id) returns (ListFollowingResponseDto) {
      option (google.api.http) = {
-      post: "/api/follower/followings/{id}"
+      post: "/api/follower/followings/{Id}"
       body: "*"
     };
     }
 
     rpc GetFollowers(id) returns (ListFollowingResponseDto) {
      option (google.api.http) = {
-      post: "/api/follower/followers/{id}"
+      post: "/api/follower/followers/{Id}"
       body: "*"
     };
     }
@@ -38,12 +38,12 @@ service Follower {
 
 
 message UserFollowingDto {
-     string userId=1;
-     string username=2;
-     string image=3;
-     string followingUserId=4;
-     string followingUsername=5;
-     string followingImage=6;
+     string UserId=1;
+     string Username=2;
+     string Image=3;
+     string FollowingUserId=4;
+     string FollowingUsername=5;
+     string FollowingImage=6;
 }
 
 message FollowingResponseDto {
@@ -59,7 +59,7 @@ message FollowerResponseDto {
 }
 
 message id {
-    string id=1;
+    string Id=1;
 }
 
 message ListFollowingResponseDto {
