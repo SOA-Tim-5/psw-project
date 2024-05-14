@@ -14,22 +14,31 @@ namespace Explorer.API.Controllers
         }
 
         public override async Task<AuthenticationTokens> Authorize(Credentials request,
-            ServerCallContext context)
+    ServerCallContext context)
         {
-            var httpHandler = new HttpClientHandler();
-            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-            var channel = GrpcChannel.ForAddress("https://localhost:44332", new GrpcChannelOptions { HttpHandler = httpHandler });
-
-            var client = new Authorize.AuthorizeClient(channel);
-            var response = await client.AuthorizeAsync(request);
-
-            Console.WriteLine(response.AccessToken);
-
-            return await Task.FromResult(new AuthenticationTokens
+            try
             {
-                Id = response.Id,
-                AccessToken = response.AccessToken
-            });
+                var httpHandler = new HttpClientHandler();
+                httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+                var channel = GrpcChannel.ForAddress("https://localhost:44332", new GrpcChannelOptions { HttpHandler = httpHandler });
+                //Console.WriteLine(channel);
+                var client = new Authorize.AuthorizeClient(channel);
+                var response = await client.AuthorizeAsync(request);
+
+                //Console.WriteLine(response.AccessToken);
+
+                return await Task.FromResult(new AuthenticationTokens
+                {
+                    Id = response.Id,
+                    AccessToken = response.AccessToken
+                });
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Greška prilikom uspostavljanja veze: {ex.Message}");
+                throw; 
+            }
         }
+
     }
 }
