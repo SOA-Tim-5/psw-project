@@ -96,8 +96,61 @@ namespace Explorer.API.Controllers.Author
             });
         }
 
+        public override async Task<ListEncounterResponseDto> FindAllInRangeOf(UserPositionWithRange message,
+ServerCallContext context)
+        {
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:81", new GrpcChannelOptions { HttpHandler = httpHandler });
 
+            var client = new Encounter.EncounterClient(channel);
+            var response = await client.FindAllInRangeOfAsync(message);
+            return await Task.FromResult(response);
+        }
 
+        public override async Task<EncounterInstanceResponseDto> FindEncounterInstance(EncounterInstanceId message,
+    ServerCallContext context)
+        {
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:81", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new Encounter.EncounterClient(channel);
+            var response = await client.FindEncounterInstanceAsync(message);
+
+            return await Task.FromResult(new EncounterInstanceResponseDto
+            {
+                UserId = response.UserId,
+                Status = response.Status,
+                CompletitionTime = response.CompletitionTime
+
+            });
+        }
+
+        public override async Task<EncounterResponseDto> Activate(TouristPosition message,
+ServerCallContext context)
+        {
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:81", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new Encounter.EncounterClient(channel);
+            var response = await client.ActivateAsync(message);
+
+            return await Task.FromResult(new EncounterResponseDto
+            {
+                Id = response.Id,
+                Title = response.Title,
+                Description = response.Description,
+                Picture = response.Picture,
+                Longitude = response.Longitude,
+                Latitude = response.Latitude,
+                Radius = response.Radius,
+                XpReward = response.XpReward,
+                Status = response.Status,
+                Type = response.Type,
+            });
+        }
     }
 }
 

@@ -2,6 +2,7 @@ syntax = "proto3";
 
 option csharp_namespace = "GrpcServiceTranscoding";
 import "Protos/google/api/annotations.proto";
+import "google/protobuf/timestamp.proto";
 
 
 service Encounter {
@@ -20,6 +21,25 @@ service Encounter {
   rpc CreateHiddenLocationEncounter(HiddenLocationEncounterCreateDto) returns (HiddenLocationEncounterResponseDto){
   option (google.api.http) = {
     post: "/api/author/hidden-location-encounter/create"
+    body: "*"
+  };
+  }
+  rpc FindAllInRangeOf(UserPositionWithRange) returns (ListEncounterResponseDto){
+  option (google.api.http) = {
+    post: "/api/tourist/encounter/in-range-of"
+    body: "*"
+
+  };
+  }
+
+    rpc FindEncounterInstance(EncounterInstanceId) returns (EncounterInstanceResponseDto){
+  option (google.api.http) = {
+    get: "/api/tourist/encounter/{EncounterId}/{Id}/instance"
+  };
+  }
+    rpc Activate(TouristPosition) returns (EncounterResponseDto){
+  option (google.api.http) = {
+    post: "/api/tourist/encounter/activate"
     body: "*"
   };
   }
@@ -139,4 +159,36 @@ message HiddenLocationEncounterResponseDto{
         Archived = 2;
     };
         EncounterStatus Status=11;
+}
+message ListEncounterResponseDto{
+    repeated EncounterResponseDto encounters=1;
+}
+
+message UserPositionWithRange{
+    double range=1;
+    double longitude=2;
+    double latitude=3;
+}
+
+message EncounterInstanceId{
+    int64 Id=1;
+    int64 EncounterId=2;
+}
+
+message EncounterInstanceResponseDto{
+    int64 UserId=1;
+    enum EncounterInstanceStatus {
+        Activated=0;
+        Completed=1;
+    };
+    EncounterInstanceStatus Status=2;
+    google.protobuf.Timestamp CompletitionTime = 3;
+
+}
+
+message TouristPosition{
+    int64 TouristId=1;
+    double Longitude=2;
+    double Latitude=3;
+    int64 EncounterId=4;
 }
