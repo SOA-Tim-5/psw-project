@@ -6,7 +6,7 @@ using Grpc.Core;
 using Grpc.Net.Client;
 using GrpcServiceTranscoding;
 using Microsoft.AspNetCore.Mvc;
-using Explorer.Stakeholders.Core.Domain;
+//using Explorer.Stakeholders.Core.Domain;
 using System.Collections;
 
 namespace Explorer.API.Controllers.Author.TourAuthoring
