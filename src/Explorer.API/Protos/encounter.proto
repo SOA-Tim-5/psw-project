@@ -55,6 +55,18 @@ service Encounter {
     body: "*"
   };
   }
+  rpc CompleteHiddenLocationEncounter(TouristPosition) returns (Inrange){
+  option (google.api.http) = {
+    post: "/api/tourist/hidden-location-encounter/complete"
+    body: "*"
+  };
+  }
+  rpc IsUserInCompletitionRange(Position) returns (Inrange){
+  option (google.api.http) = {
+    post: "/api/tourist/hidden-location-encounter/check-range"
+    body: "*"
+  };
+  }
 }
 
 
@@ -183,11 +195,7 @@ message EncounterInstanceId{
 
 message EncounterInstanceResponseDto{
     int64 UserId=1;
-    enum EncounterInstanceStatus {
-        Activated=0;
-        Completed=1;
-    };
-    EncounterInstanceStatus Status=2;
+    int64 Status=2;
     google.protobuf.Timestamp CompletitionTime = 3;
 
 }
@@ -201,4 +209,13 @@ message TouristPosition{
 message TouristProgress{
     int64 Xp=1;
     int64 Level=2;
+}
+
+message Inrange{
+    bool In=1;
+}
+message Position{
+    int64 Id=1;
+    double Longitude=2;
+    double Latitude=3;
 }

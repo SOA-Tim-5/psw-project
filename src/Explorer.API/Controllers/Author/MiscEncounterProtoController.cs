@@ -185,6 +185,36 @@ ServerCallContext context)
             });
         }
 
+        public override async Task<Inrange> CompleteHiddenLocationEncounter(TouristPosition message,
+ServerCallContext context)
+        {
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:81", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new Encounter.EncounterClient(channel);
+            var response = await client.CompleteHiddenLocationEncounterAsync(message);
+
+            return await Task.FromResult(new Inrange
+            {
+                In = true
+            });
+        }
+        public override async Task<Inrange> IsUserInCompletitionRange(Position message,
+ServerCallContext context)
+        {
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:81", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new Encounter.EncounterClient(channel);
+            var response = await client.IsUserInCompletitionRangeAsync(message);
+            return await Task.FromResult(new Inrange
+            {
+                In = true
+            });
+        }
+
     }
 }
 
