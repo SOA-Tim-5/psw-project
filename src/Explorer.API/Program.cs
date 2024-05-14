@@ -48,6 +48,9 @@ app.MapControllers();
 app.MapGrpcService<AuthenticationProtoController>();
 app.MapGrpcService<MiscEncounterProtoController>();
 
+app.MapGrpcService<FollowerProtoController>();  
+
+
 app.Run();
 
 // Required for automated tests

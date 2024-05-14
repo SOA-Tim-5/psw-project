@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Explorer.API.Controllers
 {
     [Authorize(Policy = "nonAdministratorPolicy")]
-    [Route("api/follower")]
+    [Route("")]
     public class FollowerController : BaseApiController
     {
 
