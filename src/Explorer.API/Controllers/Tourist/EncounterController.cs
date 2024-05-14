@@ -174,6 +174,7 @@ namespace Explorer.API.Controllers.Tourist
         }
         */
        // [HttpGet("progress")]
+
         public async Task<ActionResult<TouristProgressDto>> GetProgress()
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);

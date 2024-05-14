@@ -47,9 +47,6 @@ app.UseStaticFiles();
 app.MapControllers();
 app.MapGrpcService<AuthenticationProtoController>();
 app.MapGrpcService<MiscEncounterProtoController>();
-app.MapGrpcService<SocialEncounterProtoController>();
-app.MapGrpcService<HiddenLocationEncounterProtoController>();
-app.MapGrpcService<EncounterControllerProto>();
 
 app.Run();
 

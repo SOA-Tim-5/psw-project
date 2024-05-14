@@ -2,7 +2,6 @@ syntax = "proto3";
 
 option csharp_namespace = "GrpcServiceTranscoding";
 import "Protos/google/api/annotations.proto";
-import "google/protobuf/timestamp.proto";
 
 
 service Encounter {
@@ -14,76 +13,16 @@ service Encounter {
     }
     rpc CreateSocialEncounter(SocialEncounterCreateDto) returns (EncounterResponseDto){
     option (google.api.http) = {
-      post: "/api/author/social-encounter/create"
-      body: "*"
-    };
-    }
-    rpc CreateHiddenLocationEncounter(HiddenLocationEncounterCreateDto) returns (HiddenLocationEncounterResponseDto){
-    option (google.api.http) = {
-      post: "/api/author/hidden-location-encounter/create"
-      body: "*"
-    };
-    }
-    rpc Activate(TouristPosition) returns (EncounterResponseDto){
-    option (google.api.http) = {
-      post: "/api/tourist/encounter/{TouristId}/activate"
-      body: "*"
-    };
-    }
-    rpc FindTouristProgressByTouristId(TouristId) returns (TouristProgress){
-    option (google.api.http) = {
-      post: "/api/tourist/encounter/progress"
-      body: "*"
-    };
-    }
-    rpc IsUserInCompletitionRange(Position) returns (Inrange){
-    option (google.api.http) = {
-      post: "/api/tourist/hidden-location-encounter/{Id}/check-range"
-      body: "*"
-    };
-    }
-    rpc FindHiddenLocationEncounterById(EncounterId) returns (HiddenLocationEncounterResponseDto){
-    option (google.api.http) = {
-      post: "/api/tourist/hidden-location-encounter/{Id}"
-      body: "*"
-    };
-    }
-    rpc FindEncounterInstance(EncounterInstanceId) returns (EncounterInstanceResponseDto){
-    option (google.api.http) = {
-      post: "/api/tourist/encounter/{EncounterId}/instance"
-      body: "*"
-    };
-    }
-    rpc CompleteMisc(EncounterInstanceId) returns (TouristProgress){
-    option (google.api.http) = {
-      post: "/api/tourist/encounter/Id/complete/misc"
-      body: "*"
-    };
-    }
-    rpc CompleteHiddenLocationEncounter(TouristPosition) returns (Inrange){
-    option (google.api.http) = {
-      post: "/api/tourist/hidden-location-encounter/{TouristId}/complete"
-      body: "*"
-    };
-    }
-    rpc CompleteSocialEncounter(TouristPosition) returns (TouristProgress){
-    option (google.api.http) = {
-      post: "/api/tourist/encounter/{TouristId}/complete/social"
-      body: "*"
-    };
-    }
-    rpc FindAll(Inrange) returns (ListEncounterResponseDto){
-    option (google.api.http) = {
-      post: "/api/tourist/encounter"
-      body: "*"
-    };
-    }
-    rpc FindAllInRangeOf(AllInRange) returns (ListEncounterResponseDto){
-    option (google.api.http) = {
-      post: "/api/tourist/encounter/in-range-of"
-      body: "*"
-    };
-    }
+    post: "/api/author/social-encounter/create"
+    body: "*"
+  };
+  }
+  rpc CreateHiddenLocationEncounter(HiddenLocationEncounterCreateDto) returns (HiddenLocationEncounterResponseDto){
+  option (google.api.http) = {
+    post: "/api/author/hidden-location-encounter/create"
+    body: "*"
+  };
+  }
 }
 
 
@@ -139,7 +78,6 @@ message SocialEncounterCreateDto
      EncounterStatus Status =8;
      int32 PeopleNumber=9;
 }
-
 message EncounterResponseDto
 {
      int64 Id=1;
@@ -164,6 +102,7 @@ message EncounterResponseDto
     };
     EncounterType Type=10;
 }
+
 
 message HiddenLocationEncounterCreateDto{
      double PictureLongitude=1;
@@ -200,61 +139,4 @@ message HiddenLocationEncounterResponseDto{
         Archived = 2;
     };
         EncounterStatus Status=11;
-}
-
-message TouristPosition{
-    int64 TouristId=1;
-    double Longitude=2;
-    double Latitude=3;
-    int64 EncounterId=4;
-}
-
-message TouristProgress{
-    int64 Xp=1;
-    int64 Level=2;
-}
-
-message TouristId{
-    int64 Id=1;
-}
-
-
-message Position{
-    int64 Id=1;
-    double Longitude=2;
-    double Latitude=3;
-}
-
-message Inrange{
-    bool In=1;
-}
-
-message EncounterId{
-    int64 Id=1;
-}
-
-message EncounterInstanceId{
-    int64 Id=1;
-    int64 EncounterId=2;
-}
-
-message EncounterInstanceResponseDto{
-    int64 UserId=1;
-    enum EncounterInstanceStatus {
-        Activated=0;
-        Completed=1;
-    };
-    EncounterInstanceStatus Status=2;
-    google.protobuf.Timestamp CompletitionTime = 3;
-
-}
-
-message ListEncounterResponseDto{
-    repeated EncounterResponseDto encounters=1;
-}
-
-message AllInRange{
-    double Range=1;
-    double Longitude=2;
-    double Latitude=3;
 }

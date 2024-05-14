@@ -19,7 +19,7 @@ namespace Explorer.API.Controllers.Tourist
         {
         }
        
-        [HttpGet("{id:long}")]
+        //[HttpGet("{id:long}")]
         public async Task<ActionResult<EncounterResponseDto>> GetHiddenLocationEncounterById(long id)
         {
             string url = "http://host.docker.internal:81/encounters/hidden/" + id.ToString();
