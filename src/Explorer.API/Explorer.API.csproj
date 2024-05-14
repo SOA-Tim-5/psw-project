@@ -54,6 +54,7 @@
 		<Protobuf Include="Protos\authentication.proto" />
 		<Protobuf Include="Protos\follower.proto" />
 		<Protobuf Include="Protos\encounter.proto" />
+		<Protobuf Include="Protos\tour.proto" />
 	</ItemGroup>
 
 </Project>

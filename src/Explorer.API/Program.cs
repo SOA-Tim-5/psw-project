@@ -1,6 +1,10 @@
 using Explorer.API.Controllers;
 using Explorer.API.Controllers.Author;
+<<<<<<< HEAD
+using Explorer.API.Controllers.Author.TourAuthoring;
+=======
 using Explorer.API.Controllers.Tourist;
+>>>>>>> 8095f7c7830cad23e8579ec62a3662bde41781a8
 using Explorer.API.Startup;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
 
@@ -47,6 +51,7 @@ app.UseStaticFiles();
 app.MapControllers();
 app.MapGrpcService<AuthenticationProtoController>();
 app.MapGrpcService<MiscEncounterProtoController>();
+app.MapGrpcService<TourProtoController>();
 
 app.MapGrpcService<FollowerProtoController>();  
 
