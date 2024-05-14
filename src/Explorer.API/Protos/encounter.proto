@@ -67,6 +67,12 @@ service Encounter {
     body: "*"
   };
   }
+  rpc FindTouristProgressByTouristId(TouristId) returns (TouristProgress) {
+  option (google.api.http) = {
+    get: "/api/tourist/encounter/progress/{Id}"
+  };
+  }
+
 }
 
 
@@ -218,4 +224,7 @@ message Position{
     int64 Id=1;
     double Longitude=2;
     double Latitude=3;
+}
+message TouristId{
+    int64 Id=1;
 }

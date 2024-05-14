@@ -214,6 +214,22 @@ ServerCallContext context)
                 In = true
             });
         }
+        public override async Task<TouristProgress> FindTouristProgressByTouristId(TouristId message,
+ServerCallContext context)
+        {
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:81", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new Encounter.EncounterClient(channel);
+            var response = await client.FindTouristProgressByTouristIdAsync(message);
+            return await Task.FromResult(new TouristProgress
+            {
+                Xp = response.Xp,
+                Level = response.Level,
+            });
+
+        }
 
     }
 }
