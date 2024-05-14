@@ -10,7 +10,7 @@ package Authorize;
 service Authorize {
   rpc Authorize (Credentials) returns (AuthenticationTokens) {
       option (google.api.http) = {
-      post: "/api/users/login"
+      post: "/api/users/login/88888"
       body: "*"
     };
   }

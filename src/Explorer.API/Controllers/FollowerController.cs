@@ -13,7 +13,7 @@ using System.Text.Json;
 namespace Explorer.API.Controllers
 {
     [Authorize(Policy = "nonAdministratorPolicy")]
-    [Route("")]
+    [Route("api")]
     public class FollowerController : BaseApiController
     {
 
@@ -50,7 +50,7 @@ namespace Explorer.API.Controllers
             var result = _followerService.GetFollowings(page, pageSize, userId);
             return CreateResponse(result);
         }*/
-        [HttpGet("followings/{id}")]
+       /* [HttpGet("followings/{id}")]
         public async Task<ActionResult<List<FollowingResponseDto>>> GetFollowings(string id)
         {
             var followings = await client.GetFromJsonAsync<FollowingResponseDto[]>(
@@ -63,7 +63,7 @@ namespace Explorer.API.Controllers
             var followers = await client.GetFromJsonAsync<FollowingResponseDto[]>(
                 "http://host.docker.internal:8090/followers/" + id);
             return followers.ToList();
-        }
+        }*/
 
         //[HttpDelete("{id:long}")]
         //public ActionResult Delete(long id)
@@ -79,20 +79,33 @@ namespace Explorer.API.Controllers
         //    return CreateResponse(result);
         //}
 
-        //[HttpGet("search/{searchUsername}")]
-        //public ActionResult<PagedResult<UserResponseDto>> GetSearch([FromQuery] int page, [FromQuery] int pageSize, string searchUsername)
-        //{
-        //    long userId = 0;
-        //    var identity = HttpContext.User.Identity as ClaimsIdentity;
-        //    if (identity != null && identity.IsAuthenticated)
-        //    {
-        //        userId = long.Parse(identity.FindFirst("id").Value);
-        //    }
-        //    var result = _userService.SearchUsers(0, 0, searchUsername, userId);
-        //    return CreateResponse(result);
-        //}
+        [HttpGet("follower/search/{searchUsername}")]
+        public async Task<ActionResult<PagedResult<UserResponseDto>>> GetSearch([FromQuery] int page, [FromQuery] int pageSize, string searchUsername)
+        {
 
-        [HttpPost("create-following")]
+            string url = $"https://localhost:44332/api/people/follower/search/" + searchUsername;
+
+            // Slanje GET zahteva
+            using HttpResponseMessage response = await client.GetAsync(url);
+
+            // Provera status koda odgovora
+            if (response.IsSuccessStatusCode)
+            {
+                // Čitanje odgovora kao string
+                string jsonResponse = await response.Content.ReadAsStringAsync();
+                //var resultModel = JsonSerializer.Deserialize<List<TourResponseDto>>(jsonResponse);
+
+                // Kreiranje odgovora
+                return CreateResponse(jsonResponse.ToResult());
+            }
+            else
+            {
+                return StatusCode((int)response.StatusCode);
+            }
+           
+        }
+
+       /* [HttpPost("create-following")]
         public async Task<ActionResult<FollowerResponseDto>> CreateNewFollowing([FromBody] UserFollowingDto following)
         {
             using StringContent jsonContent = new(JsonSerializer.Serialize(following), Encoding.UTF8, "application/json");
@@ -109,7 +122,7 @@ namespace Explorer.API.Controllers
         {
             var followers = await client.GetFromJsonAsync<FollowingResponseDto[]>("http://host.docker.internal:8090/recommendations/" + id);
             return followers.ToList();
-        }
+        }*/
     }
 
 

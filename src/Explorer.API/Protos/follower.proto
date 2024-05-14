@@ -14,26 +14,47 @@ service Follower {
 
     rpc GetFollowerRecommendations(id) returns (ListFollowingResponseDto) {
     option (google.api.http) = {
-      post: "/api/follower/recommendations/{Id}"
-      body: "*"
+      get: "/api/follower/recommendations/{Id}"
+      
     };
     }
 
      rpc GetFollowings(id) returns (ListFollowingResponseDto) {
      option (google.api.http) = {
-      post: "/api/follower/followings/{Id}"
-      body: "*"
+      get: "/api/follower/followings/{Id}"
+      
     };
     }
 
     rpc GetFollowers(id) returns (ListFollowingResponseDto) {
      option (google.api.http) = {
-      post: "/api/follower/followers/{Id}"
-      body: "*"
+      get: "/api/follower/followers/{Id}"
+      
+    };
+    }
+
+ 
+    rpc GetAllFromFollowingUsers(id) returns (BlogListResponse) {
+     option (google.api.http) = {
+      get: "/api/blog/from-following/{Id}"
+      
     };
     }
 
 }
+
+//[HttpGet("search/{searchUsername}")]
+        //public ActionResult<PagedResult<UserResponseDto>> GetSearch([FromQuery] int page, [FromQuery] int pageSize, string searchUsername)
+        //{
+        //    long userId = 0;
+        //    var identity = HttpContext.User.Identity as ClaimsIdentity;
+        //    if (identity != null && identity.IsAuthenticated)
+        //    {
+        //        userId = long.Parse(identity.FindFirst("id").Value);
+        //    }
+        //    var result = _userService.SearchUsers(0, 0, searchUsername, userId);
+        //    return CreateResponse(result);
+        //}
 
 
 
@@ -64,4 +85,39 @@ message id {
 
 message ListFollowingResponseDto {
     repeated FollowingResponseDto ResponseList=1 ;
+}
+
+message SearchUsername {
+    string SearchUsername=1;
+}
+message FollowerCreateDto{
+     int64 UserId =1;
+         int64 FollowedById =2;
+}
+message UserResponseDto{
+     int64 Id =1;
+         string Username =2;
+         string ProfilePicture =3;
+         int32 Role =4;
+         bool IsActive =5;
+         repeated FollowerCreateDto Followers=6;
+}
+
+message BlogResponseDto{
+     int32 Id =1;
+         string Title =2;
+         string Description =3;
+         string Date=4;
+         repeated string Pictures =5;
+         int32 Status =6;
+         int64 VoteCount =7;
+         int64 UpvoteCount =8;
+         int64 DownvoteCount=9;
+         int32 AuthorId =10;
+         int64 ClubId =11;
+}
+
+message BlogListResponse{
+    repeated BlogResponseDto Response =1;
+    repeated FollowingResponseDto  Following = 2;
 }

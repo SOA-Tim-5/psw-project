@@ -17,6 +17,6 @@ namespace Explorer.Blog.API.Public
         Result<BlogResponseDto> UpdateBlog(BlogUpdateDto blog);
         public Result Delete(long id);
         Result<PagedResult<BlogResponseDto>> GetAllFromBlogs(int page, int pageSize, long clubId);
-        Task<Result<List<BlogResponseDto>>> GetAllFromFollowingUsers(int page, int pageSize, long userId);
+        Task<List<BlogResponseDto>> GetAllFromFollowingUsers(List<FollowingResponseDto> f);
     }
 }

@@ -54,13 +54,13 @@ namespace Explorer.API.Controllers
             return CreateResponse(result);
         }
 
-        [HttpGet("from-following")]
-        public async Task<ActionResult<List<BlogResponseDto>>> GetAllFromFollowing([FromQuery] int page, [FromQuery] int pageSize)
-        {
-            long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            var result = await _blogService.GetAllFromFollowingUsers(page, pageSize, userId);
-            return CreateResponse(result);
-        }
+        //[HttpGet("from-following")]
+       // public async Task<ActionResult<List<BlogResponseDto>>> GetAllFromFollowing([FromQuery] int page, [FromQuery] int pageSize)
+        //{
+        //    long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
+            //var result = await _blogService.GetAllFromFollowingUsers(page, pageSize, userId);
+            //return CreateResponse(result);
+       // }
 
         [HttpGet("{id:long}")]
         public ActionResult<BlogResponseDto> Get(long id)
