@@ -4,23 +4,19 @@ option csharp_namespace = "GrpcServiceTranscoding";
 import "Protos/google/api/annotations.proto";
 
 service FacilityService {
-    rpc Create(FacilityCreateDto) returns (FacilityResponseDto) {
+    rpc CreateFacility(FacilityCreateDto) returns (FacilityResponseDto) {
         option (google.api.http) = {
           post: "/api/facility"
           body: "*"
         };
     }
-    rpc GetByAuthorId(GetFacilityParams) returns (FacilityListResponse){
-        option (google.api.http) = {
-          get: "/api/facility/authorsFacilities/{id}"
-        };
-    }
+    
 }
 
 message FacilityCreateDto{
      string Name=1;
- string Description=2;
- string ImagePath =3;
+ optional string Description=2;
+ optional string ImagePath =3;
    int64 AuthorId=4;
  enum FacilityCategory {
         Draft = 0;
@@ -37,8 +33,8 @@ message FacilityCreateDto{
 message FacilityResponseDto{
     int64 Id=1;
      string Name=2;
- string Description=3;
- string ImagePath =4;
+ optional string Description=3;
+ optional string ImagePath =4;
    int64 AuthorId=5;
  enum FacilityCategory {
         Restaurant=0;
@@ -57,10 +53,3 @@ message FacilityResponseDto{
  double Latitude=8;
 }
 
-message FacilityListResponse{
-    repeated FacilityResponseDto facilityResponses =1;
-}
-
-message GetFacilityParams{
-    string id=1;
-}

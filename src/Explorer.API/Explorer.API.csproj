@@ -49,7 +49,7 @@
 		<Protobuf Include="Protos\authentication.proto" />
 		<Protobuf Include="Protos\encounter.proto" />
 		<Protobuf Include="Protos\tour.proto" />
-		<Protobuf Include="Protos\facility\facility.proto" />
+		<Protobuf Include="Protos\facility.proto"/>
 		<Protobuf Include="Protos\publicFacilityRequest.proto" />
 		<Protobuf Include="Protos\equipment.proto" />
 		<Protobuf Include="Protos\preference.proto" />

@@ -1,6 +1,14 @@
-﻿using Grpc.Core;
+﻿using System;
+using System.Net.Security;
+using FluentResults;
+using System.Security.Claims;
+using Grpc.Core;
 using Grpc.Net.Client;
 using GrpcServiceTranscoding;
+using Microsoft.AspNetCore.Mvc;
+using Explorer.Stakeholders.Core.Domain;
+using System.Collections;
+using static Google.Rpc.Context.AttributeContext.Types;
 
 namespace Explorer.API.Controllers.Author
 {
@@ -13,15 +21,15 @@ namespace Explorer.API.Controllers.Author
             _logger = logger;
         }
 
-        public override async Task<FacilityResponseDto> Create(FacilityCreateDto message,
-            ServerCallContext context)
+        public override async Task<FacilityResponseDto> CreateFacility(FacilityCreateDto message,
+                    ServerCallContext context)
         {
             var httpHandler = new HttpClientHandler();
             httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
             var channel = GrpcChannel.ForAddress("http://localhost:88", new GrpcChannelOptions { HttpHandler = httpHandler });
 
             var client = new FacilityService.FacilityServiceClient(channel);
-            var response = await client.CreateAsync(message);
+            var response = await client.CreateFacilityAsync(message);
 
             // Console.WriteLine(response.AccessToken);
 
@@ -35,25 +43,8 @@ namespace Explorer.API.Controllers.Author
                 Category = response.Category,
                 Longitude = response.Longitude,
                 Latitude = response.Latitude
-            }); ;
+            });
         }
 
-        public async Task<List<FacilityResponseDto>> GetByAuthorId(GetFacilityParams message, ServerCallContext context)
-        {
-
-            var httpHandler = new HttpClientHandler();
-            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-            var channel = GrpcChannel.ForAddress("http://localhost:88", new GrpcChannelOptions { HttpHandler = httpHandler });
-
-            var client = new FacilityService.FacilityServiceClient(channel);
-            var response = await client.GetByAuthorIdAsync(message);
-
-            List<FacilityResponseDto> rs = new List<FacilityResponseDto>();
-            rs.AddRange(response.FacilityResponses);
-
-            return await Task.FromResult(rs);
-        }
-
-        
     }
 }
