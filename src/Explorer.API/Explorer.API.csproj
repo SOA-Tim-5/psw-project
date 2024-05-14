@@ -8,6 +8,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="Protos\follower.proto" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Content Include="Startup\templateMail.html" />
   </ItemGroup>
 
@@ -21,6 +25,8 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.14" />
+
   </ItemGroup>
 
   <ItemGroup>
@@ -30,8 +36,6 @@
     <ProjectReference Include="..\Modules\Blog\Explorer.Blog.Infrastructure\Explorer.Blog.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Payments\Explorer.Payments.API\Explorer.Payments.API.csproj" />
     <ProjectReference Include="..\Modules\Payments\Explorer.Payments.Infrastructure\Explorer.Payments.Infrastructure.csproj" />
-    <ProjectReference Include="..\Modules\Stakeholders\Explorer.Stakeholders.API\Explorer.Stakeholders.API.csproj" />
-    <ProjectReference Include="..\Modules\Stakeholders\Explorer.Stakeholders.Infrastructure\Explorer.Stakeholders.Infrastructure.csproj" />
   </ItemGroup>
 
 	<ItemGroup>
@@ -46,9 +50,9 @@
 	</ItemGroup>
 
 	<ItemGroup>
-		<Folder Include="Controllers\Tourist\" />
 		<Folder Include="Controllers\Administrator\" />
 		<Protobuf Include="Protos\authentication.proto" />
+		<Protobuf Include="Protos\follower.proto" />
 		<Protobuf Include="Protos\encounter.proto" />
 		<Protobuf Include="Protos\tour.proto" />
 	</ItemGroup>
