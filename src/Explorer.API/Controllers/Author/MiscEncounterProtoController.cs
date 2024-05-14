@@ -168,6 +168,23 @@ ServerCallContext context)
                 Level = response.Level,
             });
         }
+        public override async Task<TouristProgress> CompleteSocialEncounter(TouristPosition message,
+ServerCallContext context)
+        {
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:81", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new Encounter.EncounterClient(channel);
+            var response = await client.CompleteSocialEncounterAsync(message);
+
+            return await Task.FromResult(new TouristProgress
+            {
+                Xp = response.Xp,
+                Level = response.Level,
+            });
+        }
+
     }
 }
 
