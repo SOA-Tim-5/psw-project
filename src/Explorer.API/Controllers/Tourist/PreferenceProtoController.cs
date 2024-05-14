@@ -16,7 +16,7 @@ namespace Explorer.API.Controllers.Tourist
             _logger = logger;
         }
 
-        public override async Task<PreferenceResponseDto> Create(PreferenceCreateDto message,
+        public override async Task<PreferenceResponseDto> CreatePreference(PreferenceCreateDto message,
             ServerCallContext context)
         {
             var httpHandler = new HttpClientHandler();
@@ -24,7 +24,7 @@ namespace Explorer.API.Controllers.Tourist
             var channel = GrpcChannel.ForAddress("http://localhost:88", new GrpcChannelOptions { HttpHandler = httpHandler });
 
             var client = new PreferenceService.PreferenceServiceClient(channel);
-            var response = await client.CreateAsync(message);
+            var response = await client.CreatePreferenceAsync(message);
 
             // Console.WriteLine(response.AccessToken);
 

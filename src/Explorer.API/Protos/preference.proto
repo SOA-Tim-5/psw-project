@@ -5,7 +5,7 @@ import "Protos/google/api/annotations.proto";
 import "google/protobuf/empty.proto";
 
 service PreferenceService {
-    rpc Create(PreferenceCreateDto) returns (PreferenceResponseDto) {
+    rpc CreatePreference(PreferenceCreateDto) returns (PreferenceResponseDto) {
         option (google.api.http) = {
           post: "/api/tourist/preferences/create"
           body: "*"

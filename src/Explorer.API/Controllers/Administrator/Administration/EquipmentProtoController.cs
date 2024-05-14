@@ -14,7 +14,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
             _logger = logger;
         }
 
-        public override async Task<EquipmentResponseDto> Create(EquipmentCreateDto message,
+        public override async Task<EquipmentResponseDto> CreateEquipment(EquipmentCreateDto message,
             ServerCallContext context)
         {
             var httpHandler = new HttpClientHandler();
@@ -22,7 +22,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
             var channel = GrpcChannel.ForAddress("http://localhost:88", new GrpcChannelOptions { HttpHandler = httpHandler });
 
             var client = new EquipmentService.EquipmentServiceClient(channel);
-            var response = await client.CreateAsync(message);
+            var response = await client.CreateEquipmentAsync(message);
 
             // Console.WriteLine(response.AccessToken);
 
@@ -33,19 +33,6 @@ namespace Explorer.API.Controllers.Administrator.Administration
                 Description = response.Description
             }); ;
         }
-        public async Task<List<EquipmentResponseDto>> GetAll(ServerCallContext context)
-        {
-            var httpHandler = new HttpClientHandler();
-            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-            var channel = GrpcChannel.ForAddress("http://localhost:88", new GrpcChannelOptions { HttpHandler = httpHandler });
-
-            var client = new EquipmentService.EquipmentServiceClient(channel);
-            var response = await client.GetAllAsync(new Empty());
-
-            List<EquipmentResponseDto> rs = new List<EquipmentResponseDto>();
-            rs.AddRange(response.EquipmentResponses);
-
-            return await Task.FromResult(rs);
-        }
+        
     }
 }

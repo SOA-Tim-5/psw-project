@@ -45,8 +45,9 @@ app.MapGrpcService<MiscEncounterProtoController>();
 app.MapGrpcService<TourProtoController>();
 app.MapGrpcService<FacilityProtoController>();
 app.MapGrpcService<PublicFacilityRequestProtoController>();
-app.MapGrpcService<EquipmentProtoController>();
 app.MapGrpcService<PreferenceProtoController>();
+
+app.MapGrpcService<EquipmentProtoController>();
 app.Run();
 
 // Required for automated tests

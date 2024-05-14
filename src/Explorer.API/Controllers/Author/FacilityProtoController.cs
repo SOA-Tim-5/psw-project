@@ -46,5 +46,37 @@ namespace Explorer.API.Controllers.Author
             });
         }
 
+        public override async Task<FacilityListResponse> GetByAuthorId(GetFacilityParams message, ServerCallContext context)
+        {
+
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("http://localhost:88", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new FacilityService.FacilityServiceClient(channel);
+            var response = await client.GetByAuthorIdAsync(message);
+
+            List<FacilityResponseDto> rs = new List<FacilityResponseDto>();
+
+            foreach (FacilityResponseDto tr in response.FacilityResponses)
+            {
+
+                rs.Add(new FacilityResponseDto
+                {
+                    Id = tr.Id,
+                    Name = tr.Name,
+                    Description = tr.Description,
+                    ImagePath = tr.ImagePath,
+                    AuthorId = tr.AuthorId,
+                    Category = tr.Category,
+                    Longitude = tr.Longitude,
+                    Latitude = tr.Latitude
+                });
+            }
+
+            return await Task.FromResult(response);
+
+        }
+
     }
 }
