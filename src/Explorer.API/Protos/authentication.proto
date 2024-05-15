@@ -20,6 +20,13 @@ service Authorize {
       
     };
      }
+
+     rpc GetByUserId(UserId) returns (PersonResponseDtoA) {
+     option (google.api.http) = {
+      get: "/api/people/person/{UsersId}"
+      
+    };
+     }
 }
 
 // The request message containing the user's name.
@@ -42,16 +49,33 @@ message SearchUsernameA {
     string SearchUsername=1;
     string UserId=2;
 }
+
 message UserResponseDtoA{
      int64 Id =1;
-         string Username =2;
-         string ProfilePicture =3;
-         int32 Role =4;
-         bool IsActive =5;
-         repeated FollowerCreateDtoA Followers=6;
+     string Username =2;
+     string ProfilePicture =3;
+     int32 Role =4;
+     bool IsActive =5;
+     repeated FollowerCreateDtoA Followers=6;
+}
+
+message PersonResponseDtoA{
+    int64 Id =1;
+    int64 UserId =2;
+    string Name =3;
+    string Surname =4;
+    string Email =5;
+    UserResponseDtoA User =6;
+    string Bio =7;
+    string Motto =8;
 }
 
 message FollowerCreateDtoA{
      int64 UserId =1;
          int64 FollowedById =2;
 }
+
+message UserId {
+    int64 UsersId = 1;;
+}
+
