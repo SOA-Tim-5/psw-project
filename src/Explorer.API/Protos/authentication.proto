@@ -51,23 +51,23 @@ message SearchUsernameA {
 }
 
 message UserResponseDtoA{
-     int64 Id =1;
-     string Username =2;
-     string ProfilePicture =3;
-     int32 Role =4;
-     bool IsActive =5;
-     repeated FollowerCreateDtoA Followers=6;
+     int64 id =1;
+     string username =2;
+     string profilePicture =3;
+     int32 role =4;
+     bool isActive =5;
+     repeated FollowerCreateDtoA followers=6;
 }
 
 message PersonResponseDtoA{
-    int64 Id =1;
-    int64 UserId =2;
-    string Name =3;
-    string Surname =4;
-    string Email =5;
-    UserResponseDtoA User =6;
-    string Bio =7;
-    string Motto =8;
+    int64 id =1;
+    int64 userId =2;
+    string name =3;
+    string surname =4;
+    string email =5;
+    UserResponseDtoA user =6;
+    string bio =7;
+    string motto =8;
 }
 
 message FollowerCreateDtoA{

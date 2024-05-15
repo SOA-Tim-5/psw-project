@@ -61,7 +61,7 @@ namespace Explorer.API.Controllers
                 ResponseList = { response.ResponseList }
             });
         }
-
+        
         public override async Task<PersonResponseDtoA> GetByUserId(UserId userId, ServerCallContext context)
         {
             var httpHandler = new HttpClientHandler();
@@ -86,6 +86,6 @@ namespace Explorer.API.Controllers
 
         });
         }
-
+        
     }
 }
