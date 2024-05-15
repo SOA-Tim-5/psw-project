@@ -55,6 +55,10 @@
 		<Protobuf Include="Protos\follower.proto" />
 		<Protobuf Include="Protos\encounter.proto" />
 		<Protobuf Include="Protos\tour.proto" />
+		<Protobuf Include="Protos\facility.proto"/>
+		<Protobuf Include="Protos\publicFacilityRequest.proto" />
+		<Protobuf Include="Protos\preference.proto"/>
+		<Protobuf Include="Protos\equipment.proto"/>
 	</ItemGroup>
 
 </Project>

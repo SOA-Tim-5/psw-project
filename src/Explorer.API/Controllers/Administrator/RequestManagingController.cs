@@ -47,7 +47,7 @@ namespace Explorer.API.Controllers.Administrator
             //return CreateResponse(result);
             return null;
         }
-        [HttpGet("facility")]
+        //[HttpGet("facility")]
         public async Task<ActionResult<PagedResult<PublicFacilityRequestResponseDto>>> GetAllFacilityRequest([FromQuery] int page, [FromQuery] int pageSize)
         {
             /*var result = _publicFacilityRequestService.GetPagedWithName(page, pageSize);

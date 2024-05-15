@@ -1,9 +1,8 @@
 using Explorer.API.Controllers;
+using Explorer.API.Controllers.Administrator.Administration;
 using Explorer.API.Controllers.Author;
 using Explorer.API.Controllers.Author.TourAuthoring;
-
 using Explorer.API.Controllers.Author.TourAuthoring;
-
 using Explorer.API.Controllers.Tourist;
 using Explorer.API.Startup;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -52,10 +51,13 @@ app.MapControllers();
 app.MapGrpcService<AuthenticationProtoController>();
 app.MapGrpcService<MiscEncounterProtoController>();
 app.MapGrpcService<TourProtoController>();
+app.MapGrpcService<FacilityProtoController>();
+//app.MapGrpcService<PublicFacilityRequestProtoController>();
+app.MapGrpcService<PreferenceProtoController>();
 
 app.MapGrpcService<FollowerProtoController>();  
 
-
+app.MapGrpcService<EquipmentProtoController>();
 app.Run();
 
 // Required for automated tests

@@ -11,17 +11,24 @@ public static class CorsConfiguration
             options.AddPolicy(name: corsPolicy,
                 builder =>
                 {
+                    
                     builder.WithOrigins(ParseCorsOrigins())
                         .WithHeaders(HeaderNames.ContentType, HeaderNames.Authorization, "access_token")
                         .WithMethods("GET", "PUT", "POST", "PATCH", "DELETE", "OPTIONS");
-                });
+                    /*
+                    builder.AllowAnyMethod()
+                            .AllowAnyHeader()
+                            .SetIsOriginAllowed(origin => true) // allow any origin 
+                            .AllowCredentials();
+                    */
+        });
         });
         return services;
     }
 
     private static string[] ParseCorsOrigins()
     {
-        var corsOrigins = new[] { "http://localhost:4200" };
+        var corsOrigins = new[] { "http://localhost:4200", "*" };
         var corsOriginsPath = Environment.GetEnvironmentVariable("EXPLORER_CORS_ORIGINS");
         if (File.Exists(corsOriginsPath))
         {

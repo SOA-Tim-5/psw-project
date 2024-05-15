@@ -1,0 +1,51 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServiceTranscoding";
+import "Protos/google/api/annotations.proto";
+import "google/protobuf/empty.proto";
+
+service PreferenceService {
+    rpc CreatePreference(PreferenceCreateDto) returns (PreferenceResponseDto) {
+        option (google.api.http) = {
+          post: "/api/tourist/preferences/create"
+          body: "*"
+        };
+    }
+    rpc GetByTouristId(GetPreferenceParams) returns (PreferenceResponseDto){
+        option (google.api.http) = {
+          get: "/api/tourist/preferences/{id}"
+        };
+    }
+    
+}
+
+message PreferenceCreateDto{
+    int64 UserId=1;
+    int32 DifficultyLevel=2;
+    int32 WalkingRating=3;
+    int32 CyclingRating=4;
+    int32 CarRating=5;
+    int32 BoatRating=6;
+    repeated string SelectedTags=7;
+}
+
+
+message  PreferenceResponseDto{
+    int64 Id=1;
+    int64 UserId=2;
+    int32 DifficultyLevel=3;
+    int32 WalkingRating=4;
+    int32 CyclingRating=5;
+    int32 CarRating=6;
+    int32 BoatRating=7;
+    repeated string SelectedTags=8;
+}
+
+
+message PreferenceListResponse{
+    repeated PreferenceResponseDto preferenceResponses =1;
+}
+
+message GetPreferenceParams{
+    string id=1;
+}

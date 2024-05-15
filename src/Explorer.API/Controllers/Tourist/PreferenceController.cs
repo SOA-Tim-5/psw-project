@@ -19,7 +19,7 @@ namespace Explorer.API.Controllers.Tourist
         {
         }
 
-        [HttpGet]
+        //[HttpGet]
         /* public ActionResult<PreferenceResponseDto> Get()
          {
             // int userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
@@ -59,7 +59,7 @@ namespace Explorer.API.Controllers.Tourist
             }
         }
 
-        [HttpPost("create")]
+        //[HttpPost("create")]
         /*public ActionResult<PreferenceResponseDto> Create([FromBody] PreferenceCreateDto preference)
         {
             preference.UserId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);

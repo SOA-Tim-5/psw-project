@@ -19,7 +19,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
         {
         }
 
-        [HttpGet]
+        //[HttpGet]
         /*public ActionResult<PagedResult<EquipmentResponseDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
             var result = _equipmentService.GetPaged(page, pageSize);
@@ -51,7 +51,7 @@ namespace Explorer.API.Controllers.Administrator.Administration
 
 
 
-        [HttpPost]
+        //[HttpPost]
         public async Task<ActionResult<EquipmentResponseDto>> Create([FromBody] EquipmentCreateDto equipment)
         {
             //var result = _equipmentService.Create(equipment);

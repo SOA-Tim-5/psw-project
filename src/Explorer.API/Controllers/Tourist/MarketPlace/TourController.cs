@@ -27,7 +27,7 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
             return null;
         }
 
-        [HttpGet("tours/{tourId:long}")]
+        //[HttpGet("tours/{tourId:long}")]
         /*public ActionResult<PagedResult<TourResponseDto>> GetById(long tourId)
         {
             var result = _tourService.GetById(tourId);

@@ -21,7 +21,7 @@ public class KeyPointController : BaseApiController
 
     //****************************************
     [Authorize(Roles = "author")]
-    [HttpPost("tours/{tourId:long}/key-points")]
+    //[HttpPost("tours/{tourId:long}/key-points")]
     public async Task<ActionResult<KeyPointResponseDto>> CreateKeyPoint([FromRoute] long tourId, [FromBody] KeyPointCreateDto keyPoint)
     {
             

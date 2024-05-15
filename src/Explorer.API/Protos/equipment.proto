@@ -1,0 +1,26 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServiceTranscoding";
+import "Protos/google/api/annotations.proto";
+
+service EquipmentService {
+    rpc CreateEquipment(EquipmentCreateDto) returns (EquipmentResponseDto) {
+        option (google.api.http) = {
+          post: "/api/administration/equipment"
+          body: "*"
+        };
+    }
+    
+}
+
+message EquipmentCreateDto{
+    string Name=1;
+    optional string Description=2;
+}
+
+
+message  EquipmentResponseDto{
+    int64 Id=1;
+    string Name=2;
+    optional string Description=3;
+}
