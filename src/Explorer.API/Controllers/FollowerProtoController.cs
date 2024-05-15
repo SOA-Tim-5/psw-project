@@ -94,7 +94,7 @@ namespace Explorer.API.Controllers.Author
             });
         }
         
-        public override async Task<BlogListResponse> GetAllFromFollowingUsers(id id,
+        public override async Task<BlogListResponse> GetAllFromFollowingUsers(id userId,
                ServerCallContext context)
         {
 
@@ -103,7 +103,7 @@ namespace Explorer.API.Controllers.Author
             var channel = GrpcChannel.ForAddress("http://localhost:8090", new GrpcChannelOptions { HttpHandler = httpHandler });
 
             var client = new Follower.FollowerClient(channel);
-            var response = await client.GetAllFromFollowingUsersAsync(id);
+            var response = await client.GetAllFromFollowingUsersAsync(userId);
 
             List<Blog.API.Dtos.FollowingResponseDto> result = new List<Blog.API.Dtos.FollowingResponseDto>();
             foreach(var f in response.Following)
