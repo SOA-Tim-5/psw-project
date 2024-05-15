@@ -1,4 +1,5 @@
-﻿using Explorer.Blog.Core.Domain.RepositoryInterfaces;
+﻿using System.Linq;
+using Explorer.Blog.Core.Domain.RepositoryInterfaces;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.BuildingBlocks.Infrastructure.Database;
 using Microsoft.EntityFrameworkCore;
@@ -35,6 +36,12 @@ namespace Explorer.Blog.Infrastructure.Database.Repositories
             return task.Result;
         }
 
+        public async Task<List<Core.Domain.Blog>> GetAllB()
+        {
+            var task = _dbSet.Include(x => x.Comments);
+            
+            return await Task.FromResult(task.ToList());
+        }
         public Core.Domain.Blog GetById(long id)
         {
             var entity = _dbSet.Include(x => x.Comments).First(x => x.Id == id);

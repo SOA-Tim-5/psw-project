@@ -22,35 +22,20 @@ services:
   encounters:
     image: encounters
     restart: on-failure
-    networks:
-      - database
-    ports:
-      - "81:81"
     environment:
-      DATABASE_HOST: database
-      DATABASE_PORT: 5432
-      DATABASE_PASSWORD: super
-      DATABASE_USER: postgres
-      DATABASE_SCHEMA: explorer
+      # NoSQL: environment variable holding connection URI for Mongo database
+      # protocol://username:password@hostname:port
+      - MONGO_DB_URI=mongodb://root:pass@mongo:27017
+      # - MONGO_INITDB_ROOT_USERNAME= root
+      # - MONGO_INITDB_ROOT_PASSWORD= pass
+      # - MONGO_DB_URI=mongodb://mongo:27017
+    # NoSQL: Our service will try to connect to Mongo before it is up
+    # in order to avoid that problem, we specify that it depends on mongo service
+    # which defines the order of starting the containers
+    # Additionaly we specify that mongo service needs to pass a healthcheck
     depends_on:
-      - explorer
-      - database
-  tours:
-    image: tours
-    restart: on-failure
-    networks:
-      - database
-    ports:
-      - "88:88"
-    environment:
-      DATABASE_HOST: database
-      DATABASE_PORT: 5432
-      DATABASE_PASSWORD: super
-      DATABASE_USER: postgres
-      DATABASE_SCHEMA: explorer
-    depends_on:
-      - explorer
-      - database
+      mongo:
+        condition: service_healthy
   database:
     image: postgres:13
     restart: always
@@ -69,10 +54,49 @@ services:
       - type: bind
         source: init.sql
         target: /tmp/explorer-init.sql
+  
+# NoSQL: MongoDB
+  mongo:
+    image: mongo
+    restart: always
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: root
+      MONGO_INITDB_ROOT_PASSWORD: pass
+      MONGO_INITDB_DATABASE: mongo
+    # Docker healtcheck - checks if database is "alive"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok'
+      interval: 10s
+      timeout: 10s
+      retries: 10
+    volumes:
+      - mongo_store:/data/db
+
+  # NoSQL: MognoExpress
+  mongo-express:
+    image: mongo-express
+    restart: always
+    environment:
+      # hostname of mongo databse
+      - ME_CONFIG_MONGODB_SERVER=mongo
+      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
+      - ME_CONFIG_MONGODB_ADMINPASSWORD=pass
+      - ME_CONFIG_MONGODB_URL=mongodb://root:pass@mongo:27017/
+    depends_on:
+      - mongo
+    ports:
+      - "8081:8081"
+    volumes:
+      - mongo_express_data:/data/db
+
 
 volumes:
   database-data:
     name: explorer
+  mongo_store:
+  mongo_express_data:
 
 networks:
   database:

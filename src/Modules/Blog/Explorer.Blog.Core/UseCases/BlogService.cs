@@ -1,9 +1,10 @@
-﻿using AutoMapper;
+﻿using System.Collections.Generic;
+using System.Text.Json;
+using AutoMapper;
 using Explorer.Blog.API.Dtos;
 using Explorer.Blog.API.Public;
 using Explorer.Blog.Core.Domain.RepositoryInterfaces;
 using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Stakeholders.API.Internal;
 using FluentResults;
 
 namespace Explorer.Blog.Core.UseCases
@@ -12,13 +13,13 @@ namespace Explorer.Blog.Core.UseCases
     {
 
         private readonly IBlogRepository _repository;
-        private readonly IInternalUserService _internalUserService;
+        //private readonly IInternalUserService _internalUserService;
         private readonly IMapper _mapper;
-        public BlogService(ICrudRepository<Domain.Blog> crudRepository, IBlogRepository repository, IMapper mapper, IInternalUserService internalUserService) : base(crudRepository, mapper)
+        public BlogService(ICrudRepository<Domain.Blog> crudRepository, IBlogRepository repository, IMapper mapper): base(crudRepository, mapper) //, IInternalUserService internalUserService) 
         {
             _repository = repository;
             _mapper = mapper;
-            _internalUserService = internalUserService;
+            //_internalUserService = internalUserService;
         }
 
         public Result<BlogResponseDto> GetById(long id)
@@ -27,14 +28,45 @@ namespace Explorer.Blog.Core.UseCases
             return MapToDto<BlogResponseDto>(entity);
         }
 
+    
+
+        public async Task<List<BlogResponseDto>> GetAllFromFollowingUsers(List<FollowingResponseDto> followings)
+        {
+            var entities = await _repository.GetAllB();
+            /*
+            //TODO call follower microservice
+            string url = "http://host.docker.internal:8090/followings/" + userId.ToString();
+            HttpClient client = new HttpClient();
+            using HttpResponseMessage response = await client.GetAsync(url);
+            var result = await response.Content.ReadAsStringAsync();
+            List<FollowingResponseDto> followings = JsonSerializer.Deserialize<List<FollowingResponseDto>>(result);
+            */
+            List<BlogResponseDto> blogs = new List<BlogResponseDto>();
+            foreach (var e in entities)
+            {
+                if(followings.Find(f => f.Id == e.AuthorId.ToString()) != null)
+                    blogs.Add(MapToDto<BlogResponseDto>(e));
+            }
+            //var blogs = MapToDto<BlogResponseDto>(entities);
+            foreach (var blog in blogs)
+            {
+                //var user = _internalUserService.Get(blog.AuthorId).Value;
+                //blog.Author = user;
+            }
+            return await Task.FromResult(new List<BlogResponseDto>(blogs)
+            );
+        }
+
         public Result<PagedResult<BlogResponseDto>> GetAll(int page, int pageSize)
         {
             var entities = _repository.GetAll(page, pageSize);
+
+
             var result = MapToDto<BlogResponseDto>(entities);
             foreach (var blog in result.Value.Results)
             {
-                var user = _internalUserService.Get(blog.AuthorId).Value;
-                blog.Author = user;
+                //var user = _internalUserService.Get(blog.AuthorId).Value;
+                //blog.Author = user;
             }
             return result;
         }
@@ -90,8 +122,8 @@ namespace Explorer.Blog.Core.UseCases
             var result = MapToDto<BlogResponseDto>(entities);
             foreach (var blog in result.Value.Results)
             {
-                var user = _internalUserService.Get(blog.AuthorId).Value;
-                blog.Author = user;
+                //var user = _internalUserService.Get(blog.AuthorId).Value;
+                //blog.Author = user;
             }
             return result;
         }

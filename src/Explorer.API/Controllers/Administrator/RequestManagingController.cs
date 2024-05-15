@@ -1,7 +1,6 @@
 using Explorer.Blog.Core.Domain;
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -48,7 +47,7 @@ namespace Explorer.API.Controllers.Administrator
             //return CreateResponse(result);
             return null;
         }
-        [HttpGet("facility")]
+        //[HttpGet("facility")]
         public async Task<ActionResult<PagedResult<PublicFacilityRequestResponseDto>>> GetAllFacilityRequest([FromQuery] int page, [FromQuery] int pageSize)
         {
             /*var result = _publicFacilityRequestService.GetPagedWithName(page, pageSize);

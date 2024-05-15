@@ -19,7 +19,7 @@ namespace Explorer.API.Controllers.Tourist
         {
         }
        
-        [HttpGet("{id:long}")]
+        //[HttpGet("{id:long}")]
         public async Task<ActionResult<EncounterResponseDto>> GetHiddenLocationEncounterById(long id)
         {
             string url = "http://host.docker.internal:81/encounters/hidden/" + id.ToString();
@@ -30,7 +30,7 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(resultModel.ToResult());
         }
 
-        [HttpPost("{id:long}/complete")]
+        //[HttpPost("{id:long}/complete")]
         public async Task<ActionResult<EncounterResponseDto>> Complete([FromBody] TouristPositionCreateDto position, long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
@@ -41,7 +41,7 @@ namespace Explorer.API.Controllers.Tourist
             return CreateResponse(jsonResponse.ToResult());
         }
         
-        [HttpPost("{id:long}/check-range")]
+       // [HttpPost("{id:long}/check-range")]
         public async Task<bool>  CheckIfUserInCompletionRange([FromBody] TouristPositionCreateDto position, long id)
         {
             long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);

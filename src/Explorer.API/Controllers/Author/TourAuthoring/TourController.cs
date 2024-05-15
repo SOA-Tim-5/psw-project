@@ -1,6 +1,5 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -42,7 +41,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
 
         //**************************************************
         [Authorize(Roles = "author, tourist")]
-        [HttpGet("authors")]
+        //[HttpGet("authors")]
         public async Task<ActionResult<List<TourResponseDto>>> GetAuthorsTours([FromQuery] int page, [FromQuery] int pageSize)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -95,9 +94,10 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             }
 
         */
+         /*
             //KREIRANJE TURE 1. FUNKCIONALNOST
-        [Authorize(Roles = "author, tourist")]
-        [HttpPost]
+        //[Authorize(Roles = "author, tourist")]
+        //[HttpPost]
         public async Task<ActionResult<TourResponseDto>> Create([FromBody] TourCreateDto tour)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -110,6 +110,7 @@ namespace Explorer.API.Controllers.Author.TourAuthoring
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return CreateResponse(jsonResponse.ToResult());
         }
+         */
 
         [Authorize(Roles = "author, tourist")]
         [HttpPut("{id:int}")]

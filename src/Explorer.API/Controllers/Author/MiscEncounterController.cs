@@ -17,7 +17,7 @@ namespace Explorer.API.Controllers.Author
         }
 
 
-        [HttpPost("createMisc")]
+        //[HttpPost("createMisc")]
         public async Task<ActionResult<MiscEncounterResponseDto>> Create([FromBody] MiscEncounterCreateDto encounter)
         {
             using StringContent jsonContent = new(JsonSerializer.Serialize(encounter), Encoding.UTF8, "application/json");

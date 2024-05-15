@@ -1,0 +1,128 @@
+syntax = "proto3";
+
+option csharp_namespace = "GrpcServiceTranscoding";
+import "Protos/google/api/annotations.proto";
+option go_package = "proto/follower";
+
+service Follower {
+    rpc CreateNewFollowing(UserFollowingDto) returns (FollowerResponseDto) {
+    option (google.api.http) = {
+      post: "/api/follower/create-following"
+      body: "*"
+    };
+    }
+
+    rpc GetFollowerRecommendations(id) returns (ListFollowingResponseDto) {
+    option (google.api.http) = {
+      get: "/api/follower/recommendations/{Id}"
+      
+    };
+    }
+
+     rpc GetFollowings(id) returns (ListFollowingResponseDto) {
+     option (google.api.http) = {
+      get: "/api/follower/followings/{Id}"
+      
+    };
+    }
+
+    rpc GetFollowers(id) returns (ListFollowingResponseDto) {
+     option (google.api.http) = {
+      get: "/api/follower/followers/{Id}"
+      
+    };
+    }
+
+ 
+    rpc GetAllFromFollowingUsers(id) returns (BlogListResponse) {
+     option (google.api.http) = {
+      get: "/api/blog/from-following/{Id}"
+      
+    };
+    }
+
+}
+
+//[HttpGet("search/{searchUsername}")]
+        //public ActionResult<PagedResult<UserResponseDto>> GetSearch([FromQuery] int page, [FromQuery] int pageSize, string searchUsername)
+        //{
+        //    long userId = 0;
+        //    var identity = HttpContext.User.Identity as ClaimsIdentity;
+        //    if (identity != null && identity.IsAuthenticated)
+        //    {
+        //        userId = long.Parse(identity.FindFirst("id").Value);
+        //    }
+        //    var result = _userService.SearchUsers(0, 0, searchUsername, userId);
+        //    return CreateResponse(result);
+        //}
+
+
+
+message UserFollowingDto {
+     string UserId=1;
+     string Username=2;
+     string Image=3;
+     string FollowingUserId=4;
+     string FollowingUsername=5;
+     string FollowingImage=6;
+}
+
+message FollowingResponseDto {
+    string Id=1;
+    string Username=2;
+    string Image=3;
+}
+
+message FollowerResponseDto {
+    int64 Id=1;
+    int64 UserId=2;
+    int64 FollowedById=3;
+}
+
+message id {
+    string Id=1;
+}
+
+message ListFollowingResponseDto {
+    repeated FollowingResponseDto ResponseList=1 ;
+}
+
+message ListUserResponseDto {
+    repeated UserResponseDto ResponseList=1 ;
+}
+
+message SearchUsername {
+    string SearchUsername=1;
+    string UserId=2;
+}
+message FollowerCreateDto{
+     int64 UserId =1;
+         int64 FollowedById =2;
+}
+message UserResponseDto{
+     int64 Id =1;
+         string Username =2;
+         string ProfilePicture =3;
+         int32 Role =4;
+         bool IsActive =5;
+         repeated FollowerCreateDto Followers=6;
+}
+
+message BlogResponseDto{
+     int32 Id =1;
+         string Title =2;
+         string Description =3;
+         string Date=4;
+         repeated string Pictures =5;
+         int32 Status =6;
+         int64 VoteCount =7;
+         int64 UpvoteCount =8;
+         int64 DownvoteCount=9;
+         int32 AuthorId =10;
+         int64 ClubId =11;
+}
+
+message BlogListResponse{
+    repeated BlogResponseDto Response =1;
+    repeated FollowingResponseDto  Following = 2;
+}

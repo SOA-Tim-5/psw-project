@@ -1,7 +1,6 @@
 ﻿using Explorer.Blog.API.Dtos;
 using Explorer.Blog.API.Public;
 using Explorer.BuildingBlocks.Core.UseCases;
-using Explorer.Stakeholders.API.Public;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,14 +13,10 @@ namespace Explorer.API.Controllers
     public class BlogController : BaseApiController
     {
         private readonly IBlogService _blogService;
-        private readonly IClubMemberManagementService _clubMemberManagmentService;
-        private readonly IClubService _clubService;
-
-        public BlogController(IBlogService authenticationService, IClubMemberManagementService clubMemberManagmentService, IClubService clubService)
+        
+        public BlogController(IBlogService authenticationService)
         {
             _blogService = authenticationService;
-            _clubMemberManagmentService = clubMemberManagmentService;
-            _clubService = clubService;
         }
 
 
@@ -52,12 +47,20 @@ namespace Explorer.API.Controllers
             return CreateResponse(result);
         }
 
-        [HttpGet]
+        //[HttpGet]
         public ActionResult<PagedResult<BlogResponseDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
             var result = _blogService.GetAll(page, pageSize);
             return CreateResponse(result);
         }
+
+        //[HttpGet("from-following")]
+       // public async Task<ActionResult<List<BlogResponseDto>>> GetAllFromFollowing([FromQuery] int page, [FromQuery] int pageSize)
+        //{
+        //    long userId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
+            //var result = await _blogService.GetAllFromFollowingUsers(page, pageSize, userId);
+            //return CreateResponse(result);
+       // }
 
         [HttpGet("{id:long}")]
         public ActionResult<BlogResponseDto> Get(long id)
@@ -96,35 +99,35 @@ namespace Explorer.API.Controllers
             return CreateResponse(result);
         }
 
-        [Authorize(Policy = "touristPolicy")]
-        [HttpPost("createClubBlog")]
-        public ActionResult<BlogResponseDto> CreateClubBlog([FromBody] BlogCreateDto blog)
-        {
-            blog.AuthorId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
-            if(blog.ClubId == null)
-            {
-                return BadRequest();
-            }
-            bool touristInClub = false;
-            foreach(int touristId in _clubMemberManagmentService.GetMembers((long)blog.ClubId).Value.Results.Select(member => member.UserId))
-            {
-                if(touristId == blog.AuthorId)
-                {
-                    touristInClub = true;
-                    break;
-                }
-            }
-            if (!touristInClub)
-            {
-                if(_clubService.GetById((int)blog.ClubId).Value.OwnerId != blog.AuthorId)
-                {
-                    return BadRequest();
-                }
-            }
-            blog.Date = DateTime.UtcNow;
-            var result = _blogService.Create(blog);
-            return CreateResponse(result);
-        }
+        //[Authorize(Policy = "touristPolicy")]
+        //[HttpPost("createClubBlog")]
+        //public ActionResult<BlogResponseDto> CreateClubBlog([FromBody] BlogCreateDto blog)
+        //{
+        //    blog.AuthorId = int.Parse(HttpContext.User.Claims.First(i => i.Type.Equals("id", StringComparison.OrdinalIgnoreCase)).Value);
+        //    if(blog.ClubId == null)
+        //    {
+        //        return BadRequest();
+        //    }
+        //    bool touristInClub = false;
+        //    foreach(int touristId in _clubMemberManagmentService.GetMembers((long)blog.ClubId).Value.Results.Select(member => member.UserId))
+        //    {
+        //        if(touristId == blog.AuthorId)
+        //        {
+        //            touristInClub = true;
+        //            break;
+        //        }
+        //    }
+        //    if (!touristInClub)
+        //    {
+        //        if(_clubService.GetById((int)blog.ClubId).Value.OwnerId != blog.AuthorId)
+        //        {
+        //            return BadRequest();
+        //        }
+        //    }
+        //    blog.Date = DateTime.UtcNow;
+        //    var result = _blogService.Create(blog);
+        //    return CreateResponse(result);
+        //}
 
         [Authorize(Policy = "touristPolicy")]
         [HttpGet("getClubBlogs")]

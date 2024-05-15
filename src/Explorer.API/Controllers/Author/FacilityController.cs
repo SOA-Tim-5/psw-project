@@ -1,6 +1,5 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +27,7 @@ namespace Explorer.API.Controllers.Author
             return null;
         }
 
-        [HttpGet("authorsFacilities")]
+        //[HttpGet("authorsFacilities")]
         /*public ActionResult<PagedResult<FacilityResponseDto>> GetByAuthorId([FromQuery] int page, [FromQuery] int pageSize)
         {
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -80,8 +79,8 @@ namespace Explorer.API.Controllers.Author
         }*/
 
 
-        [HttpPost]
-        public async Task<ActionResult<FacilityResponseDto>> Create([FromBody] FacilityCreateDto facility)
+        //[HttpPost]
+        /*public async Task<ActionResult<FacilityResponseDto>> Create([FromBody] FacilityCreateDto facility)
         {
             //var result = _keyPointService.Create(keyPoint);
             var identity = HttpContext.User.Identity as ClaimsIdentity;
@@ -92,7 +91,7 @@ namespace Explorer.API.Controllers.Author
             var jsonResponse = await response.Content.ReadAsStringAsync();
             return CreateResponse(jsonResponse.ToResult());
             //return CreateResponse(result);
-        }
+        }*/
 
         [HttpPut("{id:int}")]
         public ActionResult<FacilityResponseDto> Update([FromBody] FacilityUpdateDto facility)

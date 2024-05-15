@@ -4,7 +4,12 @@
     <TargetFramework>net7.0</TargetFramework>
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
+	  <IncludeHttpRuleProtos>true</IncludeHttpRuleProtos>  
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Remove="Protos\follower.proto" />
+  </ItemGroup>
 
   <ItemGroup>
     <Content Include="Startup\templateMail.html" />
@@ -20,6 +25,8 @@
     </PackageReference>
     <PackageReference Include="Newtonsoft.Json" Version="13.0.3" />
     <PackageReference Include="Swashbuckle.AspNetCore" Version="6.5.0" />
+    <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" Version="5.0.14" />
+
   </ItemGroup>
 
   <ItemGroup>
@@ -29,11 +36,29 @@
     <ProjectReference Include="..\Modules\Blog\Explorer.Blog.Infrastructure\Explorer.Blog.Infrastructure.csproj" />
     <ProjectReference Include="..\Modules\Payments\Explorer.Payments.API\Explorer.Payments.API.csproj" />
     <ProjectReference Include="..\Modules\Payments\Explorer.Payments.Infrastructure\Explorer.Payments.Infrastructure.csproj" />
-    <ProjectReference Include="..\Modules\Stakeholders\Explorer.Stakeholders.API\Explorer.Stakeholders.API.csproj" />
-    <ProjectReference Include="..\Modules\Stakeholders\Explorer.Stakeholders.Infrastructure\Explorer.Stakeholders.Infrastructure.csproj" />
   </ItemGroup>
 
-  
+	<ItemGroup>
+		<PackageReference Include="Grpc.AspNetCore" Version="2.49.0" />
+		<PackageReference Include="Google.Protobuf" Version="3.26.1" />
+		<PackageReference Include="Grpc.Net.Client" Version="2.52.0" />
+		<PackageReference Include="Grpc.Tools" Version="2.62.0">
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+			<PrivateAssets>all</PrivateAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.AspNetCore.Grpc.JsonTranscoding" Version="7.0.17" />
+	</ItemGroup>
 
+	<ItemGroup>
+		<Folder Include="Controllers\Administrator\" />
+		<Protobuf Include="Protos\authentication.proto" />
+		<Protobuf Include="Protos\follower.proto" />
+		<Protobuf Include="Protos\encounter.proto" />
+		<Protobuf Include="Protos\tour.proto" />
+		<Protobuf Include="Protos\facility.proto"/>
+		<Protobuf Include="Protos\publicFacilityRequest.proto" />
+		<Protobuf Include="Protos\preference.proto"/>
+		<Protobuf Include="Protos\equipment.proto"/>
+	</ItemGroup>
 
 </Project>

@@ -1,0 +1,81 @@
+﻿syntax = "proto3";
+
+option csharp_namespace = "GrpcServiceTranscoding";
+
+import "Protos/google/api/annotations.proto";
+
+package Authorize;
+
+// The greeting service definition.
+service Authorize {
+  rpc Authorize (Credentials) returns (AuthenticationTokens) {
+      option (google.api.http) = {
+      post: "/api/users/login"
+      body: "*"
+    };
+  }
+     rpc GetSearch(SearchUsernameA) returns (ListUserResponseDtoA) {
+     option (google.api.http) = {
+      get: "/api/follower/search/{SearchUsername}/{UserId}"
+      
+    };
+     }
+
+     rpc GetByUserId(UserId) returns (PersonResponseDtoA) {
+     option (google.api.http) = {
+      get: "/api/people/person/{UsersId}"
+      
+    };
+     }
+}
+
+// The request message containing the user's name.
+message Credentials {
+  string username = 1;
+  string password = 2;
+}
+
+// The response message containing the greetings.
+message AuthenticationTokens {
+  int32 id = 1;
+  string accessToken = 2;
+}
+
+message ListUserResponseDtoA {
+    repeated UserResponseDtoA ResponseList=1 ;
+}
+
+message SearchUsernameA {
+    string SearchUsername=1;
+    string UserId=2;
+}
+
+message UserResponseDtoA{
+     int64 id =1;
+     string username =2;
+     string profilePicture =3;
+     int32 role =4;
+     bool isActive =5;
+     repeated FollowerCreateDtoA followers=6;
+}
+
+message PersonResponseDtoA{
+    int64 id =1;
+    int64 userId =2;
+    string name =3;
+    string surname =4;
+    string email =5;
+    UserResponseDtoA user =6;
+    string bio =7;
+    string motto =8;
+}
+
+message FollowerCreateDtoA{
+     int64 UserId =1;
+         int64 FollowedById =2;
+}
+
+message UserId {
+    int64 UsersId = 1;;
+}
+

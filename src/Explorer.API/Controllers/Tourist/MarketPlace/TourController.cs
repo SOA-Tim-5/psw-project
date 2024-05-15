@@ -2,7 +2,6 @@
 using Explorer.BuildingBlocks.Core.UseCases;
 using Explorer.Payments.API.Public;
 using Explorer.Tours.API.Dtos;
-using Explorer.Tours.API.Public;
 using FluentResults;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,7 +27,7 @@ namespace Explorer.API.Controllers.Tourist.MarketPlace
             return null;
         }
 
-        [HttpGet("tours/{tourId:long}")]
+        //[HttpGet("tours/{tourId:long}")]
         /*public ActionResult<PagedResult<TourResponseDto>> GetById(long tourId)
         {
             var result = _tourService.GetById(tourId);
