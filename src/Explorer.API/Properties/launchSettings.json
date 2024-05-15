@@ -9,7 +9,7 @@
     }
   },
   "profiles": {
-    "IIS Express": {
+    /*"IIS Express": {
       "commandName": "IISExpress",
       "launchBrowser": true,
       "launchUrl": "swagger",
@@ -24,7 +24,7 @@
         "ASPNETCORE_ENVIRONMENT": "Development"
       },
       "distributionName": ""
-    },
+    },*/
     "WebApplication1": {
       "commandName": "Project",
       "launchBrowser": true,
