@@ -1,6 +1,9 @@
 using Explorer.API.Controllers;
 using Explorer.API.Controllers.Author;
 using Explorer.API.Controllers.Author.TourAuthoring;
+
+using Explorer.API.Controllers.Author.TourAuthoring;
+
 using Explorer.API.Controllers.Tourist;
 using Explorer.API.Startup;
 using Microsoft.AspNetCore.Server.Kestrel.Core;
@@ -40,7 +43,7 @@ app.UseDeveloperExceptionPage();
 
 app.UseRouting();
 app.UseCors(corsPolicy);
-app.UseHttpsRedirection();
+//app.UseHttpsRedirection();
 app.UseAuthorization();
 app.UseAuthorization();
 app.UseStaticFiles();

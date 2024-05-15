@@ -10,20 +10,48 @@ package Authorize;
 service Authorize {
   rpc Authorize (Credentials) returns (AuthenticationTokens) {
       option (google.api.http) = {
-      post: "/api/users/login/88888"
+      post: "/api/users/login"
       body: "*"
     };
   }
+     rpc GetSearch(SearchUsernameA) returns (ListUserResponseDtoA) {
+     option (google.api.http) = {
+      get: "/api/follower/search/{SearchUsername}/{UserId}"
+      
+    };
+     }
 }
 
 // The request message containing the user's name.
 message Credentials {
-  string Username = 1;
-  string Password = 2;
+  string username = 1;
+  string password = 2;
 }
 
 // The response message containing the greetings.
 message AuthenticationTokens {
-  int32 Id = 1;
-  string AccessToken = 2;
+  int32 id = 1;
+  string accessToken = 2;
+}
+
+message ListUserResponseDtoA {
+    repeated UserResponseDtoA ResponseList=1 ;
+}
+
+message SearchUsernameA {
+    string SearchUsername=1;
+    string UserId=2;
+}
+message UserResponseDtoA{
+     int64 Id =1;
+         string Username =2;
+         string ProfilePicture =3;
+         int32 Role =4;
+         bool IsActive =5;
+         repeated FollowerCreateDtoA Followers=6;
+}
+
+message FollowerCreateDtoA{
+     int64 UserId =1;
+         int64 FollowedById =2;
 }

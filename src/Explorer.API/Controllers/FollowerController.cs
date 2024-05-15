@@ -79,7 +79,7 @@ namespace Explorer.API.Controllers
         //    return CreateResponse(result);
         //}
 
-        [HttpGet("follower/search/{searchUsername}")]
+        //[HttpGet("follower/search/{searchUsername}")]
         public async Task<ActionResult<PagedResult<UserResponseDto>>> GetSearch([FromQuery] int page, [FromQuery] int pageSize, string searchUsername)
         {
 

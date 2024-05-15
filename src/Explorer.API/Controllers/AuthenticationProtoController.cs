@@ -39,6 +39,24 @@ namespace Explorer.API.Controllers
                 throw; 
             }
         }
+        
+        public override async Task<ListUserResponseDtoA> GetSearch(SearchUsernameA id,
+          ServerCallContext context)
+        {
+            var httpHandler = new HttpClientHandler();
+            httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
+            var channel = GrpcChannel.ForAddress("https://localhost:44332", new GrpcChannelOptions { HttpHandler = httpHandler });
+
+            var client = new Authorize.AuthorizeClient(channel);
+            var response = await client.GetSearchAsync(id);
+
+            // Console.WriteLine(response.AccessToken);
+
+            return await Task.FromResult(new ListUserResponseDtoA
+            {
+                ResponseList = { response.ResponseList }
+            });
+        }
 
     }
 }

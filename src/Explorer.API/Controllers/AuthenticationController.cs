@@ -39,7 +39,7 @@ public class AuthenticationController : BaseApiController
         return CreateResponse(jsonResponse.ToResult());
     }
 
-    [HttpPost("login")]
+    //[HttpPost("login")]
     public async Task<ActionResult<AuthenticationTokensDto>> Login([FromBody] CredentialsDto credentials)
     {
       

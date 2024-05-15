@@ -87,8 +87,13 @@ message ListFollowingResponseDto {
     repeated FollowingResponseDto ResponseList=1 ;
 }
 
+message ListUserResponseDto {
+    repeated UserResponseDto ResponseList=1 ;
+}
+
 message SearchUsername {
     string SearchUsername=1;
+    string UserId=2;
 }
 message FollowerCreateDto{
      int64 UserId =1;
