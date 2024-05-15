@@ -41,7 +41,7 @@ public class PersonController : BaseApiController
 //        return CreateResponse(result);
 //    }
 
-    [HttpGet("person/{userId:long}")]
+   /* [HttpGet("person/{userId:long}")]
     public async Task<ActionResult<PersonResponseDto>> GetByUserId(long userId)
     {
         string url = $"https://localhost:44332/api/people/person/" + userId;
@@ -63,6 +63,6 @@ public class PersonController : BaseApiController
         {
             return StatusCode((int)response.StatusCode);
         }
-    }
+    }*/
 
 }
