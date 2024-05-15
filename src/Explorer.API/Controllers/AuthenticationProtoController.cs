@@ -66,7 +66,7 @@ namespace Explorer.API.Controllers
         {
             var httpHandler = new HttpClientHandler();
             httpHandler.ServerCertificateCustomValidationCallback = HttpClientHandler.DangerousAcceptAnyServerCertificateValidator;
-            var channel = GrpcChannel.ForAddress("https://host.docker.internal:44332", new GrpcChannelOptions { HttpHandler = httpHandler });
+            var channel = GrpcChannel.ForAddress("https://localhost:44332", new GrpcChannelOptions { HttpHandler = httpHandler });
 
             var client = new Authorize.AuthorizeClient(channel);
             var response = await client.GetByUserIdAsync(userId);
@@ -86,6 +86,5 @@ namespace Explorer.API.Controllers
 
         });
         }
-        
     }
 }
