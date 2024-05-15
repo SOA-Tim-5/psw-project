@@ -7,6 +7,6 @@ namespace Explorer.Blog.Core.Domain.RepositoryInterfaces
         Blog GetById(long id);
         PagedResult<Blog> GetAll(int page, int pageSize);
         PagedResult<Core.Domain.Blog> GetAllFromClub(int page, int pageSize, long ClubId);
-        List<Core.Domain.Blog> GetAllB();
+        Task<List<Core.Domain.Blog>> GetAllB();
     }
 }

@@ -47,7 +47,7 @@ namespace Explorer.API.Controllers
             return CreateResponse(result);
         }
 
-        [HttpGet]
+        //[HttpGet]
         public ActionResult<PagedResult<BlogResponseDto>> GetAll([FromQuery] int page, [FromQuery] int pageSize)
         {
             var result = _blogService.GetAll(page, pageSize);

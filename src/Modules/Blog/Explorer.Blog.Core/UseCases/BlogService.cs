@@ -32,7 +32,7 @@ namespace Explorer.Blog.Core.UseCases
 
         public async Task<List<BlogResponseDto>> GetAllFromFollowingUsers(List<FollowingResponseDto> followings)
         {
-            var entities = _repository.GetAllB();
+            var entities = await _repository.GetAllB();
             /*
             //TODO call follower microservice
             string url = "http://host.docker.internal:8090/followings/" + userId.ToString();

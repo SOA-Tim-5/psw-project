@@ -36,11 +36,11 @@ namespace Explorer.Blog.Infrastructure.Database.Repositories
             return task.Result;
         }
 
-        public List<Core.Domain.Blog> GetAllB()
+        public async Task<List<Core.Domain.Blog>> GetAllB()
         {
             var task = _dbSet.Include(x => x.Comments);
-      
-            return task.ToList();
+            
+            return await Task.FromResult(task.ToList());
         }
         public Core.Domain.Blog GetById(long id)
         {
