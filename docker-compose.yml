@@ -35,25 +35,18 @@ services:
       DATABASE_SCHEMA: explorer
     depends_on:
       - databaseStakeholders
+
   encounters:
     image: encounters
     restart: on-failure
     ports:
       - "81:81"
     environment:
-      # NoSQL: environment variable holding connection URI for Mongo database
-      # protocol://username:password@hostname:port
-      - MONGO_DB_URI=mongodb://root:pass@mongo:27017
-      # - MONGO_INITDB_ROOT_USERNAME= root
-      # - MONGO_INITDB_ROOT_PASSWORD= pass
-      # - MONGO_DB_URI=mongodb://mongo:27017
-    # NoSQL: Our service will try to connect to Mongo before it is up
-    # in order to avoid that problem, we specify that it depends on mongo service
-    # which defines the order of starting the containers
-    # Additionaly we specify that mongo service needs to pass a healthcheck
+      MONGO_DB_URI: mongodb://root:pass@mongo:27017
     depends_on:
       mongo:
         condition: service_healthy
+
   database:
     image: postgres:13
     restart: always
@@ -74,18 +67,17 @@ services:
         target: /tmp/explorer-init.sql
 
   databaseStakeholders:
-     image: postgres:13
-     restart: always
-     networks:
-       - databaseStakeholders
-     environment:
-       POSTGRES_PASSWORD: super
-       POSTGRES_USER: postgres
-       POSTGRES_DB: explorer
-     ports:
-       - "5431:5431"
-  
-# NoSQL: MongoDB
+    image: postgres:13
+    restart: always
+    networks:
+      - databaseStakeholders
+    environment:
+      POSTGRES_PASSWORD: super
+      POSTGRES_USER: postgres
+      POSTGRES_DB: explorer
+    ports:
+      - "5431:5431"
+
   mongo:
     image: mongo
     restart: always
@@ -95,7 +87,6 @@ services:
       MONGO_INITDB_ROOT_USERNAME: root
       MONGO_INITDB_ROOT_PASSWORD: pass
       MONGO_INITDB_DATABASE: mongo
-    # Docker healtcheck - checks if database is "alive"
     healthcheck:
       test: echo 'db.runCommand("ping").ok'
       interval: 10s
@@ -104,22 +95,18 @@ services:
     volumes:
       - mongo_store:/data/db
 
-  # NoSQL: MognoExpress
   mongo-express:
     image: mongo-express
     restart: always
     environment:
-      # hostname of mongo databse
-      - ME_CONFIG_MONGODB_SERVER=mongo
-      - ME_CONFIG_MONGODB_ADMINUSERNAME=root
-      - ME_CONFIG_MONGODB_ADMINPASSWORD=pass
-      - ME_CONFIG_MONGODB_URL=mongodb://root:pass@mongo:27017/
+      ME_CONFIG_MONGODB_SERVER: mongo
+      ME_CONFIG_MONGODB_ADMINUSERNAME: root
+      ME_CONFIG_MONGODB_ADMINPASSWORD: pass
+      ME_CONFIG_MONGODB_URL: mongodb://root:pass@mongo:27017/
     depends_on:
       - mongo
     ports:
       - "8081:8081"
-    volumes:
-      - mongo_express_data:/data/db
 
   tours:
     image: tours
@@ -144,29 +131,21 @@ services:
     ports:
       - "8090:8090"
     environment:
-      # NoSQL: environment variable holding connection URI for Neo4J database
-      # Local DB instance
-      - NEO4J_DB=bolt://neo4j:7687
-      - NEO4J_USERNAME=neo4j
-      - NEO4J_PASS=ivanaanja
+      NEO4J_DB: bolt://neo4j:7687
+      NEO4J_USERNAME: neo4j
+      NEO4J_PASS: ivanaanja
     depends_on:
       neo4j:
         condition: service_healthy
 
-  # NoSQL: Neo4J DB
   neo4j:
     image: neo4j
     restart: always
     ports:
-      # bolt
       - "7687:7687"
-      # http
       - "7474:7474"
-      # https
       - "7473:7473"
-    # Docker healtcheck - checks if database is "alive"
     healthcheck:
-      # test: [ "CMD-SHELL", "echo RETURN 1 | cypher-shell -a <NEO4J_dbms_connector_bolt_listen__address> -u <user defined username> -p <user defined password> || exit 1" ]
       test:
         [
           "CMD-SHELL",
@@ -176,9 +155,52 @@ services:
       timeout: 5s
       retries: 10
     environment:
-      - NEO4J_AUTH=neo4j/ivanaanja
+      NEO4J_AUTH: neo4j/ivanaanja
     volumes:
       - neo4j_data:/data
+
+  loki:
+    image: grafana/loki:latest
+    ports:
+      - "3100:3100"
+    command: -config.file=/etc/loki/local-config.yml 
+    volumes:
+      - ./loki-config:/etc/loki
+
+
+
+  promtail:
+    image: grafana/promtail:latest
+    volumes:
+      - /var/log:/var/log
+      - ./promtail-config:/etc/promtail
+    command: -config.file=/etc/promtail/config.yml
+
+#  grafana:
+#    image: grafana/grafana:latest
+#    ports:
+#      - "3000:3000"
+#    depends_on:
+#      - loki
+#    environment:
+#      - GF_SECURITY_ADMIN_USER=${ADMIN_USER:-admin}
+#      - GF_SECURITY_ADMIN_PASSWORD=${ADMIN_PASSWORD:-admin}
+#      - GF_USERS_ALLOW_SIGN_UP=false
+#      - GF_EXPLORE_ENABLED=true
+#    volumes:
+#      - grafana-data:/var/lib/grafana
+
+
+#      version: "3.8"
+  grafana:
+    image: grafana/grafana-enterprise
+    container_name: grafana
+    restart: unless-stopped
+    ports:
+     - '3000:3000'
+    depends_on:
+      - loki
+     
 
 volumes:
   database-data:
@@ -186,6 +208,7 @@ volumes:
   mongo_store:
   mongo_express_data:
   neo4j_data:
+  grafana-data:
 
 networks:
   database:
